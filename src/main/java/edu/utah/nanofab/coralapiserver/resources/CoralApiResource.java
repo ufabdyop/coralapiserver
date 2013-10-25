@@ -1,6 +1,6 @@
-package edu.utah.nanofab.coralapi.resources;
+package edu.utah.nanofab.coralapiserver.resources;
 
-import edu.utah.nanofab.coralapi.core.Saying;
+import edu.utah.nanofab.coralapiserver.core.Saying;
 import com.google.common.base.Optional;
 import com.yammer.metrics.annotation.Timed;
 

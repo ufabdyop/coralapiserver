@@ -60,7 +60,7 @@
 			<transformers>
 			    <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
 			    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-				<mainClass>edu.utah.nanofab.coralapi.CoralApiService</mainClass>
+				<mainClass>edu.utah.nanofab.coralapiserver.CoralApiService</mainClass>
 			    </transformer>
 			</transformers>
 		    </configuration>

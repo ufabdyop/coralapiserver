@@ -1,7 +1,7 @@
-package edu.utah.nanofab.coralapi;
+package edu.utah.nanofab.coralapiserver;
 
-import edu.utah.nanofab.coralapi.resources.CoralApiResource;
-import edu.utah.nanofab.coralapi.health.TemplateHealthCheck;
+import edu.utah.nanofab.coralapiserver.resources.CoralApiResource;
+import edu.utah.nanofab.coralapiserver.health.TemplateHealthCheck;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;

@@ -1,4 +1,4 @@
-package edu.utah.nanofab.coralapi;
+package edu.utah.nanofab.coralapiserver;
 
 import com.yammer.dropwizard.config.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
