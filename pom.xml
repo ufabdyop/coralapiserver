@@ -4,7 +4,7 @@
  
     <groupId>edu.utah.nanofab</groupId>
     <artifactId>coralapiserver</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
  
     <dependencies>
 	    <dependency>
@@ -19,6 +19,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+
+  <distributionManagement>
+    <repository>
+      <id>archiva.internal</id>
+      <url>http://archiva.eng.utah.edu/archiva/repository/internal/</url>
+    </repository>
+    <snapshotRepository>
+      <id>archiva.snapshots</id>
+      <url>http://archiva.eng.utah.edu/archiva/repository/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
     
     <build>
         <plugins>
