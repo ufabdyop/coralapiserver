@@ -1,10 +1,10 @@
-package edu.utah.nanofab.helloworld;
+package edu.utah.nanofab.coralapi;
 
 import com.yammer.dropwizard.config.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class HelloWorldConfiguration extends Configuration {
+public class CoralApiConfiguration extends Configuration {
     @NotEmpty
     @JsonProperty
     private String template;

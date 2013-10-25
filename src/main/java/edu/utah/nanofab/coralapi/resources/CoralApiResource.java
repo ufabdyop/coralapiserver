@@ -1,6 +1,6 @@
-package edu.utah.nanofab.helloworld.resources;
+package edu.utah.nanofab.coralapi.resources;
 
-import edu.utah.nanofab.helloworld.core.Saying;
+import edu.utah.nanofab.coralapi.core.Saying;
 import com.google.common.base.Optional;
 import com.yammer.metrics.annotation.Timed;
 
@@ -13,12 +13,12 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Path("/hello-world")
 @Produces(MediaType.APPLICATION_JSON)
-public class HelloWorldResource {
+public class CoralApiResource {
     private final String template;
     private final String defaultName;
     private final AtomicLong counter;
 
-    public HelloWorldResource(String template, String defaultName) {
+    public CoralApiResource(String template, String defaultName) {
         this.template = template;
         this.defaultName = defaultName;
         this.counter = new AtomicLong();

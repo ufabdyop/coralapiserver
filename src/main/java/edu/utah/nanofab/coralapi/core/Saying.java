@@ -1,4 +1,4 @@
-package edu.utah.nanofab.helloworld.core;
+package edu.utah.nanofab.coralapi.core;
 
 public class Saying {
     private final long id;

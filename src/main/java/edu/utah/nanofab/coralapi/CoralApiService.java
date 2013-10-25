@@ -1,27 +1,27 @@
-package edu.utah.nanofab.helloworld;
+package edu.utah.nanofab.coralapi;
 
-import edu.utah.nanofab.helloworld.resources.HelloWorldResource;
-import edu.utah.nanofab.helloworld.health.TemplateHealthCheck;
+import edu.utah.nanofab.coralapi.resources.CoralApiResource;
+import edu.utah.nanofab.coralapi.health.TemplateHealthCheck;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 
-public class HelloWorldService extends Service<HelloWorldConfiguration> {
+public class CoralApiService extends Service<CoralApiConfiguration> {
     public static void main(String[] args) throws Exception {
-        new HelloWorldService().run(args);
+        new CoralApiService().run(args);
     }
 
     @Override
-    public void initialize(Bootstrap<HelloWorldConfiguration> bootstrap) {
+    public void initialize(Bootstrap<CoralApiConfiguration> bootstrap) {
         bootstrap.setName("hello-world");
     }
 
     @Override
-    public void run(HelloWorldConfiguration configuration,
+    public void run(CoralApiConfiguration configuration,
                     Environment environment) {
 	final String template = configuration.getTemplate();
 	final String defaultName = configuration.getDefaultName();
-	environment.addResource(new HelloWorldResource(template, defaultName));
+	environment.addResource(new CoralApiResource(template, defaultName));
 	environment.addHealthCheck(new TemplateHealthCheck(template));
     }
 

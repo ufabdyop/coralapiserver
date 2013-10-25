@@ -1,4 +1,4 @@
-package edu.utah.nanofab.helloworld.health;
+package edu.utah.nanofab.coralapi.health;
 
 import com.yammer.metrics.core.HealthCheck;
 
