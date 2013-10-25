@@ -1,2 +1,10 @@
-template: Hello, %s!
-defaultName: Stranger
+        template: Hello, %s!
+        defaultName: Stranger
+        http:
+                port: 8080
+                connectorType: nonblocking+ssl
+
+                ssl:
+                        keyStore: ./newstore
+                        keyStorePassword: 123456
+
