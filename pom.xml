@@ -4,7 +4,7 @@
  
     <groupId>edu.utah.nanofab</groupId>
     <artifactId>coralapiserver</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
  
     <dependencies>
 	    <dependency>
@@ -49,6 +49,13 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+		 <plugin>
+		    <groupId>org.codehaus.mojo</groupId>
+		    <artifactId>exec-maven-plugin</artifactId>
+		    <configuration>
+			<mainClass>edu.utah.nanofab.coralapiserver.CoralApiService</mainClass>
+		    </configuration>
+		 </plugin>
 	<plugin>
 	    <groupId>org.apache.maven.plugins</groupId>
 	    <artifactId>maven-shade-plugin</artifactId>
