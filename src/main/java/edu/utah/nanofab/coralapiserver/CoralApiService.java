@@ -13,16 +13,16 @@ public class CoralApiService extends Service<CoralApiConfiguration> {
 
     @Override
     public void initialize(Bootstrap<CoralApiConfiguration> bootstrap) {
-        bootstrap.setName("hello-world");
+        bootstrap.setName("coral-api");
     }
 
     @Override
     public void run(CoralApiConfiguration configuration,
                     Environment environment) {
-	final String template = configuration.getTemplate();
-	final String defaultName = configuration.getDefaultName();
-	environment.addResource(new CoralApiResource(template, defaultName));
-	environment.addHealthCheck(new TemplateHealthCheck(template));
+		final String template = configuration.getTemplate();
+		final String defaultName = configuration.getDefaultName();
+		environment.addResource(new CoralApiResource(template, defaultName));
+		environment.addHealthCheck(new TemplateHealthCheck(template));
     }
 
 }
