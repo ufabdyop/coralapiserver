@@ -8,9 +8,14 @@
  
     <dependencies>
 	    <dependency>
-		<groupId>com.yammer.dropwizard</groupId>
-		<artifactId>dropwizard-core</artifactId>
-		<version>0.6.2</version>
+			<groupId>com.yammer.dropwizard</groupId>
+			<artifactId>dropwizard-core</artifactId>
+			<version>0.6.2</version>
+	    </dependency>
+	    <dependency>
+	     <groupId>edu.nanofab</groupId>
+	     <artifactId>CoralAPI</artifactId>
+	     <version>0.0.2</version>
 	    </dependency>
     </dependencies>
     
@@ -94,4 +99,17 @@
 
         </plugins>
     </build>
+	 <repositories>
+	    <repository>
+	      <id>internal</id>
+	      <name>Archiva Managed Internal Repository</name>
+	      <url>http://archiva.eng.utah.edu/archiva/repository/internal/</url>
+	      <releases>
+		<enabled>true</enabled>
+	      </releases>
+	      <snapshots>
+		<enabled>false</enabled>
+	      </snapshots>
+	    </repository>
+	  </repositories>
 </project>

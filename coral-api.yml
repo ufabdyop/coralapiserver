@@ -8,3 +8,5 @@
                         keyStore: ./newstore
                         keyStorePassword: 123456
 
+        logging:
+                level:  DEBUG
