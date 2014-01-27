@@ -12,10 +12,16 @@
 			<artifactId>dropwizard-core</artifactId>
 			<version>0.6.2</version>
 	    </dependency>
+        <!-- Authentication support -->
+	    <dependency>
+	      <groupId>com.yammer.dropwizard</groupId>
+	      <artifactId>dropwizard-auth</artifactId>
+	      <version>0.6.2</version>
+	    </dependency>
 	    <dependency>
 	     <groupId>edu.nanofab</groupId>
 	     <artifactId>CoralAPI</artifactId>
-	     <version>0.0.2</version>
+	     <version>0.0.9</version>
 	    </dependency>
     </dependencies>
     
