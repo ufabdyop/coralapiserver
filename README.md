@@ -11,6 +11,9 @@ to run without packaging first (which takes a long time): mvn exec:java -Dexec.a
 To post to the server (for example):
 curl -k -X POST -H "Content-Type: application/json" -d '{"username":"xyz","password":"xyz"}' https://localhost:8443/member
 
+or if authentication is enabled:
+curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k -X GET -H "Content-Type: application/json" -d '{"username":"xyz","password":"xyz"}' https://localhost:8443/member?name=coral
+
 
 Resources:
 ---

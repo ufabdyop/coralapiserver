@@ -13,9 +13,7 @@
 
         authToken:
                 tokens:
-                        - token: "TESTHOST1"
-                          user : "TESTUSER1"
-                        - token: "TESTHOST2"
-                          user : "TESTUSER2"
-                        - token: "TESTHOST3"
-                          user : "TESTUSER3"
+                        - token: "KIZ5DAYYcUgPZUh9MWXaQrsZB3RwuK5wAmcc8kyibpQxsg29Jn"
+                          user : "coralbot"
+                        - token: "0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9"
+                          user : "coral"
