@@ -23,7 +23,8 @@ public class CoralApiService extends Service<CoralApiConfiguration> {
                     Environment environment) {
 		final String template = configuration.getTemplate();
 		final String defaultName = configuration.getDefaultName();
-		environment.addResource(new CoralApiResource(template, defaultName));
+		final TokenConfiguration[] tokens = configuration.getAuthTokensConfiguration().getTokens();
+		environment.addResource(new CoralApiResource(template, defaultName, tokens));
 		environment.addResource(new CoralApiMemberResource(template, defaultName));
 		environment.addHealthCheck(new TemplateHealthCheck(template));
     }

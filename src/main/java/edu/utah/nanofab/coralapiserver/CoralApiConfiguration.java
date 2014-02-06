@@ -20,4 +20,11 @@ public class CoralApiConfiguration extends Configuration {
     public String getDefaultName() {
         return defaultName;
     }
+    
+    @JsonProperty
+    private AuthTokensConfiguration authToken = new AuthTokensConfiguration();
+
+    public AuthTokensConfiguration getAuthTokensConfiguration() {
+        return authToken;
+    }
 }

@@ -10,3 +10,12 @@
 
         logging:
                 level:  DEBUG
+
+        authToken:
+                tokens:
+                        - token: "TESTHOST1"
+                          user : "TESTUSER1"
+                        - token: "TESTHOST2"
+                          user : "TESTUSER2"
+                        - token: "TESTHOST3"
+                          user : "TESTUSER3"

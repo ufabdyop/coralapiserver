@@ -1,5 +1,7 @@
 This is based on the hello world from dropwizard.codahale.com
 
+Installing and Deploying
+---
 to package: mvn package
 to run: java -jar target/coralapiserver-{version}.jar server coral-api.yml
 
@@ -17,3 +19,4 @@ https://github.com/gary-rowe/DropwizardOpenID (gary-rowe has some sample applica
 
 so is this:
 http://cosmo-opticon.net/blog/2013/1/23/session-based-security-in-dropwizard (sessions)
+
