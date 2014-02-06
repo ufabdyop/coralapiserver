@@ -16,3 +16,5 @@
   }
 * Add more member resources PUT, POST, DELETE
 * Add project resources
+* member resource method authRequest should return a token, not a member
+* can authRequest be available vi /member/auth, instead of /member (method of POST)?
