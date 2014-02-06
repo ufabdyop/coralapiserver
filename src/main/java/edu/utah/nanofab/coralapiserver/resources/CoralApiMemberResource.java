@@ -41,7 +41,7 @@ public class CoralApiMemberResource {
     @GET
     @Timed
     public Member member(@QueryParam("name") Optional<String> name, @Auth User user) {
-    	Member fetchedMember = new Member();
+    	Member fetchedMember = null;
 		try {
 			logger.debug("Will look up member in coral");
 	    	if (name.isPresent()) {
@@ -58,5 +58,21 @@ public class CoralApiMemberResource {
 		}
         return fetchedMember;
     }
+    
+    @POST
+    public Member authRequest(@Valid AuthRequest authRequest) {
+    	Member fetchedMember = null;
+		try {
+			CoralServices api = new CoralServices(authRequest.getUsername(), 
+					this.coralIor, this.coralConfigUrl);
+			boolean success = api.authenticate(authRequest.getUsername(), authRequest.getPassword());
+			if (success) {
+					fetchedMember = api.getMember(authRequest.getUsername());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return fetchedMember;
+     }
     
 }
