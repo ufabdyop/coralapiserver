@@ -1,7 +1,6 @@
 package edu.utah.nanofab.coralapiserver;
 
 import edu.utah.nanofab.coralapiserver.resources.CoralApiMemberResource;
-import edu.utah.nanofab.coralapiserver.resources.CoralApiResource;
 import edu.utah.nanofab.coralapiserver.auth.CoralCredentials;
 import edu.utah.nanofab.coralapiserver.auth.SimpleAuthenticator;
 import edu.utah.nanofab.coralapiserver.auth.User;
@@ -25,15 +24,12 @@ public class CoralApiService extends Service<CoralApiConfiguration> {
     @Override
     public void run(CoralApiConfiguration configuration,
                     Environment environment) {
-		final String template = configuration.getTemplate();
-		final String defaultName = configuration.getDefaultName();
+		final String coralIor = configuration.getCoralIor();
+		final String coralConfigUrl = configuration.getCoralConfigUrl();
 		final TokenConfiguration[] tokens = configuration.getAuthTokensConfiguration().getTokens();
 		environment.addProvider(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens), "REALM STRING"));
-		
-		//new BasicAuthProvider<User>(new SimpleAuthenticator(), "SUPER SECRET STUFF")
-		environment.addResource(new CoralApiResource(template, defaultName, tokens));
-		environment.addResource(new CoralApiMemberResource(template, defaultName));
-		environment.addHealthCheck(new TemplateHealthCheck(template));
+		environment.addResource(new CoralApiMemberResource(coralIor, coralConfigUrl));
+		//environment.addHealthCheck(new TemplateHealthCheck(template));
     }
 
 }

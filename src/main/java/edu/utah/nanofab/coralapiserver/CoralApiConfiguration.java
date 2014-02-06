@@ -7,18 +7,19 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class CoralApiConfiguration extends Configuration {
     @NotEmpty
     @JsonProperty
-    private String template;
+    private String coralIor = "http://vagrant-coral-dev/IOR/";
 
     @NotEmpty
     @JsonProperty
-    private String defaultName = "Stranger";
+    private String coralConfigUrl = "http://vagrant-coral-dev/coral/lib/config.jar";
 
-    public String getTemplate() {
-        return template;
+
+    public String getCoralConfigUrl() {
+        return coralConfigUrl;
     }
 
-    public String getDefaultName() {
-        return defaultName;
+    public String getCoralIor() {
+        return coralIor;
     }
     
     @JsonProperty

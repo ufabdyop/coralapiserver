@@ -1,5 +1,7 @@
-        template: Hello, %s!
-        defaultName: Stranger
+        coralIor: "http://vagrant-coral-dev/IOR/"
+
+        coralConfigUrl: "http://vagrant-coral-dev/coral/lib/config.jar"
+
         http:
                 port: 8443
                 connectorType: nonblocking+ssl

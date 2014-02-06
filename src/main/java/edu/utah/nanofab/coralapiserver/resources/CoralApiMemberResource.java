@@ -4,7 +4,6 @@ import edu.nanofab.coralapi.CoralServices;
 import edu.nanofab.coralapi.resource.Member;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.AuthRequest;
-import edu.utah.nanofab.coralapiserver.core.Saying;
 
 import org.slf4j.Logger;
 
@@ -28,14 +27,14 @@ import java.util.concurrent.atomic.AtomicLong;
 @Path("/member")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiMemberResource {
-    private final String template;
-    private final String defaultName;
+    private final String coralIor;
+    private final String coralConfigUrl;
     private final AtomicLong counter;
     public static final Logger logger = LoggerFactory.getLogger(CoralApiMemberResource.class);
 
-    public CoralApiMemberResource(String template, String defaultName) {
-        this.template = template;
-        this.defaultName = defaultName;
+    public CoralApiMemberResource(String coralIor, String coralConfigUrl) {
+        this.coralIor = coralIor;
+        this.coralConfigUrl = coralConfigUrl;
         this.counter = new AtomicLong();
     }
 
@@ -47,11 +46,12 @@ public class CoralApiMemberResource {
 			logger.debug("Will look up member in coral");
 	    	if (name.isPresent()) {
 	    		logger.debug("name is present and is " + name.get());
-	    		CoralServices api = new CoralServices("coral", "http://vagrant-coral-dev/IOR/", "http://vagrant-coral-dev/coral/lib/config.jar");
+	    		CoralServices api = new CoralServices(user.getUsername(), 
+	    				this.coralIor, this.coralConfigUrl);
 
 	    		logger.debug("coral api instantiated");
 				fetchedMember = api.getMember(name.get());
-	    		logger.debug("member fetched");
+	    		logger.debug("member fetched" + (fetchedMember == null ? ", but is null" : ": " + fetchedMember.getName() ) );
 	    	}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -59,8 +59,4 @@ public class CoralApiMemberResource {
         return fetchedMember;
     }
     
-    @POST
-    public Saying authRequest(@Valid AuthRequest authRequest) {
-        return new Saying(5, "I got : " + authRequest.getUsername());
-    }
 }
