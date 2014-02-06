@@ -3,6 +3,7 @@
 *   Goals: 
    *  make post request to https://server/coralapi/auth with {user: "username", pass: "password"}
       if valid, receive token
+        * working, but the URL is wrong.  Need to extract class from MemberResource to AuthResource or something like that
    *  permanent tokens can be configured in a config file such that each token is permanently
       associated with a certain username
 
@@ -16,5 +17,3 @@
   }
 * Add more member resources PUT, POST, DELETE
 * Add project resources
-* member resource method authRequest should return a token, not a member
-* can authRequest be available vi /member/auth, instead of /member (method of POST)?
