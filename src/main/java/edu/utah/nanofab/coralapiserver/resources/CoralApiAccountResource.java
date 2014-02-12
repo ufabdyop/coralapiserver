@@ -65,4 +65,23 @@ public class CoralApiAccountResource {
 		}
         return fetchedAccount;
     }
+    
+    @POST
+    @Timed
+    public Account create(@Valid Account account, @Auth User user) {
+    	Account fetchedAccount = null;
+    	try {
+			logger.debug("Adding new account in coral: " + account.getName());
+    		CoralServices api = new CoralServices(user.getUsername(), 
+    				this.coralIor, this.coralConfigUrl);
+
+    		logger.debug("coral api instantiated");
+    		api.CreateNewAccount(account);
+    		fetchedAccount = api.getAccount(account.getName());
+    		logger.debug("account fetched" + (fetchedAccount == null ? ", but is null" : ": " + fetchedAccount.getName() ) );
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return fetchedAccount;
+    }
 }
