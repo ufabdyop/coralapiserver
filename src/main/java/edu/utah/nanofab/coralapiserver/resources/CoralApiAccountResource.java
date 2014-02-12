@@ -11,15 +11,18 @@ import edu.utah.nanofab.coralapiserver.core.AuthRequest;
 import org.slf4j.Logger;
 
 import com.google.common.base.Optional;
+import com.sun.jersey.core.spi.factory.ResponseBuilderImpl;
 import com.yammer.dropwizard.auth.Auth;
 import com.yammer.metrics.annotation.Timed;
 
 import javax.validation.Valid;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -81,6 +84,31 @@ public class CoralApiAccountResource {
     		logger.debug("account fetched" + (fetchedAccount == null ? ", but is null" : ": " + fetchedAccount.getName() ) );
 		} catch (Exception e) {
 			e.printStackTrace();
+		    Response resp = new ResponseBuilderImpl().status(500)
+                    .entity("Error while trying to create account with name \"" + account.getName() + "\": "  + e.getMessage()).build();
+			throw new WebApplicationException(resp);
+		}
+		return fetchedAccount;
+    }
+    
+    @PUT
+    @Timed
+    public Account update(@Valid Account account, @Auth User user) {
+    	Account fetchedAccount = null;
+    	try {
+			logger.debug("Adding new account in coral: " + account.getName());
+    		CoralServices api = new CoralServices(user.getUsername(), 
+    				this.coralIor, this.coralConfigUrl);
+
+    		logger.debug("coral api instantiated");
+    		api.updateAccount(account);
+    		fetchedAccount = api.getAccount(account.getName());
+    		logger.debug("account fetched" + (fetchedAccount == null ? ", but is null" : ": " + fetchedAccount.getName() ) );
+    	} catch (Exception e) {
+			e.printStackTrace();
+		    Response resp = new ResponseBuilderImpl().status(500)
+                    .entity("Error while trying to update account with name \"" + account.getName() + "\": "  + e.getMessage()).build();
+			throw new WebApplicationException(resp);
 		}
 		return fetchedAccount;
     }

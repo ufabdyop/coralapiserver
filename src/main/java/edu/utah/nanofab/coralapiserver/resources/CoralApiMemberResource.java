@@ -1,6 +1,7 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
 import edu.nanofab.coralapi.CoralServices;
+import edu.nanofab.coralapi.resource.Account;
 import edu.nanofab.coralapi.resource.Member;
 import edu.nanofab.coralapi.resource.Project;
 import edu.utah.nanofab.coralapiserver.TokenConfiguration;
@@ -18,6 +19,7 @@ import com.yammer.metrics.annotation.Timed;
 import javax.validation.Valid;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -88,5 +90,28 @@ public class CoralApiMemberResource {
 		}
 		return fetchedMember;
     }
+
     
+    @PUT
+    @Timed
+    public Member update(@Valid Member member, @Auth User user) {
+    	Member fetchedMember = null;
+    	try {
+			logger.debug("Adding new member in coral: " + member.getName());
+    		CoralServices api = new CoralServices(user.getUsername(), 
+    				this.coralIor, this.coralConfigUrl);
+
+    		logger.debug("coral api instantiated");
+    		api.updateMember(member);
+    		fetchedMember = api.getMember(member.getName());
+    		logger.debug("member fetched" + (fetchedMember == null ? ", but is null" : ": " + fetchedMember.getName() ) );
+    	} catch (Exception e) {
+			e.printStackTrace();
+		    Response resp = new ResponseBuilderImpl().status(500)
+                    .entity("Error while trying to update member with name \"" + member.getName() + "\": "  + e.getMessage()).build();
+			throw new WebApplicationException(resp);
+		}
+		return fetchedMember;
+    }
+
 }

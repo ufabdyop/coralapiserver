@@ -19,6 +19,7 @@ import com.yammer.metrics.annotation.Timed;
 import javax.validation.Valid;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -86,6 +87,29 @@ public class CoralApiProjectResource {
 			e.printStackTrace();
 		    Response resp = new ResponseBuilderImpl().status(500)
                     .entity("Error while trying to create project with name \"" + project.getName() + "\": "  + e.getMessage()).build();
+			throw new WebApplicationException(resp);
+		}
+		return fetchedProject;
+    }
+
+    
+    @PUT
+    @Timed
+    public Project update(@Valid Project project, @Auth User user) {
+    	Project fetchedProject = null;
+    	try {
+			logger.debug("Adding new project in coral: " + project.getName());
+    		CoralServices api = new CoralServices(user.getUsername(), 
+    				this.coralIor, this.coralConfigUrl);
+
+    		logger.debug("coral api instantiated");
+    		api.updateProject(project);
+    		fetchedProject = api.getProject(project.getName());
+    		logger.debug("project fetched" + (fetchedProject == null ? ", but is null" : ": " + fetchedProject.getName() ) );
+    	} catch (Exception e) {
+			e.printStackTrace();
+		    Response resp = new ResponseBuilderImpl().status(500)
+                    .entity("Error while trying to update project with name \"" + project.getName() + "\": "  + e.getMessage()).build();
 			throw new WebApplicationException(resp);
 		}
 		return fetchedProject;
