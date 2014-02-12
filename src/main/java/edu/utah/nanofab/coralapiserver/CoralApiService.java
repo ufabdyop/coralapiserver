@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiAccountResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiAuthTokenResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiMemberResource;
+import edu.utah.nanofab.coralapiserver.resources.CoralApiProjectMembershipResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiProjectResource;
 import edu.utah.nanofab.coralapiserver.auth.CoralCredentials;
 import edu.utah.nanofab.coralapiserver.auth.SimpleAuthenticator;
@@ -39,6 +40,7 @@ public class CoralApiService extends Service<CoralApiConfiguration> {
 		environment.addResource(new CoralApiMemberResource(coralIor, coralConfigUrl));
 		environment.addResource(new CoralApiProjectResource(coralIor, coralConfigUrl));
 		environment.addResource(new CoralApiAccountResource(coralIor, coralConfigUrl));
+		environment.addResource(new CoralApiProjectMembershipResource(coralIor, coralConfigUrl));
 		//environment.addHealthCheck(new TemplateHealthCheck(template));
     }
 
