@@ -63,6 +63,7 @@ public class CoralApiProjectResource {
 	    		logger.debug("coral api instantiated");
 				fetchedProject = api.getProject(name.get());
 	    		logger.debug("project fetched" + (fetchedProject == null ? ", but is null" : ": " + fetchedProject.getName() ) );
+	    		api.close();
 	    	}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,11 +79,11 @@ public class CoralApiProjectResource {
 			logger.debug("Adding new project in coral: " + project.getName());
     		CoralServices api = new CoralServices(user.getUsername(), 
     				this.coralIor, this.coralConfigUrl);
-
     		logger.debug("coral api instantiated");
     		api.CreateNewProject(project);
     		fetchedProject = api.getProject(project.getName());
     		logger.debug("project fetched" + (fetchedProject == null ? ", but is null" : ": " + fetchedProject.getName() ) );
+			api.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		    Response resp = new ResponseBuilderImpl().status(500)
@@ -106,6 +107,7 @@ public class CoralApiProjectResource {
     		api.updateProject(project);
     		fetchedProject = api.getProject(project.getName());
     		logger.debug("project fetched" + (fetchedProject == null ? ", but is null" : ": " + fetchedProject.getName() ) );
+			api.close();
     	} catch (Exception e) {
 			e.printStackTrace();
 		    Response resp = new ResponseBuilderImpl().status(500)

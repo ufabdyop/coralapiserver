@@ -62,6 +62,7 @@ public class CoralApiAccountResource {
 	    		logger.debug("coral api instantiated");
 				fetchedAccount = api.getAccount(name.get());
 	    		logger.debug("account fetched" + (fetchedAccount == null ? ", but is null" : ": " + fetchedAccount.getName() ) );
+				api.close();
 	    	}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,6 +83,7 @@ public class CoralApiAccountResource {
     		api.CreateNewAccount(account);
     		fetchedAccount = api.getAccount(account.getName());
     		logger.debug("account fetched" + (fetchedAccount == null ? ", but is null" : ": " + fetchedAccount.getName() ) );
+			api.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		    Response resp = new ResponseBuilderImpl().status(500)
@@ -104,6 +106,7 @@ public class CoralApiAccountResource {
     		api.updateAccount(account);
     		fetchedAccount = api.getAccount(account.getName());
     		logger.debug("account fetched" + (fetchedAccount == null ? ", but is null" : ": " + fetchedAccount.getName() ) );
+			api.close();
     	} catch (Exception e) {
 			e.printStackTrace();
 		    Response resp = new ResponseBuilderImpl().status(500)

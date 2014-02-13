@@ -1,21 +1,23 @@
-        coralIor: "http://vagrant-coral-dev/IOR/"
+coralIor: "http://vagrant-coral-dev/IOR/"
 
-        coralConfigUrl: "http://vagrant-coral-dev/coral/lib/config.jar"
+coralConfigUrl: "http://vagrant-coral-dev/coral/lib/config.jar"
 
-        http:
-                port: 8443
-                connectorType: nonblocking+ssl
+http:
+  port: 8443
+  connectorType: nonblocking+ssl
 
-                ssl:
-                        keyStore: ./newstore
-                        keyStorePassword: 123456
+  ssl:
+    keyStore: ./newstore
+    keyStorePassword: 123456
 
-        logging:
-                level:  DEBUG
+logging:
+  level:  ERROR
+  loggers:
+    "edu.utah.nanofab.coralapiserver": DEBUG
 
-        authToken:
-                tokens:
-                        - token: "KIZ5DAYYcUgPZUh9MWXaQrsZB3RwuK5wAmcc8kyibpQxsg29Jn"
-                          user : "coralbot"
-                        - token: "0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9"
-                          user : "coral"
+authToken:
+  tokens:
+    - token: "KIZ5DAYYcUgPZUh9MWXaQrsZB3RwuK5wAmcc8kyibpQxsg29Jn"
+      user : "coralbot"
+    - token: "0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9"
+      user : "coral"

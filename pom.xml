@@ -21,7 +21,7 @@
 	    <dependency>
 	     <groupId>edu.nanofab</groupId>
 	     <artifactId>CoralAPI</artifactId>
-	     <version>0.0.13</version>
+	     <version>0.0.17</version>
 	    </dependency>
     </dependencies>
     

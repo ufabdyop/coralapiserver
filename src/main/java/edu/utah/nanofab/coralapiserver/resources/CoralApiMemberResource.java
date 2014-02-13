@@ -62,6 +62,7 @@ public class CoralApiMemberResource {
 	    		logger.debug("coral api instantiated");
 				fetchedMember = api.getMember(name.get());
 	    		logger.debug("member fetched" + (fetchedMember == null ? ", but is null" : ": " + fetchedMember.getName() ) );
+				api.close();
 	    	}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,6 +83,7 @@ public class CoralApiMemberResource {
     		api.CreateNewMember(member);
     		fetchedMember = api.getMember(member.getName());
     		logger.debug("member fetched" + (fetchedMember == null ? ", but is null" : ": " + fetchedMember.getName() ) );
+			api.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		    Response resp = new ResponseBuilderImpl().status(500)
@@ -105,6 +107,7 @@ public class CoralApiMemberResource {
     		api.updateMember(member);
     		fetchedMember = api.getMember(member.getName());
     		logger.debug("member fetched" + (fetchedMember == null ? ", but is null" : ": " + fetchedMember.getName() ) );
+			api.close();
     	} catch (Exception e) {
 			e.printStackTrace();
 		    Response resp = new ResponseBuilderImpl().status(500)

@@ -44,7 +44,9 @@ public class CoralApiProjectMembershipResource {
 		try {
 			CoralServices api = new CoralServices(user.getUsername(), 
 					this.coralIor, this.coralConfigUrl);
-			return getProjectMembership(project.get(), api);
+			ProjectMembership memberships = getProjectMembership(project.get(), api);
+			api.close();
+			return memberships;
 		} catch (Exception e) {
 			e.printStackTrace();
 		    Response resp = new ResponseBuilderImpl().status(500)
@@ -60,7 +62,9 @@ public class CoralApiProjectMembershipResource {
 			CoralServices api = new CoralServices(user.getUsername(), 
 				this.coralIor, this.coralConfigUrl);
 			api.AddProjectMembers(request.getProject(), request.getMembers());
-			return this.getProjectMembership(request.getProject(), api);
+			ProjectMembership memberships = this.getProjectMembership(request.getProject(), api);
+			api.close();
+			return memberships;
 		} catch (Exception e) {
 			e.printStackTrace();
 		    Response resp = new ResponseBuilderImpl().status(500)
