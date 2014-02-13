@@ -8,6 +8,10 @@ import edu.utah.nanofab.coralapiserver.auth.CoralCredentials;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.AuthRequest;
 
+import org.opencoral.idl.AccountNotFoundSignal;
+import org.opencoral.idl.InvalidAccountSignal;
+import org.opencoral.idl.InvalidTicketSignal;
+import org.opencoral.idl.NotAuthorizedSignal;
 import org.slf4j.Logger;
 
 import com.google.common.base.Optional;
@@ -40,6 +44,8 @@ public class CoralApiAccountResource {
     private final String coralIor;
     private final String coralConfigUrl;
     private final AtomicLong counter;
+	private CoralServices api;
+	private String error;
     public static final Logger logger = LoggerFactory.getLogger(CoralApiAccountResource.class);
 
     public CoralApiAccountResource(String coralIor, String coralConfigUrl ) {
@@ -50,69 +56,79 @@ public class CoralApiAccountResource {
 
     @GET
     @Timed
-    public Account account(@QueryParam("name") Optional<String> name, @Auth User user) {
-    	Account fetchedAccount = null;
-		try {
-			logger.debug("Will look up account in coral");
-	    	if (name.isPresent()) {
-	    		logger.debug("name is present and is " + name.get());
-	    		CoralServices api = new CoralServices(user.getUsername(), 
-	    				this.coralIor, this.coralConfigUrl);
-
-	    		logger.debug("coral api instantiated");
-				fetchedAccount = api.getAccount(name.get());
-	    		logger.debug("account fetched" + (fetchedAccount == null ? ", but is null" : ": " + fetchedAccount.getName() ) );
-				api.close();
-	    	}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        return fetchedAccount;
+    public Account getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
+		this.setUp(user.getUsername());
+    	Account fetchedAccount = this.get(name.get());
+		this.tearDown();
+		this.reportErrorIfEncountered("Error while trying to fetch account with name \"" + name.get());
+		return fetchedAccount;
     }
     
-    @POST
+	@POST
     @Timed
-    public Account create(@Valid Account account, @Auth User user) {
-    	Account fetchedAccount = null;
-    	try {
-			logger.debug("Adding new account in coral: " + account.getName());
-    		CoralServices api = new CoralServices(user.getUsername(), 
-    				this.coralIor, this.coralConfigUrl);
-
-    		logger.debug("coral api instantiated");
-    		api.CreateNewAccount(account);
-    		fetchedAccount = api.getAccount(account.getName());
-    		logger.debug("account fetched" + (fetchedAccount == null ? ", but is null" : ": " + fetchedAccount.getName() ) );
-			api.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		    Response resp = new ResponseBuilderImpl().status(500)
-                    .entity("Error while trying to create account with name \"" + account.getName() + "\": "  + e.getMessage()).build();
-			throw new WebApplicationException(resp);
-		}
+    public Account createRequest(@Valid Account account, @Auth User user) {
+		this.setUp(user.getUsername());
+    	Account fetchedAccount = this.create(account);
+		this.tearDown();
+		this.reportErrorIfEncountered("Error while trying to create account with name \"" + account.getName());
 		return fetchedAccount;
     }
     
     @PUT
     @Timed
-    public Account update(@Valid Account account, @Auth User user) {
-    	Account fetchedAccount = null;
-    	try {
-			logger.debug("Adding new account in coral: " + account.getName());
-    		CoralServices api = new CoralServices(user.getUsername(), 
-    				this.coralIor, this.coralConfigUrl);
-
-    		logger.debug("coral api instantiated");
-    		api.updateAccount(account);
-    		fetchedAccount = api.getAccount(account.getName());
-    		logger.debug("account fetched" + (fetchedAccount == null ? ", but is null" : ": " + fetchedAccount.getName() ) );
-			api.close();
-    	} catch (Exception e) {
-			e.printStackTrace();
-		    Response resp = new ResponseBuilderImpl().status(500)
-                    .entity("Error while trying to update account with name \"" + account.getName() + "\": "  + e.getMessage()).build();
-			throw new WebApplicationException(resp);
-		}
+    public Account updateRequest(@Valid Account account, @Auth User user) {
+		this.setUp(user.getUsername());
+    	Account fetchedAccount = this.update(account);
+		this.tearDown();
+		this.reportErrorIfEncountered("Error while trying to update account with name \"" + account.getName());
 		return fetchedAccount;
     }
+    
+    private Account get(String accountName) {
+		try {
+			return api.getAccount(accountName);
+		} catch (Exception e) {
+			this.error = e.getMessage();
+			return null;
+		}
+	}
+
+	private Account create(Account account) {
+		try {
+			api.CreateNewAccount(account);
+			return api.getAccount(account.getName());
+		} catch (Exception e) {
+			this.error = e.getMessage();
+			return null;
+		}
+	}
+    
+	private Account update(Account account) {
+		try {
+			api.updateAccount(account);
+			return api.getAccount(account.getName());
+		} catch (Exception e) {
+			this.error = e.getMessage();
+			return null;
+		}
+	}
+
+	public void setUp(String username) {
+		this.error = null;
+    	this.api = new CoralServices(username,
+				this.coralIor, this.coralConfigUrl);
+    }
+    
+    public void tearDown() {
+    	this.api.close();
+    	this.api = null;
+    }
+
+    private void reportErrorIfEncountered(String message) {
+		if (this.error != null) {
+		    Response resp = new ResponseBuilderImpl().status(500)
+                    .entity(message + "\": "  + this.error).build();
+			throw new WebApplicationException(resp);
+		}
+	}
 }
