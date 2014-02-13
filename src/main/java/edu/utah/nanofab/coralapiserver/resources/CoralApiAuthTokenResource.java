@@ -38,6 +38,7 @@ public class CoralApiAuthTokenResource {
 			CoralServices api = new CoralServices(authRequest.getUsername(), 
 					this.coralIor, this.coralConfigUrl);
 			boolean success = api.authenticate(authRequest.getUsername(), authRequest.getPassword());
+			api.close();
 			if (success) {
 				sessionId = randomSessionId();
 				this.sessionTokens.put(sessionId, authRequest.getUsername());
