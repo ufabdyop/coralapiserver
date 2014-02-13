@@ -42,34 +42,30 @@ http://cosmo-opticon.net/blog/2013/1/23/session-based-security-in-dropwizard (se
 Sample Commands Via Curl:
 ---
 
-Here is an excerpt of my history of some commands to use:
+Here are the supported commands so far (as curl commands):
 
-  519  curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member?name=coral
-  520  curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/?name=coral
-  521  curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project?name=coral
-  522  curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project?name=Bootstrap%20project
-  525  curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project?name=Bootstrap%20project
-  526  curl -X POST -H "Content-Type: application/json" -d '{"name":"new project"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project
-  527  curl -X POST -H "Content-Type: application/json" -d '{"name":"new project"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project -D -
-  528  curl -X POST -H "Content-Type: application/json" -d '{"name":"new project", "account":"new account"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project -D -
-  529  curl -X POST -H "Content-Type: application/json" -d '{"name":"newmember", "account":"new account"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
-  530  curl -X POST -H "Content-Type: application/json" -d '{"name":"newmember", "project":"newproject"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
-  531  curl -X POST -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new project"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
-  532  curl -X POST -H "Content-Type: application/json" -d '{"name":"newmer2", "project":"new project"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
-  533  curl -X POST -H "Content-Type: application/json" -d '{"name":"newmer2", "project":"new project", "firstName": "lemon"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
-  534  curl -X PUT -H "Content-Type: application/json" -d '{"name":"newmer2", "project":"new project", "firstName": "lemon"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
-  535  curl -X POST -H "Content-Type: application/json" -d '{"name":"new acct"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/account -D -
-  536  curl -X PUT -H "Content-Type: application/json" -d '{"name":"new acct"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/account -D -
-  539  curl -X PUT -H "Content-Type: application/json" -d '{"name":"new acct"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/account -D -
-  540  curl -X PUT -H "Content-Type: application/json" -d '{"name":"new acct", "description":"test"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/account -D -
-  541  curl -X PUT -H "Content-Type: application/json" -d '{"name":"newmer2", "project":"new project", "firstName": "lemon"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
-  542  curl -X PUT -H "Content-Type: application/json" -d '{"name":"newmer2", "project":"new project", "firstName": "lefsn"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
-  543  curl -X POST -H "Content-Type: application/json" -d '{"name":"new project", "account":"new account"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project -D -
-  544  curl -X GET -H "Content-Type: application/json" -d '{"name":"new project", "account":"new account"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project -D -
-  545  curl -X GET -H "Content-Type: application/json" -d '{"name":"new project", "account":"new account"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project?name=new%20project -D -
-  546  curl -X PUT -H "Content-Type: application/json" -d '{"name":"new project", "description":"some", "account":"new account"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project -D -
-  547  curl -X GET -H "Content-Type: application/json" -d '{"name":"new project", "account":"new account"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project?name=new%20project -D -
-  549  curl -X PUT -H "Content-Type: application/json" -d '{"name":"new project", "description":"some", "account":"new account"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project-membership -D -
-  550  curl -X PUT -H "Content-Type: application/json" -d '{"project":"new project", "members":["coral"]}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project-membership -D -
-  552  curl -X PUT -H "Content-Type: application/json" -d '{"project":"new project", "members":["coral"]}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project-membership -D -
-  553  curl -X GET -H "Content-Type: application/json" -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project-membership?project=new%20project -D -
+GET commands:
+
+    curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/account?name=Bootstrap%20account
+    curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project?name=Bootstrap%20project
+    curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member?name=coral
+
+POST commands (creating new entities):
+
+    curl -X POST -H "Content-Type: application/json" -d '{"name":"new acct"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/account -D -
+    curl -X POST -H "Content-Type: application/json" -d '{"name":"new proj", "account":"new acct"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project -D -
+    curl -X POST -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new proj"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
+
+PUT commands (updating entities--should be idempotent):
+
+    curl -X PUT -H "Content-Type: application/json" -d '{"name":"new acct", "description":"test"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/account -D -
+    curl -X PUT -H "Content-Type: application/json" -d '{"name":"new proj", "account": "new acct", "description":"some description"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project -D -
+    curl -X PUT -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new proj", "firstName": "amy"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
+
+Add member(s) to a project:
+
+    curl -X PUT -H "Content-Type: application/json" -d '{"project":"new proj", "members":["coral"]}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project-membership -D -
+
+List member(s) on a project:
+
+    curl -H "Content-Type: application/json" -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project-membership?project=new%20project -D -

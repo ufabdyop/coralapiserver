@@ -34,9 +34,9 @@ public class CoralApiAuthTokenResource {
     	CoralCredentials sessionToken = new CoralCredentials();
     	sessionToken.setUsername("Auth Failed");
     	String sessionId = "";
+		CoralServices api = new CoralServices(authRequest.getUsername(), 
+				this.coralIor, this.coralConfigUrl);
 		try {
-			CoralServices api = new CoralServices(authRequest.getUsername(), 
-					this.coralIor, this.coralConfigUrl);
 			boolean success = api.authenticate(authRequest.getUsername(), authRequest.getPassword());
 			api.close();
 			if (success) {
@@ -48,6 +48,7 @@ public class CoralApiAuthTokenResource {
 				return Response.status(Response.Status.OK).entity(sessionToken).build(); 
 			}
 		} catch (Exception e) {
+			api.close();
 			e.printStackTrace();
 		}
 		return Response.status(Response.Status.UNAUTHORIZED).entity(sessionToken).build(); 

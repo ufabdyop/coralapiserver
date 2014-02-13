@@ -6,25 +6,16 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
-import org.opencoral.idl.InvalidMemberSignal;
-import org.opencoral.idl.InvalidProjectSignal;
-import org.opencoral.idl.InvalidTicketSignal;
-import org.opencoral.idl.NotAuthorizedSignal;
 
 import com.google.common.base.Optional;
-import com.sun.jersey.core.spi.factory.ResponseBuilderImpl;
 import com.yammer.dropwizard.auth.Auth;
 import com.yammer.metrics.annotation.Timed;
 
-import edu.nanofab.coralapi.CoralServices;
-import edu.nanofab.coralapi.collections.Members;
-import edu.nanofab.coralapi.resource.Account;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.ProjectMembership;
+import edu.utah.nanofab.coralapiserver.resources.operations.ProjectMembershipOperationGet;
+import edu.utah.nanofab.coralapiserver.resources.operations.ProjectMembershipOperationPut;
 
 @Path("/project-membership")
 @Produces(MediaType.APPLICATION_JSON)
@@ -41,46 +32,21 @@ public class CoralApiProjectMembershipResource {
 	@GET
     @Timed
     public ProjectMembership get(@QueryParam("project") Optional<String> project, @Auth User user) {
-		try {
-			CoralServices api = new CoralServices(user.getUsername(), 
-					this.coralIor, this.coralConfigUrl);
-			ProjectMembership memberships = getProjectMembership(project.get(), api);
-			api.close();
-			return memberships;
-		} catch (Exception e) {
-			e.printStackTrace();
-		    Response resp = new ResponseBuilderImpl().status(500)
-		    		.entity("Error while trying to add members to project: " + e.getMessage()).build();
-			throw new WebApplicationException(resp);
-		}
+    	ProjectMembershipOperationGet operation = new ProjectMembershipOperationGet();
+    	operation.init(this.coralIor, this.coralConfigUrl, project, Optional.<Object> absent(), user);
+    	return (ProjectMembership) (operation.perform());
     }
 	
 	@PUT
     @Timed
     public ProjectMembership update(@Valid ProjectMembership request, @Auth User user) {
-		try {
-			CoralServices api = new CoralServices(user.getUsername(), 
-				this.coralIor, this.coralConfigUrl);
-			api.AddProjectMembers(request.getProject(), request.getMembers());
-			ProjectMembership memberships = this.getProjectMembership(request.getProject(), api);
-			api.close();
-			return memberships;
-		} catch (Exception e) {
-			e.printStackTrace();
-		    Response resp = new ResponseBuilderImpl().status(500)
-		    		.entity("Error while trying to add members to project: " + e.getMessage()).build();
-			throw new WebApplicationException(resp);
-		}
+    	ProjectMembershipOperationPut operation = new ProjectMembershipOperationPut();
+    	operation.init(this.coralIor, 
+    			this.coralConfigUrl,  
+    			Optional.<String> absent(), 
+    			Optional.<Object> of(request), 
+    			user);
+    	return (ProjectMembership) (operation.perform());
     }
 
-	private ProjectMembership getProjectMembership(String project,
-			CoralServices api) {
-		Members members = 
-				api.GetProjectMembers(project);
-		String[] memberNames = members.getNames();
-		ProjectMembership pm = new ProjectMembership();
-		pm.setProject(project);
-		pm.setMembers(memberNames);
-		return pm;
-	}
 }

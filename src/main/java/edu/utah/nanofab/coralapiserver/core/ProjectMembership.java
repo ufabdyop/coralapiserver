@@ -1,8 +1,16 @@
 package edu.utah.nanofab.coralapiserver.core;
 
+import edu.nanofab.coralapi.collections.Members;
+
 public class ProjectMembership {
 	private String project;
 	private String[] members;
+	public ProjectMembership() {
+	}
+	public ProjectMembership(String project, Members members) {
+		this.project = project;
+		this.members = members.getNames();
+	}
 	public String getProject() {
 		return project;
 	}
