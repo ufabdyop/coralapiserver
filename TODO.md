@@ -7,7 +7,7 @@
    *  permanent tokens can be configured in a config file such that each token is permanently
       associated with a certain username
 
-* Wrap all responses in some meta data resource, so exceptions can get parse out, eg:
+* Wrap all responses in some meta data resource, so exceptions can get parsed out, eg:
   {
     response_code: 200, //this should also be in the response header
     errors: []
@@ -17,3 +17,4 @@
   }
 * Add more member resources PUT, POST, DELETE
 * Add project resources
+* Add lab as a parameter
