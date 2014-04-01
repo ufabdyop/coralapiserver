@@ -147,6 +147,12 @@ token:
     curl -k -X POST -H "Content-Type: application/json" -d '{"username":"ryant","password":"mypassword"}' https://localhost:8443/authenticate
     {"username":"auth-token","password":"cosmouckrklkkcu579hdsbr0l8"}
 
+You may also request a token by authenticating using http basic auth and making a get request to the same path.
+Make sure you pay attention to the status code after completion in case auth fails. Example:
+
+    curl -k -u coral:123456 https://localhost:8443/authenticate 
+    {"username":"auth-token","password":"sibjcja4ru9u1kbq73ohhtd9pn"}
+
 The server will response with a json object with a username of auth-token and the token as the password. To use the token to 
 communicate with the server, "auth-token" should be the username and the token should be the password.  Here is an example:
 
