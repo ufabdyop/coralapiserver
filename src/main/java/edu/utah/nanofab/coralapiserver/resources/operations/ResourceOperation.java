@@ -8,8 +8,8 @@ import com.google.common.base.Optional;
 import com.sun.jersey.core.spi.factory.ResponseBuilderImpl;
 import com.yammer.dropwizard.auth.Auth;
 
-import edu.nanofab.utah.coralapi.CoralAPI;
-import edu.nanofab.utah.coralapi.resource.Account;
+import edu.utah.nanofab.coralapi.CoralAPI;
+import edu.utah.nanofab.coralapi.resource.Account;
 import edu.utah.nanofab.coralapiserver.auth.User;
 
 public abstract class ResourceOperation {

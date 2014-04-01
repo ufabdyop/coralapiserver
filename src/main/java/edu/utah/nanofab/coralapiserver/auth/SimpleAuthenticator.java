@@ -10,7 +10,7 @@ import com.yammer.dropwizard.auth.AuthenticationException;
 import com.yammer.dropwizard.auth.Authenticator;
 import com.yammer.dropwizard.auth.basic.BasicCredentials;
 
-import edu.nanofab.utah.coralapi.CoralAPI;
+import edu.utah.nanofab.coralapi.CoralAPI;
 import edu.utah.nanofab.coralapiserver.TokenConfiguration;
 
 

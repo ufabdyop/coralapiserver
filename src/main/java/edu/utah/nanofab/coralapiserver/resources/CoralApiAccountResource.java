@@ -1,6 +1,6 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
-import edu.nanofab.utah.coralapi.resource.Account;
+import edu.utah.nanofab.coralapi.resource.Account;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.resources.operations.AccountOperationGet;
 import edu.utah.nanofab.coralapiserver.resources.operations.AccountOperationPost;

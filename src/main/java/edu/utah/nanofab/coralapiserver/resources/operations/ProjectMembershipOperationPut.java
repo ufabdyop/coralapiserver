@@ -1,6 +1,6 @@
 package edu.utah.nanofab.coralapiserver.resources.operations;
 
-import edu.nanofab.utah.coralapi.collections.Members;
+import edu.utah.nanofab.coralapi.collections.Members;
 import edu.utah.nanofab.coralapiserver.core.ProjectMembership;
 
 public class ProjectMembershipOperationPut extends ResourceOperation  {
