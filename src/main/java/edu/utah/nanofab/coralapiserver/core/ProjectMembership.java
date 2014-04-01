@@ -1,6 +1,6 @@
 package edu.utah.nanofab.coralapiserver.core;
 
-import edu.nanofab.coralapi.collections.Members;
+import edu.nanofab.utah.coralapi.collections.Members;
 
 public class ProjectMembership {
 	private String project;

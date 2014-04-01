@@ -1,13 +1,13 @@
 package edu.utah.nanofab.coralapiserver.resources.operations;
 
-import edu.nanofab.coralapi.resource.Project;
+import edu.nanofab.utah.coralapi.resource.Project;
 
 public class ProjectOperationPost extends ResourceOperation  {
 	@Override
 	public void performOperationImpl() throws Exception {
 		Project project = (Project)(this.postedObject.get());
 		name = project.getName();
-		this.api.CreateNewProject(project);
+		this.api.createNewProject(project);
 		this.setReturnValue(this.api.getProject(name));
 	}
 

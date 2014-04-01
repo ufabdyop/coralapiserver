@@ -8,14 +8,14 @@ import com.google.common.base.Optional;
 import com.sun.jersey.core.spi.factory.ResponseBuilderImpl;
 import com.yammer.dropwizard.auth.Auth;
 
-import edu.nanofab.coralapi.CoralServices;
-import edu.nanofab.coralapi.resource.Account;
+import edu.nanofab.utah.coralapi.CoralAPI;
+import edu.nanofab.utah.coralapi.resource.Account;
 import edu.utah.nanofab.coralapiserver.auth.User;
 
 public abstract class ResourceOperation {
 	public String coralIor;
 	public String coralConfigUrl;
-	public CoralServices api;
+	public CoralAPI api;
 	public String error = null;
 	private User user;
 	private Object returnValue = null;
@@ -66,7 +66,7 @@ public abstract class ResourceOperation {
 	}
 
 	private void setUp() {
-    	this.api = new CoralServices(this.user.getUsername(),
+    	this.api = new CoralAPI(this.user.getUsername(),
 				this.coralIor, this.coralConfigUrl);
 	}
 	

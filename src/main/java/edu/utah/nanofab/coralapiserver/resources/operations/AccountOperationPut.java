@@ -1,6 +1,6 @@
 package edu.utah.nanofab.coralapiserver.resources.operations;
 
-import edu.nanofab.coralapi.resource.Account;
+import edu.nanofab.utah.coralapi.resource.Account;
 
 public class AccountOperationPut extends ResourceOperation  {
 	@Override

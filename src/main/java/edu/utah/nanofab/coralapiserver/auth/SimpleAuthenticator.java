@@ -10,7 +10,7 @@ import com.yammer.dropwizard.auth.AuthenticationException;
 import com.yammer.dropwizard.auth.Authenticator;
 import com.yammer.dropwizard.auth.basic.BasicCredentials;
 
-import edu.nanofab.coralapi.CoralServices;
+import edu.nanofab.utah.coralapi.CoralAPI;
 import edu.utah.nanofab.coralapiserver.TokenConfiguration;
 
 
@@ -41,7 +41,7 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
     }
 	
 	public Optional<User> authenticateByUsernamePassword(String user, String pass) {
-		CoralServices api = new CoralServices(user, this.coralIor, this.coralConfigUrl);
+		CoralAPI api = new CoralAPI(user, this.coralIor, this.coralConfigUrl);
 		try {
 			boolean success = api.authenticate(user, pass);
 			api.close();

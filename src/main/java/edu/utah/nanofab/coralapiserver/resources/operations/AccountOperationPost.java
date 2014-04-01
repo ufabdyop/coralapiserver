@@ -1,6 +1,6 @@
 package edu.utah.nanofab.coralapiserver.resources.operations;
 
-import edu.nanofab.coralapi.resource.Account;
+import edu.nanofab.utah.coralapi.resource.Account;
 
 public class AccountOperationPost extends ResourceOperation  {
 
@@ -8,7 +8,7 @@ public class AccountOperationPost extends ResourceOperation  {
 	public void performOperationImpl() throws Exception {
 		Account account = (Account)(this.postedObject.get());
 		name = account.getName();
-		this.api.CreateNewAccount(account);
+		this.api.createNewAccount(account);
 		this.setReturnValue(this.api.getAccount(name));
 	}
 

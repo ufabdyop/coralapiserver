@@ -1,6 +1,6 @@
 package edu.utah.nanofab.coralapiserver.resources.operations;
 
-import edu.nanofab.coralapi.resource.Project;
+import edu.nanofab.utah.coralapi.resource.Project;
 
 public class ProjectOperationPut extends ResourceOperation  {
 	@Override

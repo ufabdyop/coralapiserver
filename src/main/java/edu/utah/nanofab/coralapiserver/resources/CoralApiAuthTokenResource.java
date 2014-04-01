@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import edu.nanofab.coralapi.CoralServices;
+import edu.nanofab.utah.coralapi.CoralAPI;
 import edu.utah.nanofab.coralapiserver.auth.CoralCredentials;
 import edu.utah.nanofab.coralapiserver.core.AuthRequest;
 
@@ -34,7 +34,7 @@ public class CoralApiAuthTokenResource {
     	CoralCredentials sessionToken = new CoralCredentials();
     	sessionToken.setUsername("Auth Failed");
     	String sessionId = "";
-		CoralServices api = new CoralServices(authRequest.getUsername(), 
+		CoralAPI api = new CoralAPI(authRequest.getUsername(), 
 				this.coralIor, this.coralConfigUrl);
 		try {
 			boolean success = api.authenticate(authRequest.getUsername(), authRequest.getPassword());
