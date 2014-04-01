@@ -35,7 +35,7 @@ public class CoralApiService extends Service<CoralApiConfiguration> {
 
 		final TokenConfiguration[] tokens = configuration.getAuthTokensConfiguration().getTokens();
 		ConcurrentHashMap<String, String> sessionTokens = new ConcurrentHashMap<String, String>();
-		environment.addProvider(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens, sessionTokens ), "REALM STRING"));
+		environment.addProvider(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens, sessionTokens, coralIor, coralConfigUrl ), "REALM STRING"));
 		environment.addResource(new CoralApiAuthTokenResource(coralIor, coralConfigUrl, sessionTokens));
 		environment.addResource(new CoralApiMemberResource(coralIor, coralConfigUrl));
 		environment.addResource(new CoralApiProjectResource(coralIor, coralConfigUrl));
