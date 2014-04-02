@@ -4,6 +4,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import edu.utah.nanofab.coralapiserver.resources.CoralApiAccountResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiAuthTokenResource;
+import edu.utah.nanofab.coralapiserver.resources.CoralApiLabRoleResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiMemberResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiProjectMembershipResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiProjectResource;
@@ -38,6 +39,7 @@ public class CoralApiService extends Service<CoralApiConfiguration> {
 		environment.addProvider(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens, sessionTokens, coralIor, coralConfigUrl ), "REALM STRING"));
 		environment.addResource(new CoralApiAuthTokenResource(coralIor, coralConfigUrl, sessionTokens));
 		environment.addResource(new CoralApiMemberResource(coralIor, coralConfigUrl));
+		environment.addResource(new CoralApiLabRoleResource(coralIor, coralConfigUrl));
 		environment.addResource(new CoralApiProjectResource(coralIor, coralConfigUrl));
 		environment.addResource(new CoralApiAccountResource(coralIor, coralConfigUrl));
 		environment.addResource(new CoralApiProjectMembershipResource(coralIor, coralConfigUrl));
