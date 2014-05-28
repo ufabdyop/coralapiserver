@@ -21,7 +21,7 @@
 	    <dependency>
 	     <groupId>edu.nanofab</groupId>
 	     <artifactId>CoralAPI</artifactId>
-	     <version>0.1.22</version>
+	     <version>0.1.24</version>
 	    </dependency>
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
