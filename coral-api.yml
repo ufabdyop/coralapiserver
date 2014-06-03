@@ -4,6 +4,7 @@ coralConfigUrl: "http://vagrant-coral-dev/coral/lib/config.jar"
 
 http:
   port: 8443
+  adminPort: 8082
   connectorType: nonblocking+ssl
 
   ssl:
@@ -21,3 +22,5 @@ authToken:
       user : "coralbot"
     - token: "0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9"
       user : "coral"
+
+

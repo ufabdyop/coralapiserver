@@ -1,0 +1,7 @@
+ Generate a java keystore like so:
+ keytool -genkey -keyalg RSA -alias mykey -keystore newstore -storepass 123456 -validity 1825 -keysize 2048
+
+ For dev box, just use localhost as name when prompted
+
+ Export cert from keystore (pass is 123456):
+ keytool -export -alias mykey -file export.crt -keystore ./newstore -rfc

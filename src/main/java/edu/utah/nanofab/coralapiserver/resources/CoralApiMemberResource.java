@@ -48,7 +48,7 @@ public class CoralApiMemberResource {
     	return (Member) (operation.perform());
     }
     
-	@POST
+    @POST
     @Timed
     public Member createRequest(@Valid Member member, @Auth User user) {
     	MemberOperationPost operation = new MemberOperationPost();

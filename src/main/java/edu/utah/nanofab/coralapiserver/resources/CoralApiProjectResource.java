@@ -47,8 +47,8 @@ public class CoralApiProjectResource {
     	operation.init(this.coralIor, this.coralConfigUrl, name, Optional.<Object> absent(), user);
     	return (Project) (operation.perform());
     }
-    
-	@POST
+   
+    @POST
     @Timed
     public Project createRequest(@Valid Project project, @Auth User user) {
     	ProjectOperationPost operation = new ProjectOperationPost();
