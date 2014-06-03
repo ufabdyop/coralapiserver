@@ -5,9 +5,10 @@ import com.yammer.dropwizard.config.Configuration;
 
 public class AuthTokensConfiguration extends Configuration {
     
-	@JsonProperty
+    @JsonProperty
     private TokenConfiguration[] tokens;
 
+    @JsonProperty
     public TokenConfiguration[] getTokens() {
         return tokens;
     }

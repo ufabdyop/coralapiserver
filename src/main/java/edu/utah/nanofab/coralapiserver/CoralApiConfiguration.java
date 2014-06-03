@@ -14,10 +14,12 @@ public class CoralApiConfiguration extends Configuration {
     private String coralConfigUrl = "http://vagrant-coral-dev/coral/lib/config.jar";
 
 
+    @JsonProperty
     public String getCoralConfigUrl() {
         return coralConfigUrl;
     }
 
+    @JsonProperty
     public String getCoralIor() {
         return coralIor;
     }
