@@ -4,6 +4,7 @@ coralConfigUrl: "http://vagrant-coral-dev/coral/lib/config.jar"
 
 http:
   port: 8443
+  adminPort: 8082
   connectorType: nonblocking+ssl
 
   ssl:
