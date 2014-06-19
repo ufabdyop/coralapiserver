@@ -41,7 +41,8 @@ We need the API to meet the following requirements:
     -   disqualify(tool, member, role)
     -   reserve( tool, agent, member, project, account, begin time, end time(or length) )
     -   deleteReservation( tool, member, time, length )
-    -   costRecovery (month, year)          
+    -   costRecovery (month, year)
+    -   version
     -   more, eventually
 
 -   Resources(nouns) in the system:
@@ -53,6 +54,7 @@ We need the API to meet the following requirements:
     -   Project
     -   Account
     -   EquipmentRole
+    -   Version
     -   perhaps more eventually, like Lab, Supply, LabRole, Rate, Rundata, ...
 
 -   Actions(verbs) supported on the resources:
@@ -101,6 +103,11 @@ We need the API to meet the following requirements:
         -   Update (POST)
         -   Delete (DELETE)
         -   List (GET)
+    
+    -   Version
+    
+
+
 
   -   URLs (examples)
     -   https://server/coral-api/v0.1/member
@@ -111,6 +118,7 @@ We need the API to meet the following requirements:
     -   https://server/coral-api/v0.1/reservation
         -   supporting POST, GET (list of reservations)
     -   https://server/coral-api/v0.1/reservation?id=someID (base64 encoding of DB id?)
+    -   https://server/version
         -   supporting POST, GET, DELETE
 
 -   The server should respond with appropriate messages for errors or
@@ -201,3 +209,7 @@ Add member(s) to a project:
 List member(s) on a project:
 
     curl -H "Content-Type: application/json" -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project-membership?project=new%20project -D -
+    
+Get current API version:
+
+    curl -k https://localhost:8443/version

@@ -12,6 +12,8 @@ import com.yammer.dropwizard.auth.basic.BasicCredentials;
 
 import edu.utah.nanofab.coralapi.CoralAPI;
 import edu.utah.nanofab.coralapiserver.TokenConfiguration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class SimpleAuthenticator implements Authenticator<BasicCredentials, User> {
@@ -34,10 +36,34 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
 	@Override
     public Optional<User> authenticate(BasicCredentials credentials) throws AuthenticationException {
 		if (credentials.getUsername().equals("auth-token")) {
-	        return authenticateByToken(credentials.getPassword());
+                    Optional<User> tokensUser = authenticateByToken(credentials.getPassword());
+                    
+                    if (isValidUser(tokensUser)) {
+                        return tokensUser;
+                    }
+                    else {
+                        throw new AuthenticationException("Invalid user");
+                    }
 		} else {
 			return authenticateByUsernamePassword(credentials.getUsername(), credentials.getPassword());
 		}
+    }
+    
+    public boolean isValidUser(Optional<User> user) {
+        if (!user.isPresent())
+            return false;
+        
+        String username = user.get().getUsername();
+        CoralAPI api = new CoralAPI(username, this.coralIor, this.coralConfigUrl);
+        try {
+            api.getMember(username);
+        } catch (Exception ex) {
+            return false;
+        } finally {
+            api.close();
+        }
+        
+        return true;
     }
 	
 	public Optional<User> authenticateByUsernamePassword(String user, String pass) {
