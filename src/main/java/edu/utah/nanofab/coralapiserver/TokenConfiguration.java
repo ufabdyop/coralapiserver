@@ -4,25 +4,25 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yammer.dropwizard.config.Configuration;
 
 public class TokenConfiguration  extends Configuration {
-	@JsonProperty
+    @JsonProperty
     private String token;
 	
-	@JsonProperty
+    @JsonProperty
     private String user;
 
-	public String getUser() {
-		return user;
-	}
+    public String getUser() {
+            return user;
+    }
 
-	public String getToken() {
-		return token;
-	}
+    public String getToken() {
+            return token;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    public void setToken(String token) {
+            this.token = token;
+    }
 
-	public void setUser(String user) {
-		this.user = user;
-	}
+    public void setUser(String user) {
+            this.user = user;
+    }
 }

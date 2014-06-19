@@ -1,3 +1,6 @@
+
+* ERROR: if you make a get request for a valid member, using an invalid member token,
+  the server returns a 204 empty response.  Should be a 401
 * Figure out how to unshade dependencies, and also run without all the packaging time
 * Add authentication module
 *   Goals: 
