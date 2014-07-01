@@ -262,6 +262,11 @@ To create a new coral member:
 curl -X POST -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new proj"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
 ```
 
+To create a reservation:
+```
+curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "project":"new proj", "account":"new acct", "bdate":"2014-06-12 12:00:00", "edate":"2014-06-12 13:00:00", "item": "some instrument"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/reservation -D -
+```
+
 #### PUT requests
 
 To update an already existing member:
