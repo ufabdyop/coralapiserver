@@ -45,7 +45,7 @@ public class CoralApiService extends Service<CoralApiConfiguration> {
 		environment.addResource(new CoralApiAccountResource(coralIor, coralConfigUrl));
 		environment.addResource(new CoralApiProjectMembershipResource(coralIor, coralConfigUrl));
 		environment.addResource(new CoralApiVersionResource());
-		environment.addResource(new CoralApiProjectsResource());
+		environment.addResource(new CoralApiProjectsResource(coralIor, coralConfigUrl));
     }
 
 }

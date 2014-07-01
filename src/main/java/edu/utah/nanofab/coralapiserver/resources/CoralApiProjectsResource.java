@@ -25,7 +25,12 @@ public class CoralApiProjectsResource {
 	private String coralConfigUrl;
 	public static final Logger logger = LoggerFactory.getLogger(CoralApiProjectsResource.class);
 	
-    @GET
+    public CoralApiProjectsResource(String coralIor, String coralConfigUrl) {
+		this.coralIor = coralIor;
+		this.coralConfigUrl = coralConfigUrl;
+	}
+
+	@GET
     @Timed
     public Projects getRequest(@QueryParam("member") Optional<String> member, @Auth User user) {
     	ProjectsOperationGet operation = new ProjectsOperationGet();
