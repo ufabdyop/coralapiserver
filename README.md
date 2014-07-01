@@ -1,8 +1,8 @@
 Coral API Server
-===
+===============
 
 We are designing an API to get access to Coral's core functionality
-through standard http queries.  
+through standard HTTP queries.  
 
 Design Goals: 
 -------------
@@ -52,6 +52,7 @@ We need the API to meet the following requirements:
     -   Reservation
     -   Enable
     -   Project
+    -   Projects
     -   Account
     -   EquipmentRole
     -   Version
@@ -89,6 +90,13 @@ We need the API to meet the following requirements:
         -   Update (POST)
         -   Delete (DELETE) (Do we need this one?)
         -   List (GET)
+
+    -   Projects
+	-   Create (PUT)
+	-   Read (or View or Show) (GET)
+	-   Update (POST)
+	-   Delete (DELETE)
+	-   List (GET)
 
     -   Account
         -   Create (PUT)
@@ -129,7 +137,7 @@ We need the API to meet the following requirements:
     happened.
 
 Implementation
----
+--------------
 
 This is based on the hello world from dropwizard.codahale.com
 
@@ -142,74 +150,147 @@ to run without packaging first (which takes a long time): mvn exec:java -Dexec.a
 
 
 Communicating with Server
----
+-------------------------
 
-#### Authenticate:
+### Authenticate:
 
 You must use tokens in an HTTP Basic Authentication scheme to talk to the server.
 The configuration file (coral-api.yml) provides a place for creating permanent tokens
 and associating them with users.  You can obtain a temporary token by posting your
-username and password to /authenticate.  Here is an example of getting a temporary
-token:
+username and password to `/authenticate`.  For example:
 
-    curl -k -X POST -H "Content-Type: application/json" -d '{"username":"ryant","password":"mypassword"}' https://localhost:8443/authenticate
+    curl -k -X POST -H "Content-Type: application/json" -d '{"username":"ryant","password":"pass"}' https://localhost:8443/authenticate
     {"username":"auth-token","password":"cosmouckrklkkcu579hdsbr0l8"}
 
-You may also request a token by authenticating using http basic auth and making a get request to the same path.
-Make sure you pay attention to the status code after completion in case auth fails. Example:
+You may also request a token by authenticating using basic HTTP authentication and making a GET request to the same path `/authenticate`. 
 
     curl -k -u coral:123456 https://localhost:8443/authenticate 
     {"username":"auth-token","password":"sibjcja4ru9u1kbq73ohhtd9pn"}
 
-The server will response with a json object with a username of auth-token and the token as the password. To use the token to 
-communicate with the server, "auth-token" should be the username and the token should be the password.  Here is an example:
+The server will response with a JSON object with a username of 'auth-token' and the token as the password. This token can be used to communicate with the server. For example:
 
     curl -u auth-token:cosmouckrklkkcu579hdsbr0l8 -k https://localhost:8443/member?name=coral
     {"name":"coral","address1":"","address2":"","advisor":"","altFax":"","altOffice":"","altPhone":"","city":"","disability":"","email":"","ethnicity":"","fax":"","firstName":"","lastName":"","mailCode":"","password":"*LK*","phone":"","project":"Bootstrap project","race":"","state":"","type":"","univid":"","url":"","zipcode":"","active":true}
 
-You should get a 401 Unauthorized if you fail to authenticate properly
+If authentication fails, you should get a 401 Unauthorized. For more information, please refer to the API docs.
 
 
 Resources:
----
-This is a good one:
-https://github.com/gary-rowe/DropwizardOpenID (gary-rowe has some sample applications)
+----------
+[Here][1] is an example of a project with a good set of resources. And [another][2].
 
-so is this:
-http://cosmo-opticon.net/blog/2013/1/23/session-based-security-in-dropwizard (sessions)
+### Account 
 
-Sample Commands Via Curl:
----
+#### GET requests
 
-Here are the supported commands so far (as curl commands):
+To get the details of an already existing account entity:
 
-GET commands:
+```
+curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/account?name=Bootstrap%20account
+```
 
-    curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/account?name=Bootstrap%20account
-    curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project?name=Bootstrap%20project
-    curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member?name=coral
-    curl -k -u coral:123456 https://localhost:8443/labRoles?member=ryant
+#### POST requests
+To create new account entities:
 
-POST commands (creating new entities):
+```
+curl -X POST -H "Content-Type: application/json" -d '{"name":"new acct"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/account -D -
+```
 
-    curl -X POST -H "Content-Type: application/json" -d '{"name":"new acct"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/account -D -
-    curl -X POST -H "Content-Type: application/json" -d '{"name":"new proj", "account":"new acct"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project -D -
-    curl -X POST -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new proj"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
+#### PUT requests
 
-PUT commands (updating entities--should be idempotent):
+To update an already existing account:
 
-    curl -X PUT -H "Content-Type: application/json" -d '{"name":"new acct", "description":"test"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/account -D -
-    curl -X PUT -H "Content-Type: application/json" -d '{"name":"new proj", "account": "new acct", "description":"some description"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project -D -
-    curl -X PUT -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new proj", "firstName": "amy"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
+```
+curl -X PUT -H "Content-Type: application/json" -d '{"name":"new acct", "description":"test"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/account -D -
+```
 
-Add member(s) to a project:
+### Project
 
-    curl -X PUT -H "Content-Type: application/json" -d '{"project":"new proj", "members":["coral"]}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project-membership -D -
+#### GET requests
 
-List member(s) on a project:
+To get the details of an already existing Project:
 
-    curl -H "Content-Type: application/json" -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project-membership?project=new%20project -D -
+```
+curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project?name=Bootstrap%20project
+```
+
+#### POST requests
+
+Create a new Project:
+
+```
+curl -X POST -H "Content-Type: application/json" -d '{"name":"new proj", "account":"new acct"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project -D -
+```
+
+#### PUT requests
+
+To update an existing project:
+
+```
+curl -X PUT -H "Content-Type: application/json" -d '{"name":"new proj", "account": "new acct", "description":"some description"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project -D -
+```
+
+#### Get all active coral projects
+
+To get all of the active projects:
+
+```
+curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/projects
+```
+
+#### List member(s) on a project
+
+```
+curl -H "Content-Type: application/json" -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project-membership?project=new%20project -D -
+```
+
+### Member
+
+#### GET requests
+
+To get the details of an already existing coral member:
+
+```
+curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member?name=coral
+```
+
+#### POST requests
+
+To create a new coral member:
+
+```
+curl -X POST -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new proj"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
+```
+
+#### PUT requests
+
+To update an already existing member:
+
+```
+curl -X PUT -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new proj", "firstName": "amy"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
+```
+
+#### Add member(s) to a project:
+
+```
+curl -X PUT -H "Content-Type: application/json" -d '{"project":"new proj", "members":["coral"]}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project-membership -D -
+```
+
+#### Get projects for member
+
+To get all of the active projects that a member is working on:
+
+```
+curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/projects?member=coral
+```
+
     
-Get current API version:
+### API Version:
 
     curl -k https://localhost:8443/version
+
+
+
+
+[1]:https://github.com/gary-rowe/DropwizardOpenID
+[2]:http://cosmo-opticon.net/blog/2013/1/23/session-based-security-in-dropwizard
