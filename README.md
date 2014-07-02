@@ -272,6 +272,11 @@ To enable a tool:
 curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "project":"new proj", "item": "some instrument"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/enable -D -
 ```
 
+To disable a tool:
+```
+curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "item": "some instrument"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/disable -D -
+```
+
 #### PUT requests
 
 To update an already existing member:

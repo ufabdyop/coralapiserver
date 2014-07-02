@@ -1,9 +1,8 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
-import edu.utah.nanofab.coralapi.resource.Enable;
 import edu.utah.nanofab.coralapiserver.auth.User;
-import edu.utah.nanofab.coralapiserver.core.EnableRequest;
-import edu.utah.nanofab.coralapiserver.resources.operations.EnableOperationPost;
+import edu.utah.nanofab.coralapiserver.core.DisableRequest;
+import edu.utah.nanofab.coralapiserver.resources.operations.DisableOperationPost;
 
 import org.slf4j.Logger;
 
@@ -21,16 +20,16 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-@Path("/enable")
+@Path("/disable")
 @Produces(MediaType.APPLICATION_JSON)
-public class CoralApiEnableResource {
+public class CoralApiDisableResource {
 	
 	private String coralIor;
 	private String coralConfigUrl;
 	private AtomicLong counter;
 	public static final Logger logger = LoggerFactory.getLogger(CoralApiEnableResource.class);
 
-    public CoralApiEnableResource(String coralIor, String coralConfigUrl ) {
+    public CoralApiDisableResource(String coralIor, String coralConfigUrl ) {
         this.coralIor = coralIor;
         this.coralConfigUrl = coralConfigUrl;
         this.counter = new AtomicLong();
@@ -38,14 +37,14 @@ public class CoralApiEnableResource {
 
     @POST
     @Timed
-    public EnableRequest createRequest(@Valid EnableRequest enableRequest, @Auth User user) {
-    	EnableOperationPost operation = new EnableOperationPost();
+    public DisableRequest createRequest(@Valid DisableRequest disableRequest, @Auth User user) {
+    	DisableOperationPost operation = new DisableOperationPost();
     	operation.init(this.coralIor, 
     			this.coralConfigUrl, 
     			Optional.<String> absent(), 
-    			Optional.<Object>of( enableRequest), 
+    			Optional.<Object>of( disableRequest), 
     			user);
-    	return (EnableRequest) (operation.perform());
+    	return (DisableRequest) (operation.perform());
     }
     
 }
