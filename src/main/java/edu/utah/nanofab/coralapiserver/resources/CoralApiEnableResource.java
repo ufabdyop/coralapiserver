@@ -1,5 +1,6 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
+import edu.utah.nanofab.coralapi.resource.Enable;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.EnableRequest;
 import edu.utah.nanofab.coralapiserver.resources.operations.EnableOperationPost;
@@ -37,14 +38,14 @@ public class CoralApiEnableResource {
 
     @POST
     @Timed
-    public EnableRequest createRequest(@Valid EnableRequest enableRequest, @Auth User user) {
+    public Enable createRequest(@Valid EnableRequest enableRequest, @Auth User user) {
     	EnableOperationPost operation = new EnableOperationPost();
     	operation.init(this.coralIor, 
     			this.coralConfigUrl, 
     			Optional.<String> absent(), 
     			Optional.<Object>of( enableRequest), 
     			user);
-    	return (EnableRequest) (operation.perform());
+    	return (Enable) (operation.perform());
     }
     
 }

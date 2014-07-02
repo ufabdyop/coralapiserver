@@ -52,6 +52,7 @@ public abstract class ResourceOperation {
 		try {
 			this.performOperationImpl();
 		} catch (Exception e) {
+			e.printStackTrace();
 			this.error = e.getMessage();
 		}
 		this.tearDown();
