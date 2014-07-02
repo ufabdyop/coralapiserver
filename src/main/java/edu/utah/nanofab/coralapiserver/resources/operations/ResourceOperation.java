@@ -15,7 +15,7 @@ public abstract class ResourceOperation {
     public String coralConfigUrl;
     public CoralAPI api;
     public String error = null;
-    private User user;
+    protected User user;
     private Object returnValue = null;
     protected Optional<String> queryParam;
     protected Optional<Object> postedObject;
