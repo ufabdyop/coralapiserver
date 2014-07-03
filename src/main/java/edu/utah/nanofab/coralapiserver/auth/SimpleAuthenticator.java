@@ -94,27 +94,31 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
 		for (TokenConfiguration t : tokens) {
 			if ( t.getToken().equals(requestToken)) {
 				if (t.getExpiration().getTime() > now.getTime() ) {
-					logger.debug("Token valid: " + t.getUser());
+					logger.debug("Token valid for " + t.getUser() + " until " + t.getExpiration());
 					return Optional.of(new User(t.getUser()));
 				} else {
 					logger.debug("Token expired: " + t.getUser() + " on " + t.getExpiration());
 				}
 			}
 		}
+		logger.debug("Token not found in config file");
+		
 		return authenticateBySessionToken(requestToken);
 	}
 
 	private Optional<User> authenticateBySessionToken(String requestToken) {
+		logger.debug("Checking session tokens");		
 		Date now = new Date();
 		if (sessionTokens.containsKey(requestToken)){
 			TokenConfiguration token = sessionTokens.get(requestToken);
 			if (token.getExpiration().getTime() > now.getTime()) {
-				logger.debug("Token valid: " + token.getUser());
+				logger.debug("Token valid: " + token.getUser() + " until " + token.getExpiration());
 				return Optional.of(new User(sessionTokens.get(requestToken).getUser()));
 			} else {
 				logger.debug("Token expired: " + token.getUser() + " on " + token.getExpiration());
 			}
 		}
+		logger.debug("Token not found in session tokens");		
 		return Optional.<User>absent();
 	}
 }
