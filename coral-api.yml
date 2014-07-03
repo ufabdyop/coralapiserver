@@ -20,9 +20,14 @@ authToken:
   tokens:
     - token: "KIZ5DAYYcUgPZUh9MWXaQrsZB3RwuK5wAmcc8kyibpQxsg29Jn"
       user : "coralbot"
+      expiration: 4086783408000
     - token: "0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9"
       user : "coral"
+      expiration: 4086783408000
     - token: "qfn4wh5y8o24hiflkbauhkji5uyqlliy82"
       user : "tapman"
-
+      expiration: 4086783408000
+    - token: "0rfjxl4J0VYgnSNRGRZhfjOMcdLySLf02HyCOZUwUiyqGdr6WKSQqHqiOueNhwHWwi1o7QAuhH9"
+      user : "proxyAuthenticator"
+      expiration: 4086783408000
 
