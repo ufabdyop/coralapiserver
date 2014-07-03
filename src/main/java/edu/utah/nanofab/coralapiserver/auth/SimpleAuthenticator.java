@@ -41,10 +41,14 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
 		if (credentials.getUsername().equals("auth-token")) {
                     Optional<User> tokensUser = authenticateByToken(credentials.getPassword());
                     
-                    if (isValidUser(tokensUser)) {
+                    //special case for proxyAuthenticator
+                    if (tokensUser.get().getUsername().equals("proxyAuthenticator")) {
+                    	logger.debug("bypassing coral check for proxyAuthenticator");
+                    	return tokensUser;
+                    } else if (isValidUser(tokensUser)) {
                         return tokensUser;
-                    }
-                    else {
+                    } else {
+                    	logger.debug("User did not validate against coral: " + tokensUser.get().getUsername());
                         throw new AuthenticationException("Invalid user");
                     }
 		} else {

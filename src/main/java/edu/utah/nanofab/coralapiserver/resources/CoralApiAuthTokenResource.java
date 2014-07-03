@@ -42,8 +42,20 @@ public class CoralApiAuthTokenResource {
 	
     @GET
     @Timed
-    public Response getRequest(@Auth User user) {
-    	return generateResponse(true, user.getUsername());
+    public Response getRequest(@QueryParam("proxyFor") Optional<String> name, @Auth User user) {
+    	//default response of unauthorized
+    	Response response = Response.status(Response.Status.UNAUTHORIZED).build();
+
+    	if (name.isPresent()) {
+    		//perform proxy auth and return token only if auth'd user is "proxyAuthenticator"
+    		if (user.getUsername().equals("proxyAuthenticator")) {
+        		response = generateResponse(true, name.get());
+    		}
+    	} else {
+        	//register token for user authenticating
+    		response = generateResponse(true, user.getUsername());
+    	}
+    	return response;
     }
 
     @POST

@@ -172,6 +172,18 @@ The server will response with a JSON object with a username of 'auth-token' and 
     curl -u auth-token:cosmouckrklkkcu579hdsbr0l8 -k https://localhost:8443/member?name=coral
     {"name":"coral","address1":"","address2":"","advisor":"","altFax":"","altOffice":"","altPhone":"","city":"","disability":"","email":"","ethnicity":"","fax":"","firstName":"","lastName":"","mailCode":"","password":"*LK*","phone":"","project":"Bootstrap project","race":"","state":"","type":"","univid":"","url":"","zipcode":"","active":true}
 
+You can create a token for another user if you use a special token in the config file.  The config file must contain an entry
+with a token for a user called "proxyAuthenticator".  Once that token is defined, you can generate tokens that can be used
+to authenticate as other users.  Obviously, this proxyAuthenticator token must be kept secret from the general public.
+You may want to periodically change this token.  Also, best not to share this token with multiple services, instead
+create multiple tokens and give one to each service.  Example command for generating a token for someone else (assuming the
+proxyAuthenticator token is 12345abdef):
+
+    curl -k -u auth-token:12345abcdef https://localhost:8443/authenticate?proxyFor=johndoe
+    {"username":"auth-token","password":"ABDCDEFGHIJKL"}
+
+The response from the server was a token of "ABDCDEFGHIJKL" that can be used to authenticate as johndoe
+
 If authentication fails, you should get a 401 Unauthorized. For more information, please refer to the API docs.
 
 
