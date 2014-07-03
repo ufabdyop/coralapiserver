@@ -11,6 +11,7 @@ import edu.utah.nanofab.coralapiserver.resources.CoralApiAccountResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiAuthTokenResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiEnableResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiLabRoleResource;
+import edu.utah.nanofab.coralapiserver.resources.CoralApiMachineResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiMemberResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiProjectMembershipResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiProjectResource;
@@ -48,6 +49,7 @@ public class CoralApiService extends Service<CoralApiConfiguration> {
 		environment.addResource(new CoralApiProjectMembershipResource(coralIor, coralConfigUrl));
 		environment.addResource(new CoralApiProjectsResource(coralIor, coralConfigUrl));
 		environment.addResource(new CoralApiEnableResource(coralIor, coralConfigUrl));
+		environment.addResource(new CoralApiMachineResource(coralIor, coralConfigUrl));
     }
 
 }
