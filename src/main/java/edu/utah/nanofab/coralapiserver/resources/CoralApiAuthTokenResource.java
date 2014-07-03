@@ -2,6 +2,7 @@ package edu.utah.nanofab.coralapiserver.resources;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -20,6 +21,7 @@ import com.yammer.metrics.annotation.Timed;
 
 import edu.utah.nanofab.coralapi.CoralAPI;
 import edu.utah.nanofab.coralapi.resource.Member;
+import edu.utah.nanofab.coralapiserver.TokenConfiguration;
 import edu.utah.nanofab.coralapiserver.auth.CoralCredentials;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.AuthRequest;
@@ -28,11 +30,11 @@ import edu.utah.nanofab.coralapiserver.resources.operations.MemberOperationGet;
 @Path("/authenticate")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiAuthTokenResource {
-	private ConcurrentHashMap<String, String> sessionTokens;
+	private ConcurrentHashMap<String, TokenConfiguration> sessionTokens;
 	private String coralIor;
 	private String coralConfigUrl;
 	
-	public CoralApiAuthTokenResource(String coralIor, String coralConfigUrl, ConcurrentHashMap<String, String> sessionTokens) {
+	public CoralApiAuthTokenResource(String coralIor, String coralConfigUrl, ConcurrentHashMap<String, TokenConfiguration> sessionTokens) {
         this.coralIor = coralIor;
         this.coralConfigUrl = coralConfigUrl;
         this.sessionTokens = sessionTokens;
@@ -77,13 +79,23 @@ public class CoralApiAuthTokenResource {
 		CoralCredentials sessionToken;
 		String sessionId;
 		sessionId = randomSessionId();
-		this.sessionTokens.put(sessionId, username);
+		TokenConfiguration t = new TokenConfiguration();
+		t.setUser(username);
+		t.setToken(sessionId);
+		t.setExpiration(defaultExpiration());
+		this.sessionTokens.put(sessionId, t);
 		sessionToken = new CoralCredentials();
 		sessionToken.setUsername("auth-token");
 		sessionToken.setPassword(sessionId);
 		return sessionToken;
 	}
 
+	private Date defaultExpiration() {
+		Date expiration = new Date();
+		long millisecondsInDay = 24 * 60 * 60 * 1000;
+		expiration.setTime(expiration.getTime() + millisecondsInDay);
+		return expiration;
+	}
 
 	private boolean authenticate(String username, String password) {
 		CoralAPI api = new CoralAPI(username, 
