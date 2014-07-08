@@ -150,7 +150,7 @@
                     </exec>
                    <exec executable="ln">
                       <arg value="-s"/>
-                      <arg value="${project.build.directory}/${project.build.finalName}"/>
+                      <arg value="${project.build.directory}/${project.build.finalName}.jar"/>
                       <arg value="${project.build.directory}/coralapiserver-current.jar"/>
                     </exec>
                 </target>
