@@ -1,6 +1,5 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
-import edu.utah.nanofab.coralapi.resource.Enable;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.EnableRequest;
 import edu.utah.nanofab.coralapiserver.resources.operations.EnableOperationPost;
@@ -27,13 +26,12 @@ public class CoralApiEnableResource {
 	
 	private String coralIor;
 	private String coralConfigUrl;
-	private AtomicLong counter;
 	public static final Logger logger = LoggerFactory.getLogger(CoralApiEnableResource.class);
 
     public CoralApiEnableResource(String coralIor, String coralConfigUrl ) {
         this.coralIor = coralIor;
         this.coralConfigUrl = coralConfigUrl;
-        this.counter = new AtomicLong();
+        new AtomicLong();
     }
 
     @POST

@@ -26,13 +26,12 @@ public class CoralApiDisableResource {
 	
 	private String coralIor;
 	private String coralConfigUrl;
-	private AtomicLong counter;
 	public static final Logger logger = LoggerFactory.getLogger(CoralApiEnableResource.class);
 
     public CoralApiDisableResource(String coralIor, String coralConfigUrl ) {
         this.coralIor = coralIor;
         this.coralConfigUrl = coralConfigUrl;
-        this.counter = new AtomicLong();
+        new AtomicLong();
     }
 
     @POST

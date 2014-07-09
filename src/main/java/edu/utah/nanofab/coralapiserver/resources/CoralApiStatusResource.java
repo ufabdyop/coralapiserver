@@ -13,15 +13,10 @@ import org.slf4j.LoggerFactory;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiStatusResource {
     
-    private String coralIor;
-    private String coralConfigUrl;
-    private AtomicLong counter;
     public static final Logger logger = LoggerFactory.getLogger(CoralApiMemberResource.class);
     
     public CoralApiStatusResource(String coralIor, String coralConfigUrl ) {
-        this.coralIor = coralIor;
-        this.coralConfigUrl = coralConfigUrl;
-        this.counter = new AtomicLong();
+        new AtomicLong();
     }
     
     

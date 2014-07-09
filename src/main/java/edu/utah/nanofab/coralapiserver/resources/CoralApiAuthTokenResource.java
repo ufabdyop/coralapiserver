@@ -4,8 +4,6 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
-
 import javax.validation.Valid;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -20,12 +18,10 @@ import com.yammer.dropwizard.auth.Auth;
 import com.yammer.metrics.annotation.Timed;
 
 import edu.utah.nanofab.coralapi.CoralAPI;
-import edu.utah.nanofab.coralapi.resource.Member;
 import edu.utah.nanofab.coralapiserver.TokenConfiguration;
 import edu.utah.nanofab.coralapiserver.auth.CoralCredentials;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.AuthRequest;
-import edu.utah.nanofab.coralapiserver.resources.operations.MemberOperationGet;
 
 @Path("/authenticate")
 @Produces(MediaType.APPLICATION_JSON)

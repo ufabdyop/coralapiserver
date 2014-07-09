@@ -4,8 +4,6 @@ package edu.utah.nanofab.coralapiserver.auth;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.ws.rs.core.Response;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

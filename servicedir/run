@@ -1,5 +1,0 @@
-#!/bin/sh
-exec 2>&1
-cd /home/coral/coralapiserver
-#make a symlink from coralapiserver-current.jar to correct version
-exec chpst -ucoral java -jar /home/coral/coralapiserver/target/coralapiserver-current.jar server /home/coral/coralapiserver/coral-api.yml

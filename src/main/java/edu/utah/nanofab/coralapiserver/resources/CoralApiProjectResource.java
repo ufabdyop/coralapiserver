@@ -31,13 +31,12 @@ public class CoralApiProjectResource {
 	
 	private String coralIor;
 	private String coralConfigUrl;
-	private AtomicLong counter;
 	public static final Logger logger = LoggerFactory.getLogger(CoralApiProjectResource.class);
 
     public CoralApiProjectResource(String coralIor, String coralConfigUrl ) {
         this.coralIor = coralIor;
         this.coralConfigUrl = coralConfigUrl;
-        this.counter = new AtomicLong();
+        new AtomicLong();
     }
 
     @GET
