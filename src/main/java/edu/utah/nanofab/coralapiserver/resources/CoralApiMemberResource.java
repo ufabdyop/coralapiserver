@@ -23,8 +23,6 @@ import javax.ws.rs.core.MediaType;
 
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 @Path("/member")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiMemberResource {
@@ -36,7 +34,6 @@ public class CoralApiMemberResource {
     public CoralApiMemberResource(String coralIor, String coralConfigUrl ) {
         this.coralIor = coralIor;
         this.coralConfigUrl = coralConfigUrl;
-        new AtomicLong();
     }
 
     @GET
@@ -49,7 +46,7 @@ public class CoralApiMemberResource {
     
     @POST
     @Timed
-    public Member createRequest(@Valid Member member, @Auth User user) {
+    public Member updateRequest(@Valid Member member, @Auth User user) {
     	MemberOperationPost operation = new MemberOperationPost();
     	operation.init(this.coralIor, 
     			this.coralConfigUrl, 
@@ -61,7 +58,7 @@ public class CoralApiMemberResource {
     
     @PUT
     @Timed
-    public Member updateRequest(@Valid Member member, @Auth User user) {
+    public Member createRequest(@Valid Member member, @Auth User user) {
     	MemberOperationPut operation = new MemberOperationPut();
     	operation.init(this.coralIor, 
     			this.coralConfigUrl, 

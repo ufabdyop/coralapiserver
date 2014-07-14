@@ -1,5 +1,7 @@
 package edu.utah.nanofab.coralapiserver;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.auth.basic.BasicAuthProvider;
 import com.yammer.dropwizard.config.Bootstrap;
@@ -11,12 +13,11 @@ import edu.utah.nanofab.coralapiserver.resources.CoralApiAccountResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiAuthTokenResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiLabRoleResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiMemberResource;
+import edu.utah.nanofab.coralapiserver.resources.CoralApiPasswordResetResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiProjectMembershipResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiProjectResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiProjectsResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiVersionResource;
-
-import java.util.concurrent.ConcurrentHashMap;
 
 
 public class CoralApiService extends Service<CoralApiConfiguration> {
@@ -32,7 +33,8 @@ public class CoralApiService extends Service<CoralApiConfiguration> {
     @Override
     public void run(CoralApiConfiguration configuration,
                     Environment environment) {
-		final String coralIor = configuration.getCoralIor();
+		
+    	final String coralIor = configuration.getCoralIor();
 		final String coralConfigUrl = configuration.getCoralConfigUrl();
 		final TokenConfiguration[] tokens = configuration.getAuthTokensConfiguration().getTokens();
 		ConcurrentHashMap<String, TokenConfiguration> sessionTokens = new ConcurrentHashMap<String, TokenConfiguration>();
@@ -46,6 +48,7 @@ public class CoralApiService extends Service<CoralApiConfiguration> {
 		environment.addResource(new CoralApiAccountResource(coralIor, coralConfigUrl));
 		environment.addResource(new CoralApiProjectMembershipResource(coralIor, coralConfigUrl));
 		environment.addResource(new CoralApiProjectsResource(coralIor, coralConfigUrl));
+		environment.addResource(new CoralApiPasswordResetResource(coralIor, coralConfigUrl));
     }
 
 }
