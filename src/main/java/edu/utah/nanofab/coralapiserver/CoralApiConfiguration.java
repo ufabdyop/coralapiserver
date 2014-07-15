@@ -13,15 +13,24 @@ public class CoralApiConfiguration extends Configuration {
     @JsonProperty
     private String coralConfigUrl = "http://vagrant-coral-dev/coral/lib/config.jar";
 
-
+    @NotEmpty
+    @JsonProperty
+    private String logLevel = "DEBUG";	// Set the default log level to DEBUG if none is provided
+    									// in the configuration file.
+    
     @JsonProperty
     public String getCoralConfigUrl() {
-        return coralConfigUrl;
+        return this.coralConfigUrl;
     }
 
     @JsonProperty
     public String getCoralIor() {
-        return coralIor;
+        return this.coralIor;
+    }
+    
+    @JsonProperty
+    public String getLogLevel() {
+    	return this.logLevel;
     }
     
     @JsonProperty
