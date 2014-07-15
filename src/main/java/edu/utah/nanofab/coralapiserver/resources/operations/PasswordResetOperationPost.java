@@ -17,7 +17,7 @@ public class PasswordResetOperationPost extends ResourceOperation {
 		String newPass = request.getPassword();
 		
 		try {
-			logger.debug("Updating password for user '" + memberName + "' with new password '" + newPass + "'");
+			logger.debug("Updating password for user '" + memberName + "'");
 			this.api.updatePassword(memberName, newPass);
 		} catch(Exception e) {
 			logger.error("Error: Could not update password for user '" + memberName + "'");
