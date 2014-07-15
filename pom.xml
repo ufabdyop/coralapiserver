@@ -1,184 +1,191 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
- 
-    <groupId>edu.utah.nanofab</groupId>
-    <artifactId>coralapiserver</artifactId>
-    <version>0.1.26</version>
- 
-    <dependencies>
-        
-        <!-- Dropwizard support-->
-        <dependency>
-            <groupId>com.yammer.dropwizard</groupId>
-            <artifactId>dropwizard-core</artifactId>
-            <version>0.6.2</version>
-        </dependency>
-       
-        <dependency>
-            <groupId>com.yammer.dropwizard</groupId>
-            <artifactId>dropwizard-auth</artifactId>
-            <version>0.6.2</version>
-        </dependency>
-        
-        <!-- CoralApi -->
-        <dependency>
-            <groupId>edu.utah.nanofab</groupId>
-            <artifactId>CoralAPI</artifactId>
-            <version>0.1.31</version>
-        </dependency>
-        
-        <!-- Authentication support -->
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.50</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.10</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-    
-    <properties>
-        <!-- use UTF-8 for everything -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <distributionManagement>
-      <repository>
-        <id>archiva.internal</id>
-        <url>http://archiva.eng.utah.edu/archiva/repository/internal/</url>
-      </repository>
+	<groupId>edu.utah.nanofab</groupId>
+	<artifactId>coralapiserver</artifactId>
+	<version>0.1.27</version>
 
-      <snapshotRepository>
-        <id>archiva.snapshots</id>
-        <url>http://archiva.eng.utah.edu/archiva/repository/snapshots/</url>
-      </snapshotRepository>
-    </distributionManagement>
-    
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <!-- compile for Java 1.7 -->
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            
-            <plugin>
-               <groupId>org.codehaus.mojo</groupId>
-               <artifactId>exec-maven-plugin</artifactId>
-               <configuration>
-                   <mainClass>edu.utah.nanofab.coralapiserver.CoralApiService</mainClass>
-               </configuration>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>1.6</version>
-                <configuration>
-                    <createDependencyReducedPom>true</createDependencyReducedPom>
-                    <filters>
-                        <filter>
-                            <artifact>*:*</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.SF</exclude>
-                                <exclude>META-INF/*.DSA</exclude>
-                                <exclude>META-INF/*.RSA</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>edu.utah.nanofab.coralapiserver.CoralApiService</mainClass>
-                                </transformer>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-       <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <version>1.7</version>
-            <configuration>
-                <target>
-                    <echo message="${project.build.directory}"/>
-                   <exec executable="rm">
-                      <arg value="-f"/>
-                      <arg value="${project.build.directory}/coralapiserver-current.jar"/>
-                    </exec>
-                   <exec executable="ln">
-                      <arg value="-s"/>
-                      <arg value="${project.build.directory}/${project.build.finalName}.jar"/>
-                      <arg value="${project.build.directory}/coralapiserver-current.jar"/>
-                    </exec>
-                </target>
-            </configuration>
-            <executions>
-              <execution>
-                <id>createSymLink</id> 
-                <goals> 
-                  <goal>run</goal> 
-                </goals>  
-                <phase>package</phase>
-              </execution>
-            </executions>
-        </plugin>
-        </plugins>
-    </build>
-    
-    <repositories>
-       <repository>
-         <id>internal</id>
-         <name>Archiva Managed Internal Repository</name>
-         <url>http://archiva.eng.utah.edu/archiva/repository/internal/</url>
-         <releases>
-           <enabled>true</enabled>
-         </releases>
-         <snapshots>
-           <enabled>false</enabled>
-         </snapshots>
-       </repository>
-     </repositories>
+	<dependencies>
+
+		<!-- Dropwizard support -->
+		<dependency>
+			<groupId>com.yammer.dropwizard</groupId>
+			<artifactId>dropwizard-core</artifactId>
+			<version>0.6.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.yammer.dropwizard</groupId>
+			<artifactId>dropwizard-auth</artifactId>
+			<version>0.6.2</version>
+		</dependency>
+
+		<!-- CoralApi -->
+		<dependency>
+			<groupId>edu.utah.nanofab</groupId>
+			<artifactId>CoralAPI</artifactId>
+			<version>0.1.34</version>
+		</dependency>
+
+		<!-- Authentication support -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>1.50</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.0</version>
+		</dependency>
+	</dependencies>
+
+	<properties>
+		<!-- use UTF-8 for everything -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+	<distributionManagement>
+		<repository>
+			<id>archiva.internal</id>
+			<url>http://archiva.eng.utah.edu/archiva/repository/internal/</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>archiva.snapshots</id>
+			<url>http://archiva.eng.utah.edu/archiva/repository/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<!-- compile for Java 1.7 -->
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>1.6</version>
+				<configuration>
+					<createDependencyReducedPom>true</createDependencyReducedPom>
+					<filters>
+						<filter>
+							<artifact>*:*</artifact>
+							<excludes>
+								<exclude>META-INF/*.SF</exclude>
+								<exclude>META-INF/*.DSA</exclude>
+								<exclude>META-INF/*.RSA</exclude>
+							</excludes>
+						</filter>
+					</filters>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>edu.utah.nanofab.coralapiserver.CoralApiService</mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.3.1</version>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<configuration>
+					<target>
+						<echo message="${project.build.directory}" />
+						<exec executable="rm">
+							<arg value="-f" />
+							<arg value="${project.build.directory}/coralapiserver-current.jar" />
+						</exec>
+						<exec executable="ln">
+							<arg value="-s" />
+							<arg value="${project.build.directory}/${project.build.finalName}.jar" />
+							<arg value="${project.build.directory}/coralapiserver-current.jar" />
+						</exec>
+					</target>
+				</configuration>
+				<executions>
+					<execution>
+						<id>createSymLink</id>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>internal</id>
+			<name>Archiva Managed Internal Repository</name>
+			<url>http://archiva.eng.utah.edu/archiva/repository/internal/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 </project>

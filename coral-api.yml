@@ -14,7 +14,7 @@ http:
 logging:
   level:  ERROR
   loggers:
-    "edu.utah.nanofab.coralapiserver": DEBUG
+    "edu.utah.nanofab.coralapiserver": ERROR
 
 authToken:
   tokens:

@@ -33,7 +33,7 @@ public abstract class ResourceOperation {
     }
 
     /**
-     * This function needs to use the api to perform some operation and set
+     * This function needs to use the Coral API to perform some operation and set
      * the returnValue object.  If there is an error, it must set the error
      * member field to a descriptive string.
      * @throws Exception 
