@@ -5,7 +5,7 @@
 
 	<groupId>edu.utah.nanofab</groupId>
 	<artifactId>coralapiserver</artifactId>
-	<version>0.1.28</version>
+	<version>0.1.29</version>
 
 	<dependencies>
 
@@ -26,7 +26,7 @@
 		<dependency>
 			<groupId>edu.utah.nanofab</groupId>
 			<artifactId>CoralAPI</artifactId>
-			<version>0.1.39</version>
+			<version>0.1.40</version>
 		</dependency>
 
 		<!-- Authentication support -->
