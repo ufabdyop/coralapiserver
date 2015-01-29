@@ -23,27 +23,27 @@ import java.util.concurrent.atomic.AtomicLong;
 @Path("/disable")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiDisableResource {
-	
-	private String coralIor;
-	private String coralConfigUrl;
-	public static final Logger logger = LoggerFactory.getLogger(CoralApiEnableResource.class);
+  
+  private String coralIor;
+  private String coralConfigUrl;
+  public static final Logger logger = LoggerFactory.getLogger(CoralApiEnableResource.class);
 
-    public CoralApiDisableResource(String coralIor, String coralConfigUrl ) {
-        this.coralIor = coralIor;
-        this.coralConfigUrl = coralConfigUrl;
-        new AtomicLong();
-    }
+  public CoralApiDisableResource(String coralIor, String coralConfigUrl ) {
+      this.coralIor = coralIor;
+      this.coralConfigUrl = coralConfigUrl;
+      new AtomicLong();
+  }
 
-    @POST
-    @Timed
-    public DisableRequest createRequest(@Valid DisableRequest disableRequest, @Auth User user) {
-    	DisableOperationPost operation = new DisableOperationPost();
-    	operation.init(this.coralIor, 
-    			this.coralConfigUrl, 
-    			Optional.<String> absent(), 
-    			Optional.<Object>of( disableRequest), 
-    			user);
-    	return (DisableRequest) (operation.perform());
-    }
+  @POST
+  @Timed
+  public DisableRequest createRequest(@Valid DisableRequest disableRequest, @Auth User user) {
+    DisableOperationPost operation = new DisableOperationPost();
+    operation.init(this.coralIor, 
+        this.coralConfigUrl, 
+        Optional.<String> absent(), 
+        Optional.<Object>of( disableRequest), 
+        user);
+    return (DisableRequest) (operation.perform());
+  }
     
 }

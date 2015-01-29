@@ -24,13 +24,13 @@ public class CoralApiVersionResource {
     }
     
     private static String projectVersion() throws IOException {
-        Properties p = new Properties();
-        InputStream stream = null;
-        
-        stream = CoralApiVersionResource.class.getClassLoader().getResourceAsStream("app.properties");
-        p.load(stream);
+      Properties p = new Properties();
+      InputStream stream = null;
+      
+      stream = CoralApiVersionResource.class.getClassLoader().getResourceAsStream("app.properties");
+      p.load(stream);
 
-        stream.close();
-        return p.getProperty("application.version");
+      stream.close();
+      return p.getProperty("application.version");
     }
 }

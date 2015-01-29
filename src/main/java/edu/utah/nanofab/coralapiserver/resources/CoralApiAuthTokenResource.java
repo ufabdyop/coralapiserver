@@ -26,103 +26,103 @@ import edu.utah.nanofab.coralapiserver.core.AuthRequest;
 @Path("/authenticate")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiAuthTokenResource {
-	private ConcurrentHashMap<String, TokenConfiguration> sessionTokens;
-	private String coralIor;
-	private String coralConfigUrl;
-	
-	public CoralApiAuthTokenResource(String coralIor, String coralConfigUrl, ConcurrentHashMap<String, TokenConfiguration> sessionTokens) {
+  private ConcurrentHashMap<String, TokenConfiguration> sessionTokens;
+  private String coralIor;
+  private String coralConfigUrl;
+  
+  public CoralApiAuthTokenResource(String coralIor, String coralConfigUrl, ConcurrentHashMap<String, TokenConfiguration> sessionTokens) {
         this.coralIor = coralIor;
         this.coralConfigUrl = coralConfigUrl;
         this.sessionTokens = sessionTokens;
-    }
-	
+  }
+  
     @GET
     @Timed
     public Response getRequest(@QueryParam("proxyFor") Optional<String> name, @Auth User user) {
-    	//default response of unauthorized
-    	Response response = Response.status(Response.Status.UNAUTHORIZED).build();
+      //default response of unauthorized
+      Response response = Response.status(Response.Status.UNAUTHORIZED).build();
 
-    	if (name.isPresent()) {
-    		//perform proxy auth and return token only if auth'd user is "proxyAuthenticator"
-    		if (user.getUsername().equals("proxyAuthenticator")) {
-        		response = generateResponse(true, name.get());
-    		}
-    	} else {
-        	//register token for user authenticating
-    		response = generateResponse(true, user.getUsername());
-    	}
-    	return response;
+      if (name.isPresent()) {
+        //perform proxy auth and return token only if auth'd user is "proxyAuthenticator"
+        if (user.getUsername().equals("proxyAuthenticator")) {
+            response = generateResponse(true, name.get());
+        }
+      } else {
+          //register token for user authenticating
+        response = generateResponse(true, user.getUsername());
+      }
+      return response;
     }
 
     @POST
     public Response authRequest(@Valid AuthRequest authRequest) {
-    	String username = authRequest.getUsername();
-    	String password = authRequest.getPassword();
-    	return validateUsernamePassword(username, password); 
-     }
-
-	private Response validateUsernamePassword(String username, String password) {
-		boolean success = authenticate(username, password);
-    	return generateResponse(success, username);
-	}
-    
-	/**
-	 * Generates the proper response for a successful or failed auth token request
-	 * @param success   true if the response is for a successful auth attempt, false returns a 401
-	 * @param username  username requesting access
-	 * @return Response
-	 */
-    private Response generateResponse(boolean success, String username) {
-		CoralCredentials sessionToken = new CoralCredentials();
-    	sessionToken.setUsername("Auth Failed");
-
-    	if (success) {
-			sessionToken = createUserToken(username);
-			return Response.status(Response.Status.OK).entity(sessionToken).build(); 
-		}
-		return Response.status(Response.Status.UNAUTHORIZED).entity(sessionToken).build();
-	}
-
-	private CoralCredentials createUserToken(String username) {
-		CoralCredentials sessionToken;
-		String sessionId;
-		sessionId = randomSessionId();
-		TokenConfiguration t = new TokenConfiguration();
-		t.setUser(username);
-		t.setToken(sessionId);
-		t.setExpiration(defaultExpiration());
-		this.sessionTokens.put(sessionId, t);
-		sessionToken = new CoralCredentials();
-		sessionToken.setUsername("auth-token");
-		sessionToken.setPassword(sessionId);
-		return sessionToken;
-	}
-
-	private Date defaultExpiration() {
-		Date expiration = new Date();
-		long millisecondsInDay = 24 * 60 * 60 * 1000;
-		expiration.setTime(expiration.getTime() + millisecondsInDay);
-		return expiration;
-	}
-
-	private boolean authenticate(String username, String password) {
-		CoralAPI api = new CoralAPI(username, 
-				this.coralIor, this.coralConfigUrl);
-		boolean success = false;
-		try {
-			 success = api.authenticate(username, password);
-			api.close();
-		} catch (Exception e) {
-			api.close();
-			e.printStackTrace();
-		}
-		return success;
-	}
-
-
-	private String randomSessionId() {
-    	SecureRandom random = new SecureRandom();
-	    return new BigInteger(130, random).toString(32);
+      String username = authRequest.getUsername();
+      String password = authRequest.getPassword();
+      return validateUsernamePassword(username, password); 
     }
+
+    private Response validateUsernamePassword(String username, String password) {
+      boolean success = authenticate(username, password);
+      return generateResponse(success, username);
+    }
+    
+  /**
+   * Generates the proper response for a successful or failed auth token request
+   * @param success   true if the response is for a successful auth attempt, false returns a 401
+   * @param username  username requesting access
+   * @return Response
+   */
+  private Response generateResponse(boolean success, String username) {
+    CoralCredentials sessionToken = new CoralCredentials();
+    sessionToken.setUsername("Auth Failed");
+
+    if (success) {
+      sessionToken = createUserToken(username);
+      return Response.status(Response.Status.OK).entity(sessionToken).build(); 
+    }
+    return Response.status(Response.Status.UNAUTHORIZED).entity(sessionToken).build();
+  }
+
+  private CoralCredentials createUserToken(String username) {
+    CoralCredentials sessionToken;
+    String sessionId;
+    sessionId = randomSessionId();
+    TokenConfiguration t = new TokenConfiguration();
+    t.setUser(username);
+    t.setToken(sessionId);
+    t.setExpiration(defaultExpiration());
+    this.sessionTokens.put(sessionId, t);
+    sessionToken = new CoralCredentials();
+    sessionToken.setUsername("auth-token");
+    sessionToken.setPassword(sessionId);
+    return sessionToken;
+  }
+
+  private Date defaultExpiration() {
+    Date expiration = new Date();
+    long millisecondsInDay = 24 * 60 * 60 * 1000;
+    expiration.setTime(expiration.getTime() + millisecondsInDay);
+    return expiration;
+  }
+
+  private boolean authenticate(String username, String password) {
+    CoralAPI api = new CoralAPI(username, 
+        this.coralIor, this.coralConfigUrl);
+    boolean success = false;
+    try {
+      success = api.authenticate(username, password);
+      api.close();
+    } catch (Exception e) {
+      api.close();
+      e.printStackTrace();
+    }
+    return success;
+  }
+
+
+  private String randomSessionId() {
+    SecureRandom random = new SecureRandom();
+    return new BigInteger(130, random).toString(32);
+  }
 
 }

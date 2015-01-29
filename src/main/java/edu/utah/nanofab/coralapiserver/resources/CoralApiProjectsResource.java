@@ -20,21 +20,21 @@ import edu.utah.nanofab.coralapiserver.resources.operations.ProjectsOperationGet
 @Path("/projects")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiProjectsResource {
-	
-	private String coralIor;
-	private String coralConfigUrl;
-	public static final Logger logger = LoggerFactory.getLogger(CoralApiProjectsResource.class);
-	
-    public CoralApiProjectsResource(String coralIor, String coralConfigUrl) {
-		this.coralIor = coralIor;
-		this.coralConfigUrl = coralConfigUrl;
-	}
+  
+  private String coralIor;
+  private String coralConfigUrl;
+  public static final Logger logger = LoggerFactory.getLogger(CoralApiProjectsResource.class);
+  
+  public CoralApiProjectsResource(String coralIor, String coralConfigUrl) {
+    this.coralIor = coralIor;
+    this.coralConfigUrl = coralConfigUrl;
+  }
 
-	@GET
-    @Timed
-    public Projects getRequest(@QueryParam("member") Optional<String> member, @Auth User user) {
-    	ProjectsOperationGet operation = new ProjectsOperationGet();
-    	operation.init(this.coralIor, this.coralConfigUrl, member, Optional.<Object> absent(), user);
-    	return (Projects) (operation.perform());
-    }
+  @GET
+  @Timed
+  public Projects getRequest(@QueryParam("member") Optional<String> member, @Auth User user) {
+    ProjectsOperationGet operation = new ProjectsOperationGet();
+    operation.init(this.coralIor, this.coralConfigUrl, member, Optional.<Object> absent(), user);
+    return (Projects) (operation.perform());
+  }
 }

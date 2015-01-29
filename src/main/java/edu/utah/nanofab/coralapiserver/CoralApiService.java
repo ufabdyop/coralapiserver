@@ -33,22 +33,21 @@ public class CoralApiService extends Service<CoralApiConfiguration> {
     @Override
     public void run(CoralApiConfiguration configuration,
                     Environment environment) {
-		
-    	final String coralIor = configuration.getCoralIor();
-		final String coralConfigUrl = configuration.getCoralConfigUrl();
-		final TokenConfiguration[] tokens = configuration.getAuthTokensConfiguration().getTokens();
-		ConcurrentHashMap<String, TokenConfiguration> sessionTokens = new ConcurrentHashMap<String, TokenConfiguration>();
-		
-        environment.addProvider(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens, sessionTokens, coralIor, coralConfigUrl ), "REALM STRING"));
-		environment.addResource(new CoralApiVersionResource());
-		environment.addResource(new CoralApiAuthTokenResource(coralIor, coralConfigUrl, sessionTokens));
-		environment.addResource(new CoralApiMemberResource(coralIor, coralConfigUrl));
-		environment.addResource(new CoralApiLabRoleResource(coralIor, coralConfigUrl));
-		environment.addResource(new CoralApiProjectResource(coralIor, coralConfigUrl));
-		environment.addResource(new CoralApiAccountResource(coralIor, coralConfigUrl));
-		environment.addResource(new CoralApiProjectMembershipResource(coralIor, coralConfigUrl));
-		environment.addResource(new CoralApiProjectsResource(coralIor, coralConfigUrl));
-		environment.addResource(new CoralApiPasswordResetResource(coralIor, coralConfigUrl));
+      final String coralIor = configuration.getCoralIor();
+      final String coralConfigUrl = configuration.getCoralConfigUrl();
+      final TokenConfiguration[] tokens = configuration.getAuthTokensConfiguration().getTokens();
+      ConcurrentHashMap<String, TokenConfiguration> sessionTokens = new ConcurrentHashMap<String, TokenConfiguration>();
+
+      environment.addProvider(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens, sessionTokens, coralIor, coralConfigUrl ), "REALM STRING"));
+      environment.addResource(new CoralApiVersionResource());
+      environment.addResource(new CoralApiAuthTokenResource(coralIor, coralConfigUrl, sessionTokens));
+      environment.addResource(new CoralApiMemberResource(coralIor, coralConfigUrl));
+      environment.addResource(new CoralApiLabRoleResource(coralIor, coralConfigUrl));
+      environment.addResource(new CoralApiProjectResource(coralIor, coralConfigUrl));
+      environment.addResource(new CoralApiAccountResource(coralIor, coralConfigUrl));
+      environment.addResource(new CoralApiProjectMembershipResource(coralIor, coralConfigUrl));
+      environment.addResource(new CoralApiProjectsResource(coralIor, coralConfigUrl));
+      environment.addResource(new CoralApiPasswordResetResource(coralIor, coralConfigUrl));
     }
 
 }

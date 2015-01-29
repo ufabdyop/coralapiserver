@@ -15,8 +15,8 @@ public class CoralApiConfiguration extends Configuration {
 
     @NotEmpty
     @JsonProperty
-    private String logLevel = "DEBUG";	// Set the default log level to DEBUG if none is provided
-    									// in the configuration file.
+    private String logLevel = "DEBUG";  // Set the default log level to DEBUG if none is provided
+                      // in the configuration file.
     
     @JsonProperty
     public String getCoralConfigUrl() {
@@ -30,7 +30,7 @@ public class CoralApiConfiguration extends Configuration {
     
     @JsonProperty
     public String getLogLevel() {
-    	return this.logLevel;
+      return this.logLevel;
     }
     
     @JsonProperty

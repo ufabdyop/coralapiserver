@@ -26,46 +26,46 @@ import org.slf4j.LoggerFactory;
 @Path("/member")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiMemberResource {
-	
-	private String coralIor;
-	private String coralConfigUrl;
-	public static final Logger logger = LoggerFactory.getLogger(CoralApiMemberResource.class);
+  
+  private String coralIor;
+  private String coralConfigUrl;
+  public static final Logger logger = LoggerFactory.getLogger(CoralApiMemberResource.class);
 
-    public CoralApiMemberResource(String coralIor, String coralConfigUrl ) {
-        this.coralIor = coralIor;
-        this.coralConfigUrl = coralConfigUrl;
-    }
+  public CoralApiMemberResource(String coralIor, String coralConfigUrl ) {
+      this.coralIor = coralIor;
+      this.coralConfigUrl = coralConfigUrl;
+  }
 
-    @GET
-    @Timed
-    public Member getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
-    	MemberOperationGet operation = new MemberOperationGet();
-    	operation.init(this.coralIor, this.coralConfigUrl, name, Optional.<Object> absent(), user);
-    	return (Member) (operation.perform());
-    }
+  @GET
+  @Timed
+  public Member getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
+    MemberOperationGet operation = new MemberOperationGet();
+    operation.init(this.coralIor, this.coralConfigUrl, name, Optional.<Object> absent(), user);
+    return (Member) (operation.perform());
+  }
     
-    @POST
-    @Timed
-    public Member updateRequest(@Valid Member member, @Auth User user) {
-    	MemberOperationPost operation = new MemberOperationPost();
-    	operation.init(this.coralIor, 
-    			this.coralConfigUrl, 
-    			Optional.<String> absent(), 
-    			Optional.<Object>of( member), 
-    			user);
-    	return (Member) (operation.perform());
-    }
-    
-    @PUT
-    @Timed
-    public Member createRequest(@Valid Member member, @Auth User user) {
-    	MemberOperationPut operation = new MemberOperationPut();
-    	operation.init(this.coralIor, 
-    			this.coralConfigUrl, 
-    			Optional.<String> absent(), 
-    			Optional.<Object>of( member), 
-    			user);
-    	return (Member) (operation.perform());
-    }
+  @POST
+  @Timed
+  public Member updateRequest(@Valid Member member, @Auth User user) {
+    MemberOperationPost operation = new MemberOperationPost();
+    operation.init(this.coralIor, 
+        this.coralConfigUrl, 
+        Optional.<String> absent(), 
+        Optional.<Object>of( member), 
+        user);
+    return (Member) (operation.perform());
+  }
+  
+  @PUT
+  @Timed
+  public Member createRequest(@Valid Member member, @Auth User user) {
+    MemberOperationPut operation = new MemberOperationPut();
+    operation.init(this.coralIor, 
+        this.coralConfigUrl, 
+        Optional.<String> absent(), 
+        Optional.<Object>of( member), 
+        user);
+    return (Member) (operation.perform());
+  }
 
 }

@@ -20,33 +20,33 @@ import edu.utah.nanofab.coralapiserver.resources.operations.ProjectMembershipOpe
 @Path("/project-membership")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiProjectMembershipResource {
-	private String coralIor;
-	private String coralConfigUrl;
+  private String coralIor;
+  private String coralConfigUrl;
 
-	public CoralApiProjectMembershipResource(String coralIor,
-			String coralConfigUrl) {
-		this.coralIor = coralIor;
-		this.coralConfigUrl = coralConfigUrl;
-	}
+  public CoralApiProjectMembershipResource(String coralIor,
+      String coralConfigUrl) {
+    this.coralIor = coralIor;
+    this.coralConfigUrl = coralConfigUrl;
+  }
 
-	@GET
-    @Timed
-    public ProjectMembership get(@QueryParam("project") Optional<String> project, @Auth User user) {
-    	ProjectMembershipOperationGet operation = new ProjectMembershipOperationGet();
-    	operation.init(this.coralIor, this.coralConfigUrl, project, Optional.<Object> absent(), user);
-    	return (ProjectMembership) (operation.perform());
-    }
-	
-	@PUT
-    @Timed
-    public ProjectMembership update(@Valid ProjectMembership request, @Auth User user) {
-    	ProjectMembershipOperationPut operation = new ProjectMembershipOperationPut();
-    	operation.init(this.coralIor, 
-    			this.coralConfigUrl,  
-    			Optional.<String> absent(), 
-    			Optional.<Object> of(request), 
-    			user);
-    	return (ProjectMembership) (operation.perform());
-    }
+  @GET
+  @Timed
+  public ProjectMembership get(@QueryParam("project") Optional<String> project, @Auth User user) {
+    ProjectMembershipOperationGet operation = new ProjectMembershipOperationGet();
+    operation.init(this.coralIor, this.coralConfigUrl, project, Optional.<Object> absent(), user);
+    return (ProjectMembership) (operation.perform());
+  }
+  
+  @PUT
+  @Timed
+  public ProjectMembership update(@Valid ProjectMembership request, @Auth User user) {
+    ProjectMembershipOperationPut operation = new ProjectMembershipOperationPut();
+    operation.init(this.coralIor, 
+        this.coralConfigUrl,  
+        Optional.<String> absent(), 
+        Optional.<Object> of(request), 
+        user);
+    return (ProjectMembership) (operation.perform());
+  }
 
 }

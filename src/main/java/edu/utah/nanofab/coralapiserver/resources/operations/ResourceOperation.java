@@ -46,18 +46,18 @@ public abstract class ResourceOperation {
      * @return
      */
     public abstract String errorMessage();
-	
+  
     public Object perform() {
-		this.setUp();
-		try {
-			this.performOperationImpl();
-		} catch (Exception e) {
-			e.printStackTrace();
-			this.error = e.getMessage();
-		}
-		this.tearDown();
-		this.reportErrorIfEncountered();
-		return returnValue();
+    this.setUp();
+    try {
+      this.performOperationImpl();
+    } catch (Exception e) {
+      e.printStackTrace();
+      this.error = e.getMessage();
+    }
+    this.tearDown();
+    this.reportErrorIfEncountered();
+    return returnValue();
     }
 
     public void setReturnValue(Object object) {
@@ -73,10 +73,10 @@ public abstract class ResourceOperation {
     this.api.close();
     this.api = null;
     }
-	
+  
     private Object returnValue() {
-    	return this.returnValue;
-	}
+      return this.returnValue;
+  }
     
     private void reportErrorIfEncountered() {
             String message = this.errorMessage();

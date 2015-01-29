@@ -23,27 +23,27 @@ import java.util.concurrent.atomic.AtomicLong;
 @Path("/enable")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiEnableResource {
-	
-	private String coralIor;
-	private String coralConfigUrl;
-	public static final Logger logger = LoggerFactory.getLogger(CoralApiEnableResource.class);
+  
+  private String coralIor;
+  private String coralConfigUrl;
+  public static final Logger logger = LoggerFactory.getLogger(CoralApiEnableResource.class);
 
-    public CoralApiEnableResource(String coralIor, String coralConfigUrl ) {
-        this.coralIor = coralIor;
-        this.coralConfigUrl = coralConfigUrl;
-        new AtomicLong();
-    }
+  public CoralApiEnableResource(String coralIor, String coralConfigUrl ) {
+      this.coralIor = coralIor;
+      this.coralConfigUrl = coralConfigUrl;
+      new AtomicLong();
+  }
 
-    @POST
-    @Timed
-    public EnableRequest createRequest(@Valid EnableRequest enableRequest, @Auth User user) {
-    	EnableOperationPost operation = new EnableOperationPost();
-    	operation.init(this.coralIor, 
-    			this.coralConfigUrl, 
-    			Optional.<String> absent(), 
-    			Optional.<Object>of( enableRequest), 
-    			user);
-    	return (EnableRequest) (operation.perform());
-    }
+  @POST
+  @Timed
+  public EnableRequest createRequest(@Valid EnableRequest enableRequest, @Auth User user) {
+    EnableOperationPost operation = new EnableOperationPost();
+    operation.init(this.coralIor, 
+        this.coralConfigUrl, 
+        Optional.<String> absent(), 
+        Optional.<Object>of( enableRequest), 
+        user);
+    return (EnableRequest) (operation.perform());
+  }
     
 }

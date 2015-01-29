@@ -28,47 +28,47 @@ import java.util.concurrent.atomic.AtomicLong;
 @Path("/account")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiAccountResource {
-	
-	private String coralIor;
-	private String coralConfigUrl;
-	public static final Logger logger = LoggerFactory.getLogger(CoralApiAccountResource.class);
+  
+  private String coralIor;
+  private String coralConfigUrl;
+  public static final Logger logger = LoggerFactory.getLogger(CoralApiAccountResource.class);
 
-    public CoralApiAccountResource(String coralIor, String coralConfigUrl ) {
-        this.coralIor = coralIor;
-        this.coralConfigUrl = coralConfigUrl;
-        new AtomicLong();
-    }
+  public CoralApiAccountResource(String coralIor, String coralConfigUrl ) {
+      this.coralIor = coralIor;
+      this.coralConfigUrl = coralConfigUrl;
+      new AtomicLong();
+  }
 
-    @GET
-    @Timed
-    public Account getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
-    	AccountOperationGet operation = new AccountOperationGet();
-    	operation.init(this.coralIor, this.coralConfigUrl, name, Optional.<Object> absent(), user);
-    	return (Account) (operation.perform());
-    }
-    
-    @POST
-    @Timed
-    public Account createRequest(@Valid Account account, @Auth User user) {
-    	AccountOperationPost operation = new AccountOperationPost();
-    	operation.init(this.coralIor, 
-    			this.coralConfigUrl, 
-    			Optional.<String> absent(), 
-    			Optional.<Object>of( account), 
-    			user);
-    	return (Account) (operation.perform());
-    }
-    
-    @PUT
-    @Timed
-    public Account updateRequest(@Valid Account account, @Auth User user) {
-    	AccountOperationPut operation = new AccountOperationPut();
-    	operation.init(this.coralIor, 
-    			this.coralConfigUrl, 
-    			Optional.<String> absent(), 
-    			Optional.<Object>of( account), 
-    			user);
-    	return (Account) (operation.perform());
-    }
+  @GET
+  @Timed
+  public Account getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
+    AccountOperationGet operation = new AccountOperationGet();
+    operation.init(this.coralIor, this.coralConfigUrl, name, Optional.<Object> absent(), user);
+    return (Account) (operation.perform());
+  }
+  
+  @POST
+  @Timed
+  public Account createRequest(@Valid Account account, @Auth User user) {
+    AccountOperationPost operation = new AccountOperationPost();
+    operation.init(this.coralIor, 
+        this.coralConfigUrl, 
+        Optional.<String> absent(), 
+        Optional.<Object>of( account), 
+        user);
+    return (Account) (operation.perform());
+  }
+  
+  @PUT
+  @Timed
+  public Account updateRequest(@Valid Account account, @Auth User user) {
+    AccountOperationPut operation = new AccountOperationPut();
+    operation.init(this.coralIor, 
+        this.coralConfigUrl, 
+        Optional.<String> absent(), 
+        Optional.<Object>of( account), 
+        user);
+    return (Account) (operation.perform());
+  }
 
 }

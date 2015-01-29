@@ -28,47 +28,47 @@ import java.util.concurrent.atomic.AtomicLong;
 @Path("/project")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiProjectResource {
-	
-	private String coralIor;
-	private String coralConfigUrl;
-	public static final Logger logger = LoggerFactory.getLogger(CoralApiProjectResource.class);
+  
+  private String coralIor;
+  private String coralConfigUrl;
+  public static final Logger logger = LoggerFactory.getLogger(CoralApiProjectResource.class);
 
-    public CoralApiProjectResource(String coralIor, String coralConfigUrl ) {
-        this.coralIor = coralIor;
-        this.coralConfigUrl = coralConfigUrl;
-        new AtomicLong();
-    }
+  public CoralApiProjectResource(String coralIor, String coralConfigUrl ) {
+      this.coralIor = coralIor;
+      this.coralConfigUrl = coralConfigUrl;
+      new AtomicLong();
+  }
 
-    @GET
-    @Timed
-    public Project getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
-    	ProjectOperationGet operation = new ProjectOperationGet();
-    	operation.init(this.coralIor, this.coralConfigUrl, name, Optional.<Object> absent(), user);
-    	return (Project) (operation.perform());
-    }
-   
-    @POST
-    @Timed
-    public Project createRequest(@Valid Project project, @Auth User user) {
-    	ProjectOperationPost operation = new ProjectOperationPost();
-    	operation.init(this.coralIor, 
-    			this.coralConfigUrl, 
-    			Optional.<String> absent(), 
-    			Optional.<Object>of( project), 
-    			user);
-    	return (Project) (operation.perform());
-    }
-    
-    @PUT
-    @Timed
-    public Project updateRequest(@Valid Project project, @Auth User user) {
-    	ProjectOperationPut operation = new ProjectOperationPut();
-    	operation.init(this.coralIor, 
-    			this.coralConfigUrl, 
-    			Optional.<String> absent(), 
-    			Optional.<Object>of( project), 
-    			user);
-    	return (Project) (operation.perform());
-    }
+  @GET
+  @Timed
+  public Project getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
+    ProjectOperationGet operation = new ProjectOperationGet();
+    operation.init(this.coralIor, this.coralConfigUrl, name, Optional.<Object> absent(), user);
+    return (Project) (operation.perform());
+  }
+ 
+  @POST
+  @Timed
+  public Project createRequest(@Valid Project project, @Auth User user) {
+    ProjectOperationPost operation = new ProjectOperationPost();
+    operation.init(this.coralIor, 
+        this.coralConfigUrl, 
+        Optional.<String> absent(), 
+        Optional.<Object>of( project), 
+        user);
+    return (Project) (operation.perform());
+  }
+  
+  @PUT
+  @Timed
+  public Project updateRequest(@Valid Project project, @Auth User user) {
+    ProjectOperationPut operation = new ProjectOperationPut();
+    operation.init(this.coralIor, 
+        this.coralConfigUrl, 
+        Optional.<String> absent(), 
+        Optional.<Object>of( project), 
+        user);
+    return (Project) (operation.perform());
+  }
 
 }

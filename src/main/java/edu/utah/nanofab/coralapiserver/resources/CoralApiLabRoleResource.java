@@ -23,22 +23,22 @@ import java.util.concurrent.atomic.AtomicLong;
 @Path("/labRoles")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiLabRoleResource {
-	
-	private String coralIor;
-	private String coralConfigUrl;
-	public static final Logger logger = LoggerFactory.getLogger(CoralApiLabRoleResource.class);
+  
+  private String coralIor;
+  private String coralConfigUrl;
+  public static final Logger logger = LoggerFactory.getLogger(CoralApiLabRoleResource.class);
 
-    public CoralApiLabRoleResource(String coralIor, String coralConfigUrl ) {
-        this.coralIor = coralIor;
-        this.coralConfigUrl = coralConfigUrl;
-        new AtomicLong();
-    }
+  public CoralApiLabRoleResource(String coralIor, String coralConfigUrl ) {
+      this.coralIor = coralIor;
+      this.coralConfigUrl = coralConfigUrl;
+      new AtomicLong();
+  }
 
-    @GET
-    @Timed
-    public LabRoles getRequest(@QueryParam("member") Optional<String> username, @Auth User user) {
-    	LabRoleOperationGet operation = new LabRoleOperationGet();
-    	operation.init(this.coralIor, this.coralConfigUrl, username, Optional.<Object> absent(), user);
-    	return (LabRoles) (operation.perform());
-    }
+  @GET
+  @Timed
+  public LabRoles getRequest(@QueryParam("member") Optional<String> username, @Auth User user) {
+    LabRoleOperationGet operation = new LabRoleOperationGet();
+    operation.init(this.coralIor, this.coralConfigUrl, username, Optional.<Object> absent(), user);
+    return (LabRoles) (operation.perform());
+  }
 }

@@ -22,23 +22,23 @@ import java.util.concurrent.atomic.AtomicLong;
 @Path("/machine")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiMachineResource {
-	
-	private String coralIor;
-	private String coralConfigUrl;
-	public static final Logger logger = LoggerFactory.getLogger(CoralApiMachineResource.class);
+  
+  private String coralIor;
+  private String coralConfigUrl;
+  public static final Logger logger = LoggerFactory.getLogger(CoralApiMachineResource.class);
 
-    public CoralApiMachineResource(String coralIor, String coralConfigUrl ) {
-        this.coralIor = coralIor;
-        this.coralConfigUrl = coralConfigUrl;
-        new AtomicLong();
-    }
+  public CoralApiMachineResource(String coralIor, String coralConfigUrl ) {
+      this.coralIor = coralIor;
+      this.coralConfigUrl = coralConfigUrl;
+      new AtomicLong();
+  }
 
-    @GET
-    @Timed
-    public Object getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
-    	MachineOperationGet operation = new MachineOperationGet();
-    	operation.init(this.coralIor, this.coralConfigUrl, name, Optional.<Object> absent(), user);
-    	return operation.perform();
-    }
-    
+  @GET
+  @Timed
+  public Object getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
+    MachineOperationGet operation = new MachineOperationGet();
+    operation.init(this.coralIor, this.coralConfigUrl, name, Optional.<Object> absent(), user);
+    return operation.perform();
+  }
+  
 }
