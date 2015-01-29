@@ -1,6 +1,6 @@
-coralIor: "http://vagrant-coral-dev/IOR/"
+coralIor: "http://coral-dev-box/IOR/"
 
-coralConfigUrl: "http://vagrant-coral-dev/coral/lib/config.jar"
+coralConfigUrl: "http://coral-dev-box/coral/lib/config.jar"
 
 http:
   port: 8443

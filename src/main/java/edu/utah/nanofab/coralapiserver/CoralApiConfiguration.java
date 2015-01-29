@@ -7,11 +7,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class CoralApiConfiguration extends Configuration {
     @NotEmpty
     @JsonProperty
-    private String coralIor = "http://vagrant-coral-dev/IOR/";
+    private String coralIor = "http://coral-dev-box/IOR/";
 
     @NotEmpty
     @JsonProperty
-    private String coralConfigUrl = "http://vagrant-coral-dev/coral/lib/config.jar";
+    private String coralConfigUrl = "http://coral-dev-box/coral/lib/config.jar";
 
     @NotEmpty
     @JsonProperty
