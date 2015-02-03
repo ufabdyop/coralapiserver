@@ -2,14 +2,19 @@ coralIor: "http://coral-dev-box/IOR/"
 
 coralConfigUrl: "http://coral-dev-box/coral/lib/config.jar"
 
-http:
-  port: 8443
-  adminPort: 8082
-  connectorType: nonblocking+ssl
-
-  ssl:
-    keyStore: ./newstore
-    keyStorePassword: 123456
+server:
+#  type: simple
+#  applicationContextPath: /
+#  adminContextPath: /admin
+  applicationConnectors:
+    - type: http
+      port: 8080
+    - type: https
+      port: 8443
+      keyStorePath: ./newstore
+      keyStorePassword: 123456
+      certAlias: mykey
+      validateCerts: false
 
 logging:
   level:  ERROR
