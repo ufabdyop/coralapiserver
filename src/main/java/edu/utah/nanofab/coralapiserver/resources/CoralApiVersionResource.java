@@ -1,6 +1,6 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
-import com.yammer.metrics.annotation.Timed;
+import com.codahale.metrics.annotation.Timed;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;

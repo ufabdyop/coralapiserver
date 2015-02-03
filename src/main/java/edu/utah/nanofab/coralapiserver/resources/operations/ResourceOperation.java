@@ -5,7 +5,7 @@ import javax.ws.rs.core.Response;
 
 import com.google.common.base.Optional;
 import com.sun.jersey.core.spi.factory.ResponseBuilderImpl;
-import com.yammer.dropwizard.auth.Auth;
+import io.dropwizard.auth.Auth;
 
 import edu.utah.nanofab.coralapi.CoralAPI;
 import edu.utah.nanofab.coralapiserver.auth.User;

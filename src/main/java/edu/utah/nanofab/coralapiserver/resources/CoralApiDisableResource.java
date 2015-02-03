@@ -7,8 +7,8 @@ import edu.utah.nanofab.coralapiserver.resources.operations.DisableOperationPost
 import org.slf4j.Logger;
 
 import com.google.common.base.Optional;
-import com.yammer.dropwizard.auth.Auth;
-import com.yammer.metrics.annotation.Timed;
+import io.dropwizard.auth.Auth;
+import com.codahale.metrics.annotation.Timed;
 
 import javax.validation.Valid;
 import javax.ws.rs.POST;

@@ -2,10 +2,10 @@ package edu.utah.nanofab.coralapiserver;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.yammer.dropwizard.Service;
-import com.yammer.dropwizard.auth.basic.BasicAuthProvider;
-import com.yammer.dropwizard.config.Bootstrap;
-import com.yammer.dropwizard.config.Environment;
+import io.dropwizard.Application;
+import io.dropwizard.auth.basic.BasicAuthProvider;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
 
 import edu.utah.nanofab.coralapiserver.auth.SimpleAuthenticator;
 import edu.utah.nanofab.coralapiserver.auth.User;
@@ -20,14 +20,13 @@ import edu.utah.nanofab.coralapiserver.resources.CoralApiProjectsResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiVersionResource;
 
 
-public class CoralApiService extends Service<CoralApiConfiguration> {
+public class CoralApiService extends Application<CoralApiConfiguration> {
     public static void main(String[] args) throws Exception {
         new CoralApiService().run(args);
     }
 
     @Override
     public void initialize(Bootstrap<CoralApiConfiguration> bootstrap) {
-        bootstrap.setName("coral-api");
     }
 
     @Override
@@ -38,16 +37,16 @@ public class CoralApiService extends Service<CoralApiConfiguration> {
       final TokenConfiguration[] tokens = configuration.getAuthTokensConfiguration().getTokens();
       ConcurrentHashMap<String, TokenConfiguration> sessionTokens = new ConcurrentHashMap<String, TokenConfiguration>();
 
-      environment.addProvider(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens, sessionTokens, coralIor, coralConfigUrl ), "REALM STRING"));
-      environment.addResource(new CoralApiVersionResource());
-      environment.addResource(new CoralApiAuthTokenResource(coralIor, coralConfigUrl, sessionTokens));
-      environment.addResource(new CoralApiMemberResource(coralIor, coralConfigUrl));
-      environment.addResource(new CoralApiLabRoleResource(coralIor, coralConfigUrl));
-      environment.addResource(new CoralApiProjectResource(coralIor, coralConfigUrl));
-      environment.addResource(new CoralApiAccountResource(coralIor, coralConfigUrl));
-      environment.addResource(new CoralApiProjectMembershipResource(coralIor, coralConfigUrl));
-      environment.addResource(new CoralApiProjectsResource(coralIor, coralConfigUrl));
-      environment.addResource(new CoralApiPasswordResetResource(coralIor, coralConfigUrl));
+      environment.jersey().register(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens, sessionTokens, coralIor, coralConfigUrl ), "REALM STRING"));
+      environment.jersey().register(new CoralApiVersionResource());
+      environment.jersey().register(new CoralApiAuthTokenResource(coralIor, coralConfigUrl, sessionTokens));
+      environment.jersey().register(new CoralApiMemberResource(coralIor, coralConfigUrl));
+      environment.jersey().register(new CoralApiLabRoleResource(coralIor, coralConfigUrl));
+      environment.jersey().register(new CoralApiProjectResource(coralIor, coralConfigUrl));
+      environment.jersey().register(new CoralApiAccountResource(coralIor, coralConfigUrl));
+      environment.jersey().register(new CoralApiProjectMembershipResource(coralIor, coralConfigUrl));
+      environment.jersey().register(new CoralApiProjectsResource(coralIor, coralConfigUrl));
+      environment.jersey().register(new CoralApiPasswordResetResource(coralIor, coralConfigUrl));
     }
 
 }

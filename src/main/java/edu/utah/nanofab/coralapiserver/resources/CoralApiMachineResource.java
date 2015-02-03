@@ -6,8 +6,8 @@ import edu.utah.nanofab.coralapiserver.resources.operations.MachineOperationGet;
 import org.slf4j.Logger;
 
 import com.google.common.base.Optional;
-import com.yammer.dropwizard.auth.Auth;
-import com.yammer.metrics.annotation.Timed;
+import io.dropwizard.auth.Auth;
+import com.codahale.metrics.annotation.Timed;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

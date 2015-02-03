@@ -3,7 +3,7 @@ package edu.utah.nanofab.coralapiserver;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.yammer.dropwizard.config.Configuration;
+import io.dropwizard.Configuration;
 
 public class TokenConfiguration  extends Configuration {
    
