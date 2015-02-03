@@ -6,6 +6,7 @@ import io.dropwizard.Application;
 import io.dropwizard.auth.basic.BasicAuthProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.dropwizard.assets.AssetsBundle;
 
 import edu.utah.nanofab.coralapiserver.auth.SimpleAuthenticator;
 import edu.utah.nanofab.coralapiserver.auth.User;
@@ -27,6 +28,7 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
 
     @Override
     public void initialize(Bootstrap<CoralApiConfiguration> bootstrap) {
+      bootstrap.addBundle(new AssetsBundle("/assets"));
     }
 
     @Override
