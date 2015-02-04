@@ -19,8 +19,8 @@ public class CoralApiWhoAmIResource {
   
   @GET
   @Timed
-  public String getRequest(@Auth User user) {
-	  return user.getUsername();
+  public User getRequest(@Auth User user) {
+	  return user;
   }  
   
 }
