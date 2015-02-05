@@ -269,10 +269,12 @@ curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https:/
 #### POST requests
 
 To create a new coral member:
-
 ```
 curl -X POST -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new proj"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
 ```
+
+To change a password:
+curl  -X POST -H "Content-Type: application/json" -d '{"name":"coral", "password":"1234567"}' -k -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 https://localhost:8443/resetPassword
 
 To create a reservation:
 ```

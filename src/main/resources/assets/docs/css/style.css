@@ -8,3 +8,9 @@ code {
   display: block;
   margin: 10px;
 }
+
+#apiUrl {
+  display: block;
+  clear: both;
+  width: 500px;
+}

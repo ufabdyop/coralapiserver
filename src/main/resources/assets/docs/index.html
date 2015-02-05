@@ -2,20 +2,21 @@
 <html>
   <head>
     <title>CoralAPIServer Docs</title>
+    <script src="https://code.jquery.com/jquery-1.11.2.js"></script>
+    <script src="js/samples.js"></script>
+    <script>
+    </script>
   </head>
 
   <body>
-    <span id="loading-message">Loading...</span>
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
-    <script src="js/samples.js"></script>
-    <script>
-      var apiUrl = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port ;
-    </script>
-    <script src="https://code.jquery.com/jquery-1.11.2.js"></script>
+    <label>API URL is <span id="currentApi"></span></label>
+    <input type="text" id="apiUrl"/>
+    <button onclick="overrideApiUrl()">Set</button>
     <h3>Version</h3>
     <p>The simplest API call is to ask the API what version it is running.  With curl, this is done as:
     <br/>
-    <code>curl <script>document.write(apiUrl);</script>/version</code>
+    <code>curl https://mycoralapiserver.hostname/version</code>
     <br/>
     And the server should reply with something like:
     <code>
@@ -37,21 +38,28 @@
     coral credentials.
     <br/>
     Here's the curl example:
-    <code>curl -u username:password <script>document.write(apiUrl);</script>/authenticate</code>
+    <code>curl -u username:password https://mycoralapiserver.hostname/authenticate</code>
     <br/>
     And the server should reply with something like:
     <code>
-      { "" }
+      {"username":"auth-token","password":"ogps07otsl015pigm63d3snbsk"}
     </code>
+    You may use auth-token that is return as way to authenticate on future requests so you don't have to continue sending your username and password.
+    The token will expire.
+    You may also configure the coral-api.yml file with a set of tokens that are persistent.
     </p>
 
     <p>With jQuery, this is:</p>
-    <textarea id="authExample">
-    </textarea>
+    <textarea id="authExample"> </textarea>
     <script>
       $('#authExample').html(authenticate.toString());
     </script>
-    <button onclick="getVersion(apiUrl);">Try It</button>
+    <label>Username</label><input type="text" id="username"/>
+    <br/>
+    <label>Password</label><input type="text" id="password"/>
+    <br/>
+    <button onclick="authenticate(apiUrl, $('#username').val(), $('#password').val());">Try It</button>
   </body>
+  <script src="js/initDocs.js"></script>
 
 </html>
