@@ -48,7 +48,7 @@
 		<dependency>
 			<groupId>edu.utah.nanofab</groupId>
 			<artifactId>CoralAPI</artifactId>
-			<version>0.1.43-SNAPSHOT</version>
+			<version>0.1.43</version>
 		</dependency>
 
 		<!-- Authentication support -->
