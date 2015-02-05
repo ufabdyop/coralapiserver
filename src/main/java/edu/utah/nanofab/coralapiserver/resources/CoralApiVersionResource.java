@@ -31,6 +31,6 @@ public class CoralApiVersionResource {
       p.load(stream);
 
       stream.close();
-      return p.getProperty("application.version");
+      return "{ \"versionNumber\": \"" + p.getProperty("application.version") + "\" }";
     }
 }
