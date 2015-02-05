@@ -17,9 +17,9 @@ server:
       validateCerts: false
 
 logging:
-  level:  ERROR
+  level:  DEBUG
   loggers:
-    "edu.utah.nanofab.coralapiserver": ERROR
+    "edu.utah.nanofab.coralapiserver": DEBUG
 
 authToken:
   tokens:

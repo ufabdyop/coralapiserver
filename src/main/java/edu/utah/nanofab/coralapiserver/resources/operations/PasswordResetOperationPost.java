@@ -22,12 +22,11 @@ public class PasswordResetOperationPost extends ResourceOperation {
     } catch(Exception e) {
       logger.error("Error: Could not update password for user '" + memberName + "'");
       logger.trace(e.getMessage(), e);
-      this.setReturnValue(false);
+      this.setReturnValue("{\"status\": \"failed\"}");
       return;
     }
     
-    this.setReturnValue(true);
-    return;
+    this.setReturnValue("{\"status\": \"success\"}");
   }
 
   @Override

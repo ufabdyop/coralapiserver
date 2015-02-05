@@ -49,7 +49,7 @@ public class CoralApiPasswordResetResource {
    */
   @POST
   @Timed
-  public boolean updatePassword(@Valid PasswordResetRequest request, @Auth User user) {
+  public Object updatePassword(@Valid PasswordResetRequest request, @Auth User user) {
     PasswordResetOperationPost operation = new PasswordResetOperationPost();
     
     operation.init(this.coralIor, 
@@ -59,6 +59,6 @@ public class CoralApiPasswordResetResource {
              user
     );
     
-    return (Boolean) operation.perform();
+    return operation.perform();
   }
 }
