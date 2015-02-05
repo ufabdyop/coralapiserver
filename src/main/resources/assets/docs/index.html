@@ -6,8 +6,52 @@
 
   <body>
     <span id="loading-message">Loading...</span>
-    <!-- <script src="https://rawgit.com/ufabdyop/coralapiserver-js/master/index.js"></script> -->
-    <script src="http://localhost:4001/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <script src="js/samples.js"></script>
+    <script>
+      var apiUrl = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port ;
+    </script>
+    <script src="https://code.jquery.com/jquery-1.11.2.js"></script>
+    <h3>Version</h3>
+    <p>The simplest API call is to ask the API what version it is running.  With curl, this is done as:
+    <br/>
+    <code>curl <script>document.write(apiUrl);</script>/version</code>
+    <br/>
+    And the server should reply with something like:
+    <code>
+      { "versionNumber": "0.2.1" }
+    </code>
+    </p>
+
+    <p>With jQuery, this is:</p>
+    <textarea id="versionExample">
+    </textarea>
+    <script>
+      $('#versionExample').html(getVersion.toString());
+    </script>
+    <button onclick="getVersion(apiUrl);">Try It</button>
+
+
+    <h3>Authentication</h3>
+    <p>There are a few ways to authenticate to coral api server.  The simplest is a basic http auth with 
+    coral credentials.
+    <br/>
+    Here's the curl example:
+    <code>curl -u username:password <script>document.write(apiUrl);</script>/authenticate</code>
+    <br/>
+    And the server should reply with something like:
+    <code>
+      { "" }
+    </code>
+    </p>
+
+    <p>With jQuery, this is:</p>
+    <textarea id="authExample">
+    </textarea>
+    <script>
+      $('#authExample').html(authenticate.toString());
+    </script>
+    <button onclick="getVersion(apiUrl);">Try It</button>
   </body>
 
 </html>
