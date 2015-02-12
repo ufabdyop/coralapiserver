@@ -159,17 +159,17 @@ The configuration file (coral-api.yml) provides a place for creating permanent t
 and associating them with users.  You can obtain a temporary token by posting your
 username and password to `/authenticate`.  For example:
 
-    curl -k -X POST -H "Content-Type: application/json" -d '{"username":"ryant","password":"pass"}' https://localhost:8443/authenticate
+    curl -k -X POST -H "Content-Type: application/json" -d '{"username":"ryant","password":"pass"}' https://localhost:8443/v0/authenticate
     {"username":"auth-token","password":"cosmouckrklkkcu579hdsbr0l8"}
 
 You may also request a token by authenticating using basic HTTP authentication and making a GET request to the same path `/authenticate`. 
 
-    curl -k -u coral:123456 https://localhost:8443/authenticate 
+    curl -k -u coral:123456 https://localhost:8443/v0/authenticate 
     {"username":"auth-token","password":"sibjcja4ru9u1kbq73ohhtd9pn"}
 
 The server will response with a JSON object with a username of 'auth-token' and the token as the password. This token can be used to communicate with the server. For example:
 
-    curl -u auth-token:cosmouckrklkkcu579hdsbr0l8 -k https://localhost:8443/member?name=coral
+    curl -u auth-token:cosmouckrklkkcu579hdsbr0l8 -k https://localhost:8443/v0/member?name=coral
     {"name":"coral","address1":"","address2":"","advisor":"","altFax":"","altOffice":"","altPhone":"","city":"","disability":"","email":"","ethnicity":"","fax":"","firstName":"","lastName":"","mailCode":"","password":"*LK*","phone":"","project":"Bootstrap project","race":"","state":"","type":"","univid":"","url":"","zipcode":"","active":true}
 
 You can create a token for another user if you use a special token in the config file.  The config file must contain an entry
@@ -179,7 +179,7 @@ You may want to periodically change this token.  Also, best not to share this to
 create multiple tokens and give one to each service.  Example command for generating a token for someone else (assuming the
 proxyAuthenticator token is 12345abdef):
 
-    curl -k -u auth-token:12345abcdef https://localhost:8443/authenticate?proxyFor=johndoe
+    curl -k -u auth-token:12345abcdef https://localhost:8443/v0/authenticate?proxyFor=johndoe
     {"username":"auth-token","password":"ABDCDEFGHIJKL"}
 
 The response from the server was a token of "ABDCDEFGHIJKL" that can be used to authenticate as johndoe
@@ -198,14 +198,14 @@ Resources:
 To get the details of an already existing account entity:
 
 ```
-curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/account?name=Bootstrap%20account
+curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/account?name=Bootstrap%20account
 ```
 
 #### POST requests
 To create new account entities:
 
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"name":"new acct"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/account -D -
+curl -X POST -H "Content-Type: application/json" -d '{"name":"new acct"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/account -D -
 ```
 
 #### PUT requests
@@ -213,7 +213,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"name":"new acct"}' -u aut
 To update an already existing account:
 
 ```
-curl -X PUT -H "Content-Type: application/json" -d '{"name":"new acct", "description":"test"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/account -D -
+curl -X PUT -H "Content-Type: application/json" -d '{"name":"new acct", "description":"test"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/account -D -
 ```
 
 ### Project
@@ -223,7 +223,7 @@ curl -X PUT -H "Content-Type: application/json" -d '{"name":"new acct", "descrip
 To get the details of an already existing Project:
 
 ```
-curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project?name=Bootstrap%20project
+curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/project?name=Bootstrap%20project
 ```
 
 #### POST requests
@@ -231,7 +231,7 @@ curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https:/
 Create a new Project:
 
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"name":"new proj", "account":"new acct"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project -D -
+curl -X POST -H "Content-Type: application/json" -d '{"name":"new proj", "account":"new acct"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/project -D -
 ```
 
 #### PUT requests
@@ -239,7 +239,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"name":"new proj", "accoun
 To update an existing project:
 
 ```
-curl -X PUT -H "Content-Type: application/json" -d '{"name":"new proj", "account": "new acct", "description":"some description"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project -D -
+curl -X PUT -H "Content-Type: application/json" -d '{"name":"new proj", "account": "new acct", "description":"some description"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/project -D -
 ```
 
 #### Get all active coral projects
@@ -247,13 +247,13 @@ curl -X PUT -H "Content-Type: application/json" -d '{"name":"new proj", "account
 To get all of the active projects:
 
 ```
-curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/projects
+curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/projects
 ```
 
 #### List member(s) on a project
 
 ```
-curl -H "Content-Type: application/json" -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project-membership?project=new%20project -D -
+curl -H "Content-Type: application/json" -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/project-membership?project=new%20project -D -
 ```
 
 ### Member
@@ -263,32 +263,32 @@ curl -H "Content-Type: application/json" -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqW
 To get the details of an already existing coral member:
 
 ```
-curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member?name=coral
+curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/member?name=coral
 ```
 
 #### POST requests
 
 To create a new coral member:
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new proj"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
+curl -X POST -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new proj"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/member -D -
 ```
 
 To change a password:
-curl  -X POST -H "Content-Type: application/json" -d '{"name":"coral", "password":"1234567"}' -k -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 https://localhost:8443/resetPassword
+curl  -X POST -H "Content-Type: application/json" -d '{"name":"coral", "password":"1234567"}' -k -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 https://localhost:8443/v0/resetPassword
 
 To create a reservation:
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "project":"new proj", "account":"new acct", "bdate":"2014-06-12 12:00:00", "edate":"2014-06-12 13:00:00", "item": "some instrument"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/reservation -D -
+curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "project":"new proj", "account":"new acct", "bdate":"2014-06-12 12:00:00", "edate":"2014-06-12 13:00:00", "item": "some instrument"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/reservation -D -
 ```
 
 To enable a tool:
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "project":"new proj", "item": "some instrument"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/enable -D -
+curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "project":"new proj", "item": "some instrument"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/enable -D -
 ```
 
 To disable a tool:
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "item": "some instrument"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/disable -D -
+curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "item": "some instrument"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/disable -D -
 ```
 
 #### PUT requests
@@ -296,13 +296,13 @@ curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "ite
 To update an already existing member:
 
 ```
-curl -X PUT -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new proj", "firstName": "amy"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/member -D -
+curl -X PUT -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new proj", "firstName": "amy"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/member -D -
 ```
 
 #### Add member(s) to a project:
 
 ```
-curl -X PUT -H "Content-Type: application/json" -d '{"project":"new proj", "members":["coral"]}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/project-membership -D -
+curl -X PUT -H "Content-Type: application/json" -d '{"project":"new proj", "members":["coral"]}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/project-membership -D -
 ```
 
 #### Get projects for member
@@ -310,21 +310,21 @@ curl -X PUT -H "Content-Type: application/json" -d '{"project":"new proj", "memb
 To get all of the active projects that a member is working on:
 
 ```
-curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/projects?member=coral
+curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/projects?member=coral
 ```
 
     
 ### API Version:
 
-    curl -k https://localhost:8443/version
+    curl -k https://localhost:8443/v0/version
 
 ### Check Some Security Settings:
 
-    curl -k https://localhost:8443/checkKey
+    curl -k https://localhost:8443/v0/checkKey
 
 ### Who Am I (useful if authenticating with token
 
-    curl -k https://localhost:8443/whoami
+    curl -k https://localhost:8443/v0/whoami
 
 
 
