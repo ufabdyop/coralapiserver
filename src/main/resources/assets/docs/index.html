@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>CoralAPIServer Docs</title>
-    <script src="https://code.jquery.com/jquery-1.11.2.js"></script>
     <script src="js/samples.js"></script>
     <script>
     </script>
@@ -63,7 +62,7 @@
       <br/>
       <label>Password</label><input type="text" id="password"/>
       <br/>
-      <button onclick="authenticate(apiUrl, $('#username').val(), $('#password').val());">Try It</button>
+      <button onclick="authenticate(apiUrl, document.getElementById('username').value, document.getElementById('password').value);">Try It</button>
     </div>
 
     <div id="password-doc">
@@ -91,7 +90,7 @@
         <br/>
         <label>New Password</label><input type="text" id="pw_newpassword"/>
       </div>
-      <button onclick="resetPassword(apiUrl, $('#pw_username').val(), $('#pw_password').val(), $('#pw_username_subject').val(), $('#pw_newpassword').val());">Try It</button>
+      <button onclick="resetPassword(apiUrl, document.getElementById('pw_username').value, document.getElementById('pw_password').value, document.getElementById('pw_username_subject').value, document.getElementById('pw_newpassword').value);">Try It</button>
     </div>
 
     <div id="machines-doc">
@@ -114,7 +113,7 @@
         <br/>
         <label>Password</label><input type="text" id="machine_password"/>
       </div>
-      <button onclick="machineList(apiUrl, $('#machine_username').val(), $('#machine_password').val());">Try It</button>
+      <button onclick="machineList(apiUrl, document.getElementById('machine_username').value, document.getElementById('machine_password').value);">Try It</button>
     </div>
     <div id="enable-doc">
       <h3>Enable Machine</h3>
@@ -138,7 +137,7 @@
         <label>Project</label><input type="text" id="enable_project"/>
         <label>Machine</label><input type="text" id="enable_machine"/>
       </div>
-      <button onclick="enable(apiUrl, $('#enable_username').val(), $('#enable_password').val(), $('#enable_project').val(), $('#enable_machine').val());">Try It</button>
+      <button onclick="enable(apiUrl, document.getElementById('enable_username').value, document.getElementById('enable_password').value, document.getElementById('enable_project').value, document.getElementById('enable_machine').value);">Try It</button>
     </div>
   </body>
   <script src="js/initDocs.js"></script>
