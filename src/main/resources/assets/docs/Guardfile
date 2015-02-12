@@ -1,0 +1,7 @@
+guard :shell do
+  watch(/(.*)/) {|m| puts "#{m[0]} file changed.\n" }
+end
+
+guard 'livereload' do
+  watch(/(.*)/) { |m| "/#{m[0]}" }
+end

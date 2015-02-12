@@ -11,6 +11,12 @@ code {
 
 #apiUrl {
   display: block;
-  clear: both;
   width: 500px;
+  float: left;
+}
+
+label {
+  width: 300px;
+  display: block;
+  margin-top:10px;
 }
