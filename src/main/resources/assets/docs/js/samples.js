@@ -51,3 +51,22 @@ function resetPassword(coralApiUrl, username, password, targetUsername, newPassw
   data = {"name" : targetUsername, "password" : newPassword};
   request.send(JSON.stringify(data));
 };
+
+function machineList(coralApiUrl, username, password) {
+  var request = new XMLHttpRequest();
+  request.open("GET", coralApiUrl + '/machine', true);
+  request.setRequestHeader("Accept", "application/json");
+  request.setRequestHeader("Content-Type", "application/json");
+  request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+
+  request.onreadystatechange = function() {
+        if (request.readyState == 4) {
+          if (request.status === 200) {
+              alert(request.responseText);
+          } else {
+              alert('ERROR: ' + request.statusText);
+          }
+        }
+  }
+  request.send(null);
+};

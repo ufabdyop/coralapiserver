@@ -65,6 +65,7 @@
       <br/>
       <button onclick="authenticate(apiUrl, $('#username').val(), $('#password').val());">Try It</button>
     </div>
+
     <div id="password-doc">
       <h3>Change Password</h3>
       <p>You may change your password by using the resetPassword resource
@@ -91,6 +92,29 @@
         <label>New Password</label><input type="text" id="pw_newpassword"/>
       </div>
       <button onclick="resetPassword(apiUrl, $('#pw_username').val(), $('#pw_password').val(), $('#pw_username_subject').val(), $('#pw_newpassword').val());">Try It</button>
+    </div>
+
+    <div id="machines-doc">
+      <h3>List Machines</h3>
+      <p>You may get a list of machines by using the machine resource
+        <br/>
+        Here's the curl example:
+        <code>
+          curl -u username:password https://mycoralapiserver.hostname/v0/machine
+        </code>
+      </p>
+
+      <p>With javascript, this is:</p>
+      <textarea id="machineExample"> </textarea>
+      <script>
+        $('#machineExample').html(machineList.toString());
+      </script>
+      <div id="machineExample">
+        <label>Username</label><input type="text" id="machine_username"/>
+        <br/>
+        <label>Password</label><input type="text" id="machine_password"/>
+      </div>
+      <button onclick="machineList(apiUrl, $('#machine_username').val(), $('#machine_password').val());">Try It</button>
     </div>
   </body>
   </body>
