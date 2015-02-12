@@ -18,7 +18,7 @@ import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.PasswordResetRequest;
 import edu.utah.nanofab.coralapiserver.resources.operations.PasswordResetOperationPost;
 
-@Path("/resetPassword")
+@Path("/v0/resetPassword")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiPasswordResetResource {
   

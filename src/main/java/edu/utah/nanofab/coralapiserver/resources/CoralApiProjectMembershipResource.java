@@ -17,7 +17,7 @@ import edu.utah.nanofab.coralapiserver.core.ProjectMembership;
 import edu.utah.nanofab.coralapiserver.resources.operations.ProjectMembershipOperationGet;
 import edu.utah.nanofab.coralapiserver.resources.operations.ProjectMembershipOperationPut;
 
-@Path("/project-membership")
+@Path("/v0/project-membership")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiProjectMembershipResource {
   private String coralIor;

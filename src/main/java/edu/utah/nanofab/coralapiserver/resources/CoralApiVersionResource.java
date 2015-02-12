@@ -9,7 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/version")
+@Path("/v0/version")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiVersionResource {
     

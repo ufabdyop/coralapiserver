@@ -17,7 +17,7 @@ import edu.utah.nanofab.coralapi.collections.Projects;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.resources.operations.ProjectsOperationGet;
 
-@Path("/projects")
+@Path("/v0/projects")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiProjectsResource {
   

@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-@Path("/machine")
+@Path("/v0/machine")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiMachineResource {
   

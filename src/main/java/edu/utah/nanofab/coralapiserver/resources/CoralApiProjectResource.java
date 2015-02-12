@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-@Path("/project")
+@Path("/v0/project")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiProjectResource {
   

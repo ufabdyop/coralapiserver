@@ -13,7 +13,7 @@ import com.codahale.metrics.annotation.Timed;
 
 import edu.utah.nanofab.coralapiserver.auth.User;
 
-@Path("/whoami")
+@Path("/v0/whoami")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiWhoAmIResource {
   

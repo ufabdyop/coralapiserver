@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-@Path("/labRoles")
+@Path("/v0/labRoles")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiLabRoleResource {
   

@@ -23,7 +23,7 @@ import edu.utah.nanofab.coralapiserver.auth.CoralCredentials;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.AuthRequest;
 
-@Path("/authenticate")
+@Path("/v0/authenticate")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiAuthTokenResource {
   private ConcurrentHashMap<String, TokenConfiguration> sessionTokens;

@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-@Path("/account")
+@Path("/v0/account")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiAccountResource {
   

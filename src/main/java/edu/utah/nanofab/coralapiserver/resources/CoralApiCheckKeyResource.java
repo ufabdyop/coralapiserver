@@ -17,7 +17,7 @@ import java.security.Security;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Path("/checkKey")
+@Path("/v0/checkKey")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiCheckKeyResource {
   

@@ -23,7 +23,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.slf4j.LoggerFactory;
 
-@Path("/member")
+@Path("/v0/member")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiMemberResource {
   

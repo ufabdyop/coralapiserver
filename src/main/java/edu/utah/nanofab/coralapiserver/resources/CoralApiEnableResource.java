@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-@Path("/enable")
+@Path("/v0/enable")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiEnableResource {
   
