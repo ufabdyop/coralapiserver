@@ -36,22 +36,25 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
 
   @Override
     public Optional<User> authenticate(BasicCredentials credentials) throws AuthenticationException {
-    if (credentials.getUsername().equals("auth-token")) {
-                    Optional<User> tokensUser = authenticateByToken(credentials.getPassword());
-                    
-                    //special case for proxyAuthenticator
-                    if (tokensUser.get().getUsername().equals("proxyAuthenticator")) {
-                      logger.debug("bypassing coral check for proxyAuthenticator");
-                      return tokensUser;
-                    } else if (isValidUser(tokensUser)) {
-                        return tokensUser;
-                    } else {
-                      logger.debug("User did not validate against coral: " + tokensUser.get().getUsername());
-                        throw new AuthenticationException("Invalid user");
-                    }
-    } else {
-      return authenticateByUsernamePassword(credentials.getUsername(), credentials.getPassword());
-    }
+	    if (credentials.getUsername().equals("auth-token")) {
+	                    Optional<User> tokensUser = authenticateByToken(credentials.getPassword());
+	                    
+	                    //special case for proxyAuthenticator
+	                    if (!tokensUser.isPresent()) {
+		                      logger.debug("User did not validate against coral: " + credentials.getPassword());
+		                      return Optional.<User>absent();
+	                    } else if ( tokensUser.get().getUsername().equals("proxyAuthenticator")) {
+	                      logger.debug("bypassing coral check for proxyAuthenticator");
+	                      return tokensUser;
+	                    } else if (isValidUser(tokensUser)) {
+	                        return tokensUser;
+	                    } else {
+	                      logger.debug("User did not validate against coral: " + tokensUser.get().getUsername());
+	                      return Optional.<User>absent();
+	                    }
+	    } else {
+	      return authenticateByUsernamePassword(credentials.getUsername(), credentials.getPassword());
+	    }
     }
     
     public boolean isValidUser(Optional<User> user) {
