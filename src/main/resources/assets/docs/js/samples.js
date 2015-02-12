@@ -70,3 +70,23 @@ function machineList(coralApiUrl, username, password) {
   }
   request.send(null);
 };
+
+function enable(coralApiUrl, username, password, project, item) {
+  var request = new XMLHttpRequest();
+  request.open("POST", coralApiUrl + '/enable', true);
+  request.setRequestHeader("Accept", "application/json");
+  request.setRequestHeader("Content-Type", "application/json");
+  request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+  data = {"member" : username, "project" : project, "item" : item};
+
+  request.onreadystatechange = function() {
+        if (request.readyState == 4) {
+          if (request.status === 200) {
+              alert(request.responseText);
+          } else {
+              alert('ERROR: ' + request.statusText);
+          }
+        }
+  }
+  request.send(JSON.stringify(data));
+};

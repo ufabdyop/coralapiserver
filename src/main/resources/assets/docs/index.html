@@ -116,7 +116,30 @@
       </div>
       <button onclick="machineList(apiUrl, $('#machine_username').val(), $('#machine_password').val());">Try It</button>
     </div>
-  </body>
+    <div id="enable-doc">
+      <h3>Enable Machine</h3>
+      <p>You may enable a machine by using the enable resource
+        <br/>
+        Here's the curl example:
+        <code>
+          curl -X POST -H "Content-Type: application/json" -d '{"member":"coral", "project":"Bootstrap project", "item": "some instrument"}' -u coral:password https://mycoralapiserver.hostname/v0/enable
+        </code>
+      </p>
+
+      <p>With javascript, this is:</p>
+      <textarea id="enableExample"> </textarea>
+      <script>
+        $('#enableExample').html(enable.toString());
+      </script>
+      <div id="enableExample">
+        <label>Username</label><input type="text" id="enable_username"/>
+        <br/>
+        <label>Password</label><input type="text" id="enable_password"/>
+        <label>Project</label><input type="text" id="enable_project"/>
+        <label>Machine</label><input type="text" id="enable_machine"/>
+      </div>
+      <button onclick="enable(apiUrl, $('#enable_username').val(), $('#enable_password').val(), $('#enable_project').val(), $('#enable_machine').val());">Try It</button>
+    </div>
   </body>
   <script src="js/initDocs.js"></script>
 </html>
