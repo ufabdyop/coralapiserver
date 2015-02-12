@@ -318,6 +318,14 @@ curl -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https:/
 
     curl -k https://localhost:8443/version
 
+### Check Some Security Settings:
+
+    curl -k https://localhost:8443/checkKey
+
+### Who Am I (useful if authenticating with token
+
+    curl -k https://localhost:8443/whoami
+
 
 
 
