@@ -20,6 +20,7 @@ import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiAccountResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiAuthTokenResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiCheckKeyResource;
+import edu.utah.nanofab.coralapiserver.resources.CoralApiEntryPointResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiLabRoleResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiMemberResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiPasswordResetResource;
@@ -50,6 +51,7 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
       configureCors(environment);
 
       environment.jersey().register(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens, sessionTokens, coralIor, coralConfigUrl ), "REALM STRING"));
+      environment.jersey().register(new CoralApiEntryPointResource());
       environment.jersey().register(new CoralApiVersionResource());
       environment.jersey().register(new CoralApiWhoAmIResource());
       environment.jersey().register(new CoralApiCheckKeyResource(coralIor, coralConfigUrl));
