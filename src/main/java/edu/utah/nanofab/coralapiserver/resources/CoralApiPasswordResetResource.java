@@ -52,6 +52,10 @@ public class CoralApiPasswordResetResource {
   public Object updatePassword(@Valid PasswordResetRequest request, @Auth User user) {
     PasswordResetOperationPost operation = new PasswordResetOperationPost();
     
+    if (request.getName().equals("auth-token")) {
+    	request.setName(user.getUsername());
+    }
+    
     operation.init(this.coralIor, 
              this.coralConfigUrl, 
              Optional.<String> absent(), 
