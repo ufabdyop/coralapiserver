@@ -189,6 +189,29 @@
       </div>
       <button onclick="reserve(apiUrl, document.getElementById('reservation_username').value, document.getElementById('reservation_password').value, document.getElementById('reservation_member').value, document.getElementById('reservation_project').value, document.getElementById('reservation_machine').value, document.getElementById('reservation_bdate').value, document.getElementById('reservation_minutes').value);">Try It</button>
     </div>
+
+    <div id="get-reservation-doc">
+      <h3>Get Machine Reservations</h3>
+      <p>You may get a list of reservations for a machine by using the reservation resource
+        <br/>
+        Here's the curl example:
+        <code>
+          curl -u coral:password https://mycoralapiserver.hostname/v0/reservation?machine=Test%20Machine
+        </code>
+      </p>
+
+      <p>With javascript, this is:</p>
+      <textarea id="getReservationExample"> </textarea>
+      <script>
+        document.getElementById('getReservationExample').innerHTML = (getReservations.toString());
+      </script>
+      <div id="getReservationExample">
+        <label>Username</label><input type="text" id="getReservation_username"/>
+        <label>Password</label><input type="text" id="getReservation_password"/>
+        <label>Machine</label><input type="text" id="getReservation_machine" value="Test Machine"/>
+      </div>
+      <button onclick="getReservations(apiUrl, document.getElementById('getReservation_username').value, document.getElementById('getReservation_password').value, document.getElementById('getReservation_machine').value);">Try It</button>
+    </div>
   </body>
   <script src="js/initDocs.js"></script>
 </html>

@@ -130,3 +130,23 @@ function reserve(coralApiUrl, username, password, member, project, item, bdate, 
   }
   request.send(JSON.stringify(data));
 };
+
+function getReservations(coralApiUrl, username, password, item ) {
+  var request = new XMLHttpRequest();
+
+  request.open("GET", coralApiUrl + '/reservation?machine=' + encodeURIComponent(item), true);
+  request.setRequestHeader("Accept", "application/json");
+  request.setRequestHeader("Content-Type", "application/json");
+  request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+
+  request.onreadystatechange = function() {
+        if (request.readyState == 4) {
+          if (request.status === 200) {
+              alert(request.responseText);
+          } else {
+              alert('ERROR: ' + request.statusText);
+          }
+        }
+  }
+  request.send(null);
+};
