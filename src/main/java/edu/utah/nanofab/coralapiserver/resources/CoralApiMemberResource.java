@@ -27,12 +27,10 @@ import org.slf4j.LoggerFactory;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiMemberResource {
   
-  private String coralIor;
   private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiMemberResource.class);
 
-  public CoralApiMemberResource(String coralIor, String coralConfigUrl ) {
-      this.coralIor = coralIor;
+  public CoralApiMemberResource(String coralConfigUrl ) {
       this.coralConfigUrl = coralConfigUrl;
   }
 
@@ -40,7 +38,7 @@ public class CoralApiMemberResource {
   @Timed
   public Member getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
     MemberOperationGet operation = new MemberOperationGet();
-    operation.init(this.coralIor, this.coralConfigUrl, name, Optional.<Object> absent(), user);
+    operation.init( this.coralConfigUrl, name, Optional.<Object> absent(), user);
     return (Member) (operation.perform());
   }
     
@@ -48,7 +46,7 @@ public class CoralApiMemberResource {
   @Timed
   public Member updateRequest(@Valid Member member, @Auth User user) {
     MemberOperationPost operation = new MemberOperationPost();
-    operation.init(this.coralIor, 
+    operation.init(
         this.coralConfigUrl, 
         Optional.<String> absent(), 
         Optional.<Object>of( member), 
@@ -60,7 +58,7 @@ public class CoralApiMemberResource {
   @Timed
   public Member createRequest(@Valid Member member, @Auth User user) {
     MemberOperationPut operation = new MemberOperationPut();
-    operation.init(this.coralIor, 
+    operation.init( 
         this.coralConfigUrl, 
         Optional.<String> absent(), 
         Optional.<Object>of( member), 

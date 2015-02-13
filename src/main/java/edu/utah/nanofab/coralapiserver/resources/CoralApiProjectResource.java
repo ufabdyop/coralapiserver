@@ -29,12 +29,10 @@ import java.util.concurrent.atomic.AtomicLong;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiProjectResource {
   
-  private String coralIor;
   private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiProjectResource.class);
 
-  public CoralApiProjectResource(String coralIor, String coralConfigUrl ) {
-      this.coralIor = coralIor;
+  public CoralApiProjectResource(String coralConfigUrl ) {
       this.coralConfigUrl = coralConfigUrl;
       new AtomicLong();
   }
@@ -43,7 +41,7 @@ public class CoralApiProjectResource {
   @Timed
   public Project getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
     ProjectOperationGet operation = new ProjectOperationGet();
-    operation.init(this.coralIor, this.coralConfigUrl, name, Optional.<Object> absent(), user);
+    operation.init( this.coralConfigUrl, name, Optional.<Object> absent(), user);
     return (Project) (operation.perform());
   }
  
@@ -51,7 +49,7 @@ public class CoralApiProjectResource {
   @Timed
   public Project createRequest(@Valid Project project, @Auth User user) {
     ProjectOperationPost operation = new ProjectOperationPost();
-    operation.init(this.coralIor, 
+    operation.init(
         this.coralConfigUrl, 
         Optional.<String> absent(), 
         Optional.<Object>of( project), 
@@ -63,7 +61,7 @@ public class CoralApiProjectResource {
   @Timed
   public Project updateRequest(@Valid Project project, @Auth User user) {
     ProjectOperationPut operation = new ProjectOperationPut();
-    operation.init(this.coralIor, 
+    operation.init(
         this.coralConfigUrl, 
         Optional.<String> absent(), 
         Optional.<Object>of( project), 

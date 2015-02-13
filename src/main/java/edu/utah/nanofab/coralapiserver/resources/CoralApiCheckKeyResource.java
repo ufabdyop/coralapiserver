@@ -21,12 +21,10 @@ import java.util.concurrent.atomic.AtomicLong;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiCheckKeyResource {
   
-  private String coralIor;
   private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiEnableResource.class);
 
-  public CoralApiCheckKeyResource(String coralIor, String coralConfigUrl ) {
-      this.coralIor = coralIor;
+  public CoralApiCheckKeyResource( String coralConfigUrl ) {
       this.coralConfigUrl = coralConfigUrl;
       new AtomicLong();
   }
@@ -34,7 +32,7 @@ public class CoralApiCheckKeyResource {
   @GET
   @Timed
   public Object checkKey() {
-	  CoralAPI api = new CoralAPI("", coralIor, coralConfigUrl);
+	  CoralAPI api = new CoralAPI("", coralConfigUrl);
 	  boolean keyValid = api.checkKeyIsValid();
 	  HashMap returnValue = new HashMap();
 	  returnValue.put("message", "If key doesn't exist, check config.jar for certs/Coral.key\n"

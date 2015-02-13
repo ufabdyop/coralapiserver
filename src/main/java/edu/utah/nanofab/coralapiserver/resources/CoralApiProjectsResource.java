@@ -21,12 +21,10 @@ import edu.utah.nanofab.coralapiserver.resources.operations.ProjectsOperationGet
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiProjectsResource {
   
-  private String coralIor;
   private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiProjectsResource.class);
   
-  public CoralApiProjectsResource(String coralIor, String coralConfigUrl) {
-    this.coralIor = coralIor;
+  public CoralApiProjectsResource( String coralConfigUrl) {
     this.coralConfigUrl = coralConfigUrl;
   }
 
@@ -34,7 +32,7 @@ public class CoralApiProjectsResource {
   @Timed
   public Projects getRequest(@QueryParam("member") Optional<String> member, @Auth User user) {
     ProjectsOperationGet operation = new ProjectsOperationGet();
-    operation.init(this.coralIor, this.coralConfigUrl, member, Optional.<Object> absent(), user);
+    operation.init(this.coralConfigUrl, member, Optional.<Object> absent(), user);
     return (Projects) (operation.perform());
   }
 }

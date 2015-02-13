@@ -23,12 +23,10 @@ import java.util.concurrent.atomic.AtomicLong;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiMachineResource {
   
-  private String coralIor;
   private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiMachineResource.class);
 
-  public CoralApiMachineResource(String coralIor, String coralConfigUrl ) {
-      this.coralIor = coralIor;
+  public CoralApiMachineResource( String coralConfigUrl ) {
       this.coralConfigUrl = coralConfigUrl;
       new AtomicLong();
   }
@@ -37,7 +35,7 @@ public class CoralApiMachineResource {
   @Timed
   public Object getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
     MachineOperationGet operation = new MachineOperationGet();
-    operation.init(this.coralIor, this.coralConfigUrl, name, Optional.<Object> absent(), user);
+    operation.init(this.coralConfigUrl, name, Optional.<Object> absent(), user);
     return operation.perform();
   }
   

@@ -24,12 +24,10 @@ import java.util.concurrent.atomic.AtomicLong;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiLabRoleResource {
   
-  private String coralIor;
   private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiLabRoleResource.class);
 
-  public CoralApiLabRoleResource(String coralIor, String coralConfigUrl ) {
-      this.coralIor = coralIor;
+  public CoralApiLabRoleResource(String coralConfigUrl ) {
       this.coralConfigUrl = coralConfigUrl;
       new AtomicLong();
   }
@@ -38,7 +36,7 @@ public class CoralApiLabRoleResource {
   @Timed
   public LabRoles getRequest(@QueryParam("member") Optional<String> username, @Auth User user) {
     LabRoleOperationGet operation = new LabRoleOperationGet();
-    operation.init(this.coralIor, this.coralConfigUrl, username, Optional.<Object> absent(), user);
+    operation.init(this.coralConfigUrl, username, Optional.<Object> absent(), user);
     return (LabRoles) (operation.perform());
   }
 }

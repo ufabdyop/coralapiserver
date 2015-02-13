@@ -46,28 +46,26 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
     @Override
     public void run(CoralApiConfiguration configuration,
                     Environment environment) {
-      final String coralIor = configuration.getCoralIor();
       final String coralConfigUrl = configuration.getCoralConfigUrl();
       final TokenConfiguration[] tokens = configuration.getAuthTokensConfiguration().getTokens();
       ConcurrentHashMap<String, TokenConfiguration> sessionTokens = new ConcurrentHashMap<String, TokenConfiguration>();
       configureCors(environment);
 
-      environment.jersey().register(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens, sessionTokens, coralIor, coralConfigUrl ), "REALM STRING"));
+      environment.jersey().register(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens, sessionTokens, coralConfigUrl ), "REALM STRING"));
       environment.jersey().register(new CoralApiEntryPointResource());
       environment.jersey().register(new CoralApiVersionResource());
       environment.jersey().register(new CoralApiWhoAmIResource());
-      environment.jersey().register(new CoralApiCheckKeyResource(coralIor, coralConfigUrl));
-      environment.jersey().register(new CoralApiAuthTokenResource(coralIor, coralConfigUrl, sessionTokens));
-      environment.jersey().register(new CoralApiMemberResource(coralIor, coralConfigUrl));
-      environment.jersey().register(new CoralApiEnableResource(coralIor, coralConfigUrl));
-      
-      environment.jersey().register(new CoralApiMachineResource(coralIor, coralConfigUrl));
-      environment.jersey().register(new CoralApiLabRoleResource(coralIor, coralConfigUrl));
-      environment.jersey().register(new CoralApiProjectResource(coralIor, coralConfigUrl));
-      environment.jersey().register(new CoralApiAccountResource(coralIor, coralConfigUrl));
-      environment.jersey().register(new CoralApiProjectMembershipResource(coralIor, coralConfigUrl));
-      environment.jersey().register(new CoralApiProjectsResource(coralIor, coralConfigUrl));
-      environment.jersey().register(new CoralApiPasswordResetResource(coralIor, coralConfigUrl));
+      environment.jersey().register(new CoralApiCheckKeyResource( coralConfigUrl));
+      environment.jersey().register(new CoralApiAuthTokenResource( coralConfigUrl, sessionTokens));
+      environment.jersey().register(new CoralApiMemberResource( coralConfigUrl));
+      environment.jersey().register(new CoralApiEnableResource( coralConfigUrl));
+      environment.jersey().register(new CoralApiMachineResource( coralConfigUrl));
+      environment.jersey().register(new CoralApiLabRoleResource( coralConfigUrl));
+      environment.jersey().register(new CoralApiProjectResource( coralConfigUrl));
+      environment.jersey().register(new CoralApiAccountResource( coralConfigUrl));
+      environment.jersey().register(new CoralApiProjectMembershipResource( coralConfigUrl));
+      environment.jersey().register(new CoralApiProjectsResource( coralConfigUrl));
+      environment.jersey().register(new CoralApiPasswordResetResource( coralConfigUrl));
     }
 
    private void configureCors(Environment environment) {

@@ -11,7 +11,6 @@ import edu.utah.nanofab.coralapi.CoralAPI;
 import edu.utah.nanofab.coralapiserver.auth.User;
 
 public abstract class ResourceOperation {
-    public String coralIor;
     public String coralConfigUrl;
     public CoralAPI api;
     public String error = null;
@@ -21,12 +20,11 @@ public abstract class ResourceOperation {
     protected Optional<Object> postedObject;
     protected String name = "";
 
-    public void init(String coralIor, String coralConfigUrl,
+    public void init(String coralConfigUrl,
                     Optional<String> queryParam,
                     Optional<Object> postedObject,
                     @Auth User user) {
             this.coralConfigUrl = coralConfigUrl;
-            this.coralIor = coralIor;
             this.queryParam = queryParam;
             this.postedObject = postedObject;
             this.user = user;
@@ -66,7 +64,7 @@ public abstract class ResourceOperation {
 
     private void setUp() {
     this.api = new CoralAPI(this.user.getUsername(),
-                            this.coralIor, this.coralConfigUrl);
+                            this.coralConfigUrl);
     }
 
     private void tearDown() {

@@ -24,12 +24,10 @@ import java.util.concurrent.atomic.AtomicLong;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiDisableResource {
   
-  private String coralIor;
   private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiEnableResource.class);
 
-  public CoralApiDisableResource(String coralIor, String coralConfigUrl ) {
-      this.coralIor = coralIor;
+  public CoralApiDisableResource(String coralConfigUrl ) {
       this.coralConfigUrl = coralConfigUrl;
       new AtomicLong();
   }
@@ -38,7 +36,7 @@ public class CoralApiDisableResource {
   @Timed
   public DisableRequest createRequest(@Valid DisableRequest disableRequest, @Auth User user) {
     DisableOperationPost operation = new DisableOperationPost();
-    operation.init(this.coralIor, 
+    operation.init(
         this.coralConfigUrl, 
         Optional.<String> absent(), 
         Optional.<Object>of( disableRequest), 

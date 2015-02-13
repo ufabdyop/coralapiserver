@@ -33,8 +33,7 @@ public class CoralApiAccountResource {
   private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiAccountResource.class);
 
-  public CoralApiAccountResource(String coralIor, String coralConfigUrl ) {
-      this.coralIor = coralIor;
+  public CoralApiAccountResource(String coralConfigUrl ) {
       this.coralConfigUrl = coralConfigUrl;
       new AtomicLong();
   }
@@ -43,7 +42,7 @@ public class CoralApiAccountResource {
   @Timed
   public Account getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
     AccountOperationGet operation = new AccountOperationGet();
-    operation.init(this.coralIor, this.coralConfigUrl, name, Optional.<Object> absent(), user);
+    operation.init( this.coralConfigUrl, name, Optional.<Object> absent(), user);
     return (Account) (operation.perform());
   }
   
@@ -51,7 +50,7 @@ public class CoralApiAccountResource {
   @Timed
   public Account createRequest(@Valid Account account, @Auth User user) {
     AccountOperationPost operation = new AccountOperationPost();
-    operation.init(this.coralIor, 
+    operation.init( 
         this.coralConfigUrl, 
         Optional.<String> absent(), 
         Optional.<Object>of( account), 
@@ -63,7 +62,7 @@ public class CoralApiAccountResource {
   @Timed
   public Account updateRequest(@Valid Account account, @Auth User user) {
     AccountOperationPut operation = new AccountOperationPut();
-    operation.init(this.coralIor, 
+    operation.init( 
         this.coralConfigUrl, 
         Optional.<String> absent(), 
         Optional.<Object>of( account), 

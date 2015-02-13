@@ -19,18 +19,15 @@ import edu.utah.nanofab.coralapiserver.TokenConfiguration;
 public class SimpleAuthenticator implements Authenticator<BasicCredentials, User> {
     private TokenConfiguration[] tokens;
   private ConcurrentHashMap<String, TokenConfiguration> sessionTokens;
-  private String coralIor;
   private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(SimpleAuthenticator.class);   
 
   public SimpleAuthenticator(TokenConfiguration[] tokens, 
       ConcurrentHashMap<String, TokenConfiguration> sessionTokens, 
-      String coralIor, 
       String coralConfigUrl) {
     super();
     this.tokens = tokens;
     this.sessionTokens = sessionTokens;
-    this.coralIor = coralIor;
     this.coralConfigUrl = coralConfigUrl;
   }
 
@@ -62,7 +59,7 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
             return false;
         
         String username = user.get().getUsername();
-        CoralAPI api = new CoralAPI(username, this.coralIor, this.coralConfigUrl);
+        CoralAPI api = new CoralAPI(username, this.coralConfigUrl);
         try {
             api.getMember(username);
         } catch (Exception ex) {
@@ -76,7 +73,7 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
   
   public Optional<User> authenticateByUsernamePassword(String user, String pass) {
     logger.debug("Authenticating " + user + " by password.");
-    CoralAPI api = new CoralAPI(user, this.coralIor, this.coralConfigUrl);
+    CoralAPI api = new CoralAPI(user, this.coralConfigUrl);
     try {
       boolean success = api.authenticate(user, pass);
       api.close();

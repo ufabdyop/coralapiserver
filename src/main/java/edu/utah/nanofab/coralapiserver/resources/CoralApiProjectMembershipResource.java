@@ -20,12 +20,10 @@ import edu.utah.nanofab.coralapiserver.resources.operations.ProjectMembershipOpe
 @Path("/v0/project-membership")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiProjectMembershipResource {
-  private String coralIor;
   private String coralConfigUrl;
 
-  public CoralApiProjectMembershipResource(String coralIor,
+  public CoralApiProjectMembershipResource(
       String coralConfigUrl) {
-    this.coralIor = coralIor;
     this.coralConfigUrl = coralConfigUrl;
   }
 
@@ -33,7 +31,7 @@ public class CoralApiProjectMembershipResource {
   @Timed
   public ProjectMembership get(@QueryParam("project") Optional<String> project, @Auth User user) {
     ProjectMembershipOperationGet operation = new ProjectMembershipOperationGet();
-    operation.init(this.coralIor, this.coralConfigUrl, project, Optional.<Object> absent(), user);
+    operation.init( this.coralConfigUrl, project, Optional.<Object> absent(), user);
     return (ProjectMembership) (operation.perform());
   }
   
@@ -41,7 +39,7 @@ public class CoralApiProjectMembershipResource {
   @Timed
   public ProjectMembership update(@Valid ProjectMembership request, @Auth User user) {
     ProjectMembershipOperationPut operation = new ProjectMembershipOperationPut();
-    operation.init(this.coralIor, 
+    operation.init(
         this.coralConfigUrl,  
         Optional.<String> absent(), 
         Optional.<Object> of(request), 

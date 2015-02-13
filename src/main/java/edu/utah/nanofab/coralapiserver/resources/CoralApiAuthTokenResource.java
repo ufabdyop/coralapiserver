@@ -27,11 +27,9 @@ import edu.utah.nanofab.coralapiserver.core.AuthRequest;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiAuthTokenResource {
   private ConcurrentHashMap<String, TokenConfiguration> sessionTokens;
-  private String coralIor;
   private String coralConfigUrl;
   
-  public CoralApiAuthTokenResource(String coralIor, String coralConfigUrl, ConcurrentHashMap<String, TokenConfiguration> sessionTokens) {
-        this.coralIor = coralIor;
+  public CoralApiAuthTokenResource(String coralConfigUrl, ConcurrentHashMap<String, TokenConfiguration> sessionTokens) {
         this.coralConfigUrl = coralConfigUrl;
         this.sessionTokens = sessionTokens;
   }
@@ -106,8 +104,7 @@ public class CoralApiAuthTokenResource {
   }
 
   private boolean authenticate(String username, String password) {
-    CoralAPI api = new CoralAPI(username, 
-        this.coralIor, this.coralConfigUrl);
+    CoralAPI api = new CoralAPI(username, this.coralConfigUrl);
     boolean success = false;
     try {
       success = api.authenticate(username, password);

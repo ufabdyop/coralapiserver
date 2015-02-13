@@ -22,8 +22,6 @@ import edu.utah.nanofab.coralapiserver.resources.operations.PasswordResetOperati
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiPasswordResetResource {
   
-
-  private String coralIor;
   private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiPasswordResetResource.class);
   
@@ -33,8 +31,7 @@ public class CoralApiPasswordResetResource {
    * @param coralIor The URL endpoint for the CORBA Interoperable Object Reference.
    * @param coralConfigUrl The URL endpoint for the CORBA configurations.
    */
-  public CoralApiPasswordResetResource(String coralIor, String coralConfigUrl) {
-    this.coralIor = coralIor;
+  public CoralApiPasswordResetResource(String coralConfigUrl) {
     this.coralConfigUrl = coralConfigUrl;
   }
   
@@ -56,7 +53,7 @@ public class CoralApiPasswordResetResource {
     	request.setName(user.getUsername());
     }
     
-    operation.init(this.coralIor, 
+    operation.init( 
              this.coralConfigUrl, 
              Optional.<String> absent(), 
              Optional.<Object> of(request), 
