@@ -43,5 +43,4 @@ public class CoralApiDisableResource {
         user);
     return (DisableRequest) (operation.perform());
   }
-    
 }

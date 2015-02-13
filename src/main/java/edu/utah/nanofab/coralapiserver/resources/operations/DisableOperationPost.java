@@ -14,7 +14,7 @@ public class DisableOperationPost extends ResourceOperation  {
 
   @Override
   public String errorMessage() {
-    return "Error while trying to enable" ;
+    return "Error while trying to disable" ;
   }
 
 }
