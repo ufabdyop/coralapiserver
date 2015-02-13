@@ -30,7 +30,7 @@
       <textarea id="versionExample">
       </textarea>
       <script>
-        $('#versionExample').html(getVersion.toString());
+        document.getElementById('versionExample').innerHTML = (getVersion.toString());
       </script>
       <button onclick="getVersion(apiUrl);">Try It</button>
     </div>
@@ -56,7 +56,7 @@
       <p>With javascript, this is:</p>
       <textarea id="authExample"> </textarea>
       <script>
-        $('#authExample').html(authenticate.toString());
+        document.getElementById('authExample').innerHTML = (authenticate.toString());
       </script>
       <label>Username</label><input type="text" id="username"/>
       <br/>
@@ -78,7 +78,7 @@
       <p>With javascript, this is:</p>
       <textarea id="resetPasswordExample"> </textarea>
       <script>
-        $('#resetPasswordExample').html(resetPassword.toString());
+        document.getElementById('resetPasswordExample').innerHTML = (resetPassword.toString());
       </script>
       <div id="resetPasswordAuth">
         <label>Auth Username</label><input type="text" id="pw_username"/>
@@ -106,7 +106,7 @@
       <p>With javascript, this is:</p>
       <textarea id="machineExample"> </textarea>
       <script>
-        $('#machineExample').html(machineList.toString());
+        document.getElementById('machineExample').innerHTML = (machineList.toString());
       </script>
       <div id="machineExample">
         <label>Username</label><input type="text" id="machine_username"/>
@@ -128,7 +128,7 @@
       <p>With javascript, this is:</p>
       <textarea id="enableExample"> </textarea>
       <script>
-        $('#enableExample').html(enable.toString());
+        document.getElementById('enableExample').innerHTML = (enable.toString());
       </script>
       <div id="enableExample">
         <label>Username</label><input type="text" id="enable_username"/>

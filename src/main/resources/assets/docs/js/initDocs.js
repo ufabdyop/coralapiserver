@@ -8,10 +8,10 @@ var apiUrl = window.location.protocol + '//' + window.location.hostname + ':' + 
 
 //port override
 
-$('#apiUrl').val(apiUrl);
-$('#currentApi').html(apiUrl);
+document.getElementById('apiUrl').value = apiUrl;
+document.getElementById('currentApi').innerHTML = apiUrl;
 
 function overrideApiUrl() {
-  apiUrl = $('#apiUrl').val();
-  $('#currentApi').html(apiUrl);
+  apiUrl = document.getElementById('apiUrl').value;
+  document.getElementById('currentApi').innerHTML = apiUrl;
 }
