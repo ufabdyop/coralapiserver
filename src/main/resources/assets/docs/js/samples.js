@@ -90,3 +90,23 @@ function enable(coralApiUrl, username, password, project, item) {
   }
   request.send(JSON.stringify(data));
 };
+
+function reserve(coralApiUrl, username, password, member, project, item, bdate, minutes) {
+  var request = new XMLHttpRequest();
+  request.open("POST", coralApiUrl + '/reservation', true);
+  request.setRequestHeader("Accept", "application/json");
+  request.setRequestHeader("Content-Type", "application/json");
+  request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+  data = {"member" : member, "project" : project, "item" : item, "bdate": bdate, "lengthInMinutes": minutes};
+
+  request.onreadystatechange = function() {
+        if (request.readyState == 4) {
+          if (request.status === 200) {
+              alert(request.responseText);
+          } else {
+              alert('ERROR: ' + request.statusText);
+          }
+        }
+  }
+  request.send(JSON.stringify(data));
+};

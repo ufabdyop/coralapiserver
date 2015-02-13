@@ -139,6 +139,32 @@
       </div>
       <button onclick="enable(apiUrl, document.getElementById('enable_username').value, document.getElementById('enable_password').value, document.getElementById('enable_project').value, document.getElementById('enable_machine').value);">Try It</button>
     </div>
+    <div id="reservation-doc">
+      <h3>Reserve Machine</h3>
+      <p>You may reserve a machine by using the reservation resource
+        <br/>
+        Here's the curl example:
+        <code>
+          curl -X POST -H "Content-Type: application/json" -d '{"member":"coral", "project":"Bootstrap project", "item": "some instrument", "bdate": "2015-01-29 15:00:00", "lengthInMinutes": 30}' -u coral:password https://mycoralapiserver.hostname/v0/reservation
+        </code>
+      </p>
+
+      <p>With javascript, this is:</p>
+      <textarea id="reservationExample"> </textarea>
+      <script>
+        document.getElementById('reservationExample').innerHTML = (reserve.toString());
+      </script>
+      <div id="reservationExample">
+        <label>Username</label><input type="text" id="reservation_username"/>
+        <label>Password</label><input type="text" id="reservation_password"/>
+        <label>Member</label><input type="text" id="reservation_member"/>
+        <label>Project</label><input type="text" id="reservation_project"/>
+        <label>Machine</label><input type="text" id="reservation_machine" value="Test Machine"/>
+        <label>Begin Date</label><input type="text" id="reservation_bdate" value="2015-03-01 14:30:00"/>
+        <label>Minutes</label><input type="text" id="reservation_minutes" value="30"/>
+      </div>
+      <button onclick="reserve(apiUrl, document.getElementById('reservation_username').value, document.getElementById('reservation_password').value, document.getElementById('reservation_member').value, document.getElementById('reservation_project').value, document.getElementById('reservation_machine').value, document.getElementById('reservation_bdate').value, document.getElementById('reservation_minutes').value);">Try It</button>
+    </div>
   </body>
   <script src="js/initDocs.js"></script>
 </html>
