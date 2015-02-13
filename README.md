@@ -274,11 +274,14 @@ curl -X POST -H "Content-Type: application/json" -d '{"name":"newmember", "proje
 ```
 
 To change a password:
+```
 curl  -X POST -H "Content-Type: application/json" -d '{"name":"coral", "password":"1234567"}' -k -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 https://localhost:8443/v0/resetPassword
+```
 
 To create a reservation:
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "project":"new proj", "account":"new acct", "bdate":"2014-06-12 12:00:00", "edate":"2014-06-12 13:00:00", "item": "some instrument"}' -u auth-token:0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9 -k https://localhost:8443/v0/reservation -D -
+curl -X POST -H "Content-Type: application/json" -d '{"member":"coral", "project":"Bootstrap project", "item": "some instrument", "bdate": "2015-01-29 15:00:00", "lengthInMinutes": 30}' -u coral:password -k https://localhost:8443/v0/reservation
+
 ```
 
 To enable a tool:
