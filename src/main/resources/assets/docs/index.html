@@ -139,6 +139,30 @@
       </div>
       <button onclick="enable(apiUrl, document.getElementById('enable_username').value, document.getElementById('enable_password').value, document.getElementById('enable_project').value, document.getElementById('enable_machine').value);">Try It</button>
     </div>
+
+    <div id="disable-doc">
+      <h3>Disable Machine</h3>
+      <p>You may disable a machine by using the disable resource
+        <br/>
+        Here's the curl example:
+        <code>
+          curl -X POST -H "Content-Type: application/json" -d '{"item": "some instrument"}' -u coral:password https://mycoralapiserver.hostname/v0/disable
+        </code>
+      </p>
+
+      <p>With javascript, this is:</p>
+      <textarea id="disableExample"> </textarea>
+      <script>
+        document.getElementById('disableExample').innerHTML = (disable.toString());
+      </script>
+      <div id="disableExample">
+        <label>Username</label><input type="text" id="disable_username"/>
+        <label>Password</label><input type="text" id="disable_password"/>
+        <label>Machine</label><input type="text" id="disable_machine"/>
+      </div>
+      <button onclick="disable(apiUrl, document.getElementById('disable_username').value, document.getElementById('disable_password').value, document.getElementById('disable_machine').value);">Try It</button>
+    </div>
+
     <div id="reservation-doc">
       <h3>Reserve Machine</h3>
       <p>You may reserve a machine by using the reservation resource
