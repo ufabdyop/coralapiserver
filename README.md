@@ -91,13 +91,6 @@ We need the API to meet the following requirements:
         -   Delete (DELETE) (Do we need this one?)
         -   List (GET)
 
-    -   Projects
-	-   Create (PUT)
-	-   Read (or View or Show) (GET)
-	-   Update (POST)
-	-   Delete (DELETE)
-	-   List (GET)
-
     -   Account
         -   Create (PUT)
         -   Read (or View or Show) (GET)
@@ -111,9 +104,9 @@ We need the API to meet the following requirements:
         -   Update (POST)
         -   Delete (DELETE)
         -   List (GET)
-    
+
     -   Version
-    
+
 
 
 
