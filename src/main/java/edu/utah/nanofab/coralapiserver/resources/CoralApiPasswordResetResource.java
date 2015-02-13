@@ -26,9 +26,8 @@ public class CoralApiPasswordResetResource {
   public static final Logger logger = LoggerFactory.getLogger(CoralApiPasswordResetResource.class);
   
   /**
-   * Constructs a new password reset resource with the supplied coralIor and coralConfigUrl.
+   * Constructs a new password reset resource with the supplied coralConfigUrl.
    * 
-   * @param coralIor The URL endpoint for the CORBA Interoperable Object Reference.
    * @param coralConfigUrl The URL endpoint for the CORBA configurations.
    */
   public CoralApiPasswordResetResource(String coralConfigUrl) {

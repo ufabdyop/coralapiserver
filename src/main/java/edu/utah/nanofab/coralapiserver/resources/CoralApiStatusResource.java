@@ -15,7 +15,7 @@ public class CoralApiStatusResource {
     
     public static final Logger logger = LoggerFactory.getLogger(CoralApiMemberResource.class);
     
-    public CoralApiStatusResource(String coralIor, String coralConfigUrl ) {
+    public CoralApiStatusResource(String coralConfigUrl ) {
         new AtomicLong();
     }
     

@@ -1,5 +1,3 @@
-coralIor: "http://coral-dev-box/IOR/"
-
 coralConfigUrl: "http://coral-dev-box/coral/lib/config.jar"
 
 server:

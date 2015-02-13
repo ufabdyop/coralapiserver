@@ -29,7 +29,6 @@ import java.util.concurrent.atomic.AtomicLong;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiAccountResource {
   
-  private String coralIor;
   private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiAccountResource.class);
 
