@@ -1,10 +1,5 @@
+#!/bin/sh
 exec 2>&1
-# Change to the working dir.
 cd /home/coral/coralapiserver
-
-# Package the project.
-mvn package
-
-# Start the service.
+#make a symlink from coralapiserver-current.jar to correct version
 exec chpst -ucoral java -jar /home/coral/coralapiserver/target/coralapiserver-current.jar server /home/coral/coralapiserver/coral-api.yml
-
