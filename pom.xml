@@ -178,10 +178,10 @@
 							<arg value="-f" />
 							<arg value="${project.build.directory}/coralapiserver-current.jar" />
 						</exec>
-						<exec executable="ln">
+            <exec executable="ln" dir="${project.build.directory}">
 							<arg value="-s" />
-							<arg value="${project.build.directory}/${project.build.finalName}.jar" />
-							<arg value="${project.build.directory}/coralapiserver-current.jar" />
+							<arg value="${project.build.finalName}.jar" />
+							<arg value="coralapiserver-current.jar" />
 						</exec>
 					</target>
 				</configuration>
