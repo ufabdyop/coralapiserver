@@ -1,4 +1,4 @@
-coralConfigUrl: "http://coral-dev-box/coral/lib/config.jar"
+coralConfigUrl: "http://coralserver.local/coral/lib/config.jar"
 
 server:
 #  type: simple
