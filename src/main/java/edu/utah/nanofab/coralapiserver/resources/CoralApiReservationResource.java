@@ -7,6 +7,7 @@ import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.ReservationRequest;
 import edu.utah.nanofab.coralapiserver.resources.operations.EnableOperationPost;
 import edu.utah.nanofab.coralapiserver.resources.operations.ProjectOperationGet;
+import edu.utah.nanofab.coralapiserver.resources.operations.ReservationOperationDelete;
 import edu.utah.nanofab.coralapiserver.resources.operations.ReservationOperationPost;
 
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import io.dropwizard.auth.Auth;
 import com.codahale.metrics.annotation.Timed;
 
 import javax.validation.Valid;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -65,5 +67,17 @@ public class CoralApiReservationResource {
 	  edate.setTime(edateMS); //30 days in the future;
 	  return coralApiInstance.getReservations(machine.get(), bdate, edate);
   }
-    
+
+  @DELETE
+  @Timed
+  public ReservationRequest deleteRequest(@Valid ReservationRequest request, @Auth User user) {
+    ReservationOperationDelete operation = new ReservationOperationDelete();
+    operation.init(
+        this.coralConfigUrl, 
+        Optional.<String> absent(), 
+        Optional.<Object>of( request ), 
+        user);
+    return (ReservationRequest) (operation.perform());
+  }
+      
 }
