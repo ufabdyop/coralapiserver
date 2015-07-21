@@ -158,11 +158,13 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
+              <!-- uncomment if you want to exclude coral jars in shaded jar
 						 <artifactSet>
 							<excludes>
 								<exclude>org.opencoral:*</exclude>
 							</excludes>
 						 </artifactSet>
+             -->
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
