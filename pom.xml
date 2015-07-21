@@ -69,6 +69,41 @@
 			<artifactId>javax.ws.rs-api</artifactId>
 			<version>2.0</version>
 		</dependency>
+
+    <!-- proguard libs -->
+    <!-- These are included automatically through transitive dependency of CoralAPI.  Including here just to be explicit. -->
+    <dependency>
+              <groupId>org.opencoral</groupId>
+              <artifactId>opencoral-admin</artifactId>
+              <version>3.4.9</version>
+    </dependency>
+    <dependency>
+              <groupId>org.opencoral</groupId>
+              <artifactId>opencoral-client</artifactId>
+              <version>3.4.9</version>
+    </dependency>
+    <dependency>
+              <groupId>org.opencoral</groupId>
+              <artifactId>opencoral-common</artifactId>
+              <version>3.4.9</version>
+    </dependency>
+    <dependency>
+              <groupId>org.opencoral</groupId>
+              <artifactId>opencoral-idl</artifactId>
+              <version>3.4.9</version>
+    </dependency>
+    <dependency>
+              <groupId>org.opencoral</groupId>
+              <artifactId>opencoral-runtime</artifactId>
+              <version>3.4.9</version>
+    </dependency>
+    <dependency>
+              <groupId>org.opencoral</groupId>
+              <artifactId>opencoral-server</artifactId>
+              <version>3.4.9</version>
+    </dependency>
+    <!--END proguard libs -->
+
 	</dependencies>
 
 	<properties>
