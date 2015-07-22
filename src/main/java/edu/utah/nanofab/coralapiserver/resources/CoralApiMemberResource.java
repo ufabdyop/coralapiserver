@@ -9,7 +9,13 @@ import edu.utah.nanofab.coralapiserver.resources.operations.MemberOperationPut;
 import org.slf4j.Logger;
 
 import com.google.common.base.Optional;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.Authorization;
+
+
 import io.dropwizard.auth.Auth;
+
 import com.codahale.metrics.annotation.Timed;
 
 import javax.validation.Valid;
@@ -24,6 +30,7 @@ import javax.ws.rs.core.MediaType;
 import org.slf4j.LoggerFactory;
 
 @Path("/v0/member")
+@Api(value = "/v0/member", description = "Operations about members")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiMemberResource {
   
@@ -35,6 +42,8 @@ public class CoralApiMemberResource {
   }
 
   @GET
+  @ApiOperation(value = "Find member by name", 
+					response = Member.class)    
   @Timed
   public Member getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
     MemberOperationGet operation = new MemberOperationGet();

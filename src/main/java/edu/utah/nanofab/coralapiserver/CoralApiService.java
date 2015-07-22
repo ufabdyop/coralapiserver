@@ -9,6 +9,8 @@ import io.dropwizard.auth.basic.BasicAuthProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.assets.AssetsBundle;
+import io.federecio.dropwizard.swagger.SwaggerBundle;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 
@@ -43,6 +45,26 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
     @Override
     public void initialize(Bootstrap<CoralApiConfiguration> bootstrap) {
       bootstrap.addBundle(new AssetsBundle("/assets"));
+      bootstrap.addBundle(new SwaggerBundle<CoralApiConfiguration>() {
+          @Override
+          public SwaggerBundleConfiguration getSwaggerBundleConfiguration(CoralApiConfiguration configuration) {
+        	  int port = 8080;
+        	  String hostname = System.getenv("APIHOST");
+        	  if (hostname == null) {
+        		  hostname = "localhost";
+        	  }
+        	  String portString = System.getenv("APIPORT");
+        	  if (portString != null) {
+        		  try {
+        			  port = Integer.valueOf(portString);
+        		  } catch (Exception e) {
+        			  //ignore bad port and use default one
+        		  }
+        	  }
+        	  
+              return new SwaggerBundleConfiguration(hostname, port);
+          }
+      });      
     }
 
     @Override
