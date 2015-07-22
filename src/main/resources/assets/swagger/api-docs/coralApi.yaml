@@ -1,0 +1,633 @@
+basePath: /
+definitions:
+  Account:
+    properties:
+      active:
+        type: boolean
+      bdate:
+        format: date-time
+        type: string
+      description:
+        type: string
+      edate:
+        format: date-time
+        type: string
+      name:
+        type: string
+      organization:
+        type: string
+      type:
+        type: string
+  AuthRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+  DisableRequest:
+    properties:
+      item:
+        type: string
+  EnableRequest:
+    properties:
+      item:
+        type: string
+      member:
+        type: string
+      project:
+        type: string
+  LabRoles:
+    properties:
+      empty:
+        type: boolean
+  Machines:
+    properties:
+      empty:
+        type: boolean
+  Member:
+    properties:
+      active:
+        type: boolean
+      address1:
+        type: string
+      address2:
+        type: string
+      advisor:
+        type: string
+      altFax:
+        type: string
+      altOffice:
+        type: string
+      altPhone:
+        type: string
+      bdate:
+        format: date-time
+        type: string
+      city:
+        type: string
+      disability:
+        type: string
+      edate:
+        format: date-time
+        type: string
+      email:
+        type: string
+      ethnicity:
+        type: string
+      fax:
+        type: string
+      firstName:
+        type: string
+      gender:
+        type: string
+      lastName:
+        type: string
+      mailCode:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      project:
+        type: string
+      race:
+        type: string
+      state:
+        type: string
+      type:
+        type: string
+      univid:
+        type: string
+      url:
+        type: string
+      zipcode:
+        type: string
+  PasswordResetRequest:
+    properties:
+      name:
+        type: string
+      password:
+        type: string
+  Project:
+    properties:
+      account:
+        type: string
+      active:
+        type: boolean
+      bdate:
+        format: date-time
+        type: string
+      description:
+        type: string
+      discipline:
+        type: string
+      edate:
+        format: date-time
+        type: string
+      name:
+        type: string
+      nickname:
+        type: string
+      'null':
+        type: boolean
+      pi:
+        type: string
+      type:
+        type: string
+  ProjectMembership:
+    properties:
+      members:
+        items:
+          type: string
+        type: array
+      project:
+        type: string
+  Projects:
+    properties:
+      empty:
+        type: boolean
+  ReservationRequest:
+    properties:
+      bdate:
+        type: string
+      item:
+        type: string
+      lengthInMinutes:
+        format: int32
+        type: integer
+      member:
+        type: string
+      project:
+        type: string
+  User:
+    properties:
+      username:
+        type: string
+host: 'ryanmb.nanofab.utah.edu:4001'
+info:
+  title: CoralAPIServer
+  version: '0.3.3'
+paths:
+  /v0/account:
+    get:
+      description: ''
+      operationId: getRequest
+      parameters:
+        - in: query
+          name: name
+          required: false
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/Account'
+      summary: Find account by name
+      tags:
+        - v0/account
+    post:
+      description: ''
+      operationId: createRequest
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Account'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/Account'
+      summary: update
+      tags:
+        - v0/account
+    put:
+      description: ''
+      operationId: updateRequest
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Account'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/Account'
+      summary: update
+      tags:
+        - v0/account
+  /v0/authenticate:
+    get:
+      description: ''
+      operationId: getRequest
+      parameters:
+        - in: query
+          name: proxyFor
+          required: false
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+      tags:
+        - v0/authenticate
+    post:
+      description: ''
+      operationId: authRequest
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/AuthRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+      tags:
+        - v0/authenticate
+  /v0/checkKey:
+    get:
+      description: ''
+      operationId: checkKey
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+      tags:
+        - v0/checkKey
+  /v0/disable:
+    post:
+      description: ''
+      operationId: createRequest
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/DisableRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/DisableRequest'
+      tags:
+        - v0/disable
+  /v0/enable:
+    post:
+      description: ''
+      operationId: createRequest
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/EnableRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/EnableRequest'
+      tags:
+        - v0/enable
+  /v0/labRoles:
+    get:
+      description: ''
+      operationId: getRequest
+      parameters:
+        - in: query
+          name: member
+          required: false
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/LabRoles'
+      tags:
+        - v0/labRoles
+  /v0/machine:
+    get:
+      description: ''
+      operationId: getRequest
+      parameters:
+        - in: query
+          name: name
+          required: false
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/Machines'
+      tags:
+        - v0/machine
+  /v0/member:
+    get:
+      description: ''
+      operationId: getRequest
+      parameters:
+        - in: query
+          name: name
+          required: false
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/Member'
+      summary: Find member by name
+      tags:
+        - v0/member
+    post:
+      description: ''
+      operationId: updateRequest
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Member'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/Member'
+      summary: Update member
+      tags:
+        - v0/member
+    put:
+      description: ''
+      operationId: createRequest
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Member'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/Member'
+      summary: Create member
+      tags:
+        - v0/member
+  /v0/project:
+    get:
+      description: ''
+      operationId: getRequest
+      parameters:
+        - in: query
+          name: name
+          required: false
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/Project'
+      summary: Find project by name
+      tags:
+        - v0/project
+    post:
+      description: ''
+      operationId: createRequest
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Project'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/Project'
+      summary: Update project
+      tags:
+        - v0/project
+    put:
+      description: ''
+      operationId: updateRequest
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Project'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/Project'
+      summary: Create project
+      tags:
+        - v0/project
+  /v0/projectMembership:
+    get:
+      description: ''
+      operationId: get
+      parameters:
+        - in: query
+          name: project
+          required: false
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/ProjectMembership'
+      tags:
+        - v0/projectMembership
+    put:
+      description: ''
+      operationId: update
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/ProjectMembership'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/ProjectMembership'
+      tags:
+        - v0/projectMembership
+  /v0/projects:
+    get:
+      description: ''
+      operationId: getRequest
+      parameters:
+        - in: query
+          name: member
+          required: false
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/Projects'
+      tags:
+        - v0/projects
+  /v0/reservation:
+    delete:
+      description: ''
+      operationId: deleteRequest
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/ReservationRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/ReservationRequest'
+      tags:
+        - v0/reservation
+    get:
+      description: ''
+      operationId: getRequest
+      parameters:
+        - in: query
+          name: machine
+          required: false
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/ReservationRequest'
+      tags:
+        - v0/reservation
+    post:
+      description: ''
+      operationId: createRequest
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/ReservationRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/ReservationRequest'
+      tags:
+        - v0/reservation
+  /v0/resetPassword:
+    post:
+      description: ''
+      operationId: updatePassword
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/PasswordResetRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+      tags:
+        - v0/resetPassword
+  /v0/version:
+    get:
+      description: ''
+      operationId: getRequest
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+      tags:
+        - v0/version
+  /v0/whoami:
+    get:
+      description: ''
+      operationId: getRequest
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+        - v0/whoami
+schemes:
+  - http
+swagger: '2.0'
+tags:
+  - name: v0/enable
+  - description: Operations about authentication
+    name: v0/authenticate
+  - name: v0/resetPassword
+  - description: Operations about members
+    name: v0/member
+  - description: Operations about accounts
+    name: v0/account
+  - name: v0/projects
+  - name: v0/whoami
+  - name: v0/version
+  - name: v0/reservation
+  - description: check if key is working in coral
+    name: v0/checkKey
+  - description: Operations about projects
+    name: v0/project
+  - name: v0/projectMembership
+  - name: v0/labRoles
+  - name: v0/disable
+  - name: v0/machine
