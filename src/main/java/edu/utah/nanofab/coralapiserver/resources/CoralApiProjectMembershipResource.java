@@ -16,7 +16,11 @@ import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.ProjectMembership;
 import edu.utah.nanofab.coralapiserver.resources.operations.ProjectMembershipOperationGet;
 import edu.utah.nanofab.coralapiserver.resources.operations.ProjectMembershipOperationPut;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 
+
+@Api(value = "/v0/projectMembership", description = "")
 @Path("/v0/projectMembership")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiProjectMembershipResource {
@@ -28,6 +32,7 @@ public class CoralApiProjectMembershipResource {
   }
 
   @GET
+  @ApiOperation(value = "", response = ProjectMembership.class)  
   @Timed
   public ProjectMembership get(@QueryParam("project") Optional<String> project, @Auth User user) {
     ProjectMembershipOperationGet operation = new ProjectMembershipOperationGet();
@@ -36,6 +41,7 @@ public class CoralApiProjectMembershipResource {
   }
   
   @PUT
+  @ApiOperation(value = "", response = ProjectMembership.class)  
   @Timed
   public ProjectMembership update(@Valid ProjectMembership request, @Auth User user) {
     ProjectMembershipOperationPut operation = new ProjectMembershipOperationPut();

@@ -1,6 +1,7 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
 import edu.utah.nanofab.coralapi.resource.Account;
+import edu.utah.nanofab.coralapi.resource.Member;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.resources.operations.AccountOperationGet;
 import edu.utah.nanofab.coralapiserver.resources.operations.AccountOperationPost;
@@ -9,7 +10,11 @@ import edu.utah.nanofab.coralapiserver.resources.operations.AccountOperationPut;
 import org.slf4j.Logger;
 
 import com.google.common.base.Optional;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+
 import io.dropwizard.auth.Auth;
+
 import com.codahale.metrics.annotation.Timed;
 
 import javax.validation.Valid;
@@ -26,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Path("/v0/account")
+@Api(description = "", value = "/v0/account")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiAccountResource {
   
@@ -38,6 +44,7 @@ public class CoralApiAccountResource {
   }
 
   @GET
+  @ApiOperation(value = "Find account by name", response = Account.class)  
   @Timed
   public Account getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
     AccountOperationGet operation = new AccountOperationGet();
@@ -46,6 +53,7 @@ public class CoralApiAccountResource {
   }
   
   @POST
+  @ApiOperation(value = "update", response = Account.class)
   @Timed
   public Account createRequest(@Valid Account account, @Auth User user) {
     AccountOperationPost operation = new AccountOperationPost();
@@ -58,6 +66,7 @@ public class CoralApiAccountResource {
   }
   
   @PUT
+  @ApiOperation(value = "update", response = Account.class)
   @Timed
   public Account updateRequest(@Valid Account account, @Auth User user) {
     AccountOperationPut operation = new AccountOperationPut();

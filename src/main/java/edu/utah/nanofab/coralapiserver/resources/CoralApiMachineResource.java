@@ -1,12 +1,15 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
+import edu.utah.nanofab.coralapi.collections.Machines;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.resources.operations.MachineOperationGet;
 
 import org.slf4j.Logger;
 
 import com.google.common.base.Optional;
+
 import io.dropwizard.auth.Auth;
+
 import com.codahale.metrics.annotation.Timed;
 
 import javax.ws.rs.GET;
@@ -19,6 +22,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+
+
+@Api(value = "/v0/machine", description = "")
 @Path("/v0/machine")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiMachineResource {
@@ -32,6 +40,7 @@ public class CoralApiMachineResource {
   }
 
   @GET
+  @ApiOperation(value = "", response = Machines.class)  
   @Timed
   public Object getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
     MachineOperationGet operation = new MachineOperationGet();

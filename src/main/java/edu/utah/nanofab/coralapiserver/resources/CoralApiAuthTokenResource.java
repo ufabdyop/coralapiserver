@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
+
 import javax.validation.Valid;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,7 +15,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.google.common.base.Optional;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+
 import io.dropwizard.auth.Auth;
+
 import com.codahale.metrics.annotation.Timed;
 
 import edu.utah.nanofab.coralapi.CoralAPI;
@@ -24,6 +29,8 @@ import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.AuthRequest;
 
 @Path("/v0/authenticate")
+@Api(value = "/v0/authenticate", description = "")
+
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiAuthTokenResource {
   private ConcurrentHashMap<String, TokenConfiguration> sessionTokens;
@@ -35,6 +42,7 @@ public class CoralApiAuthTokenResource {
   }
   
     @GET
+    @ApiOperation(value = "")
     @Timed
     public Response getRequest(@QueryParam("proxyFor") Optional<String> name, @Auth User user) {
       //default response of unauthorized
@@ -53,6 +61,7 @@ public class CoralApiAuthTokenResource {
     }
 
     @POST
+    @ApiOperation(value = "")    
     public Response authRequest(@Valid AuthRequest authRequest) {
       String username = authRequest.getUsername();
       String password = authRequest.getPassword();

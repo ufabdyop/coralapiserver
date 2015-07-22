@@ -31,7 +31,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicLong;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 
+
+@Api(value = "/v0/reservation", description = "")
 @Path("/v0/reservation")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiReservationResource {
@@ -45,6 +49,7 @@ public class CoralApiReservationResource {
   }
 
   @POST
+  @ApiOperation(value = "", response = ReservationRequest.class)  
   @Timed
   public ReservationRequest createRequest(@Valid ReservationRequest request, @Auth User user) {
     ReservationOperationPost operation = new ReservationOperationPost();
@@ -57,6 +62,7 @@ public class CoralApiReservationResource {
   }
   
   @GET
+  @ApiOperation(value = "", response = ReservationRequest.class)    
   @Timed
   public Reservation[] getRequest(@QueryParam("machine") Optional<String> machine, @Auth User user) throws Exception {
 	  CoralAPI coralApiInstance = new CoralAPI(user.getUsername(), this.coralConfigUrl);
@@ -69,6 +75,7 @@ public class CoralApiReservationResource {
   }
 
   @DELETE
+  @ApiOperation(value = "", response = ReservationRequest.class)    
   @Timed
   public ReservationRequest deleteRequest(@Valid ReservationRequest request, @Auth User user) {
     ReservationOperationDelete operation = new ReservationOperationDelete();

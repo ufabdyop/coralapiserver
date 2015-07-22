@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import com.google.common.base.Optional;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 import com.wordnik.swagger.annotations.Authorization;
-
 
 import io.dropwizard.auth.Auth;
 
@@ -30,7 +30,7 @@ import javax.ws.rs.core.MediaType;
 import org.slf4j.LoggerFactory;
 
 @Path("/v0/member")
-@Api(value = "/v0/member", description = "Operations about members")
+@Api(value = "/v0/member", description = "")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiMemberResource {
   
@@ -45,13 +45,17 @@ public class CoralApiMemberResource {
   @ApiOperation(value = "Find member by name", 
 					response = Member.class)    
   @Timed
-  public Member getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
+  public Member getRequest(
+		  @QueryParam("name") Optional<String> name, 
+		  @Auth User user) {
     MemberOperationGet operation = new MemberOperationGet();
     operation.init( this.coralConfigUrl, name, Optional.<Object> absent(), user);
     return (Member) (operation.perform());
   }
     
   @POST
+  @ApiOperation(value = "Update member", 
+	response = Member.class)    
   @Timed
   public Member updateRequest(@Valid Member member, @Auth User user) {
     MemberOperationPost operation = new MemberOperationPost();
@@ -64,6 +68,8 @@ public class CoralApiMemberResource {
   }
   
   @PUT
+  @ApiOperation(value = "Create member", 
+	response = Member.class)    
   @Timed
   public Member createRequest(@Valid Member member, @Auth User user) {
     MemberOperationPut operation = new MemberOperationPut();

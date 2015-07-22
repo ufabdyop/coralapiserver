@@ -1,5 +1,6 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
+import edu.utah.nanofab.coralapi.resource.Member;
 import edu.utah.nanofab.coralapi.resource.Project;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.resources.operations.ProjectOperationGet;
@@ -9,7 +10,11 @@ import edu.utah.nanofab.coralapiserver.resources.operations.ProjectOperationPut;
 import org.slf4j.Logger;
 
 import com.google.common.base.Optional;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+
 import io.dropwizard.auth.Auth;
+
 import com.codahale.metrics.annotation.Timed;
 
 import javax.validation.Valid;
@@ -26,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Path("/v0/project")
+@Api(value = "/v0/project", description = "")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiProjectResource {
   
@@ -38,6 +44,8 @@ public class CoralApiProjectResource {
   }
 
   @GET
+  @ApiOperation(value = "Find project by name", 
+	response = Project.class)
   @Timed
   public Project getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
     ProjectOperationGet operation = new ProjectOperationGet();
@@ -46,6 +54,8 @@ public class CoralApiProjectResource {
   }
  
   @POST
+  @ApiOperation(value = "Update project", 
+	response = Project.class)
   @Timed
   public Project createRequest(@Valid Project project, @Auth User user) {
     ProjectOperationPost operation = new ProjectOperationPost();
@@ -58,6 +68,8 @@ public class CoralApiProjectResource {
   }
   
   @PUT
+  @ApiOperation(value = "Create project", 
+	response = Project.class)
   @Timed
   public Project updateRequest(@Valid Project project, @Auth User user) {
     ProjectOperationPut operation = new ProjectOperationPut();
