@@ -169,9 +169,15 @@ host: 'ryanmb.nanofab.utah.edu:4001'
 info:
   title: CoralAPIServer
   version: '0.3.5'
+securityDefinitions:
+  basicAuth:
+    type: "basic"
+    description: "HTTP Basic Authentication. Use a coral username and password, or use a pre-set auth-token."
 paths:
   /account:
     get:
+      security:
+        - basicAuth: []
       description: ''
       operationId: getRequest
       parameters:
@@ -190,6 +196,8 @@ paths:
       tags:
         - account
     post:
+      security:
+        - basicAuth: []
       description: ''
       operationId: createRequest
       parameters:
@@ -209,6 +217,8 @@ paths:
       tags:
         - account
     put:
+      security:
+        - basicAuth: []
       description: ''
       operationId: updateRequest
       parameters:
@@ -229,6 +239,8 @@ paths:
         - account
   /authenticate:
     get:
+      security:
+        - basicAuth: []
       description: ''
       operationId: getRequest
       parameters:
@@ -244,6 +256,8 @@ paths:
       tags:
         - authenticate
     post:
+      security:
+        - basicAuth: []
       description: ''
       operationId: authRequest
       parameters:
@@ -272,6 +286,8 @@ paths:
         - checkKey
   /disable:
     post:
+      security:
+        - basicAuth: []
       description: ''
       operationId: createRequest
       parameters:
@@ -291,6 +307,8 @@ paths:
         - disable
   /enable:
     post:
+      security:
+        - basicAuth: []
       description: ''
       operationId: createRequest
       parameters:
@@ -310,6 +328,8 @@ paths:
         - enable
   /labRoles:
     get:
+      security:
+        - basicAuth: []
       description: ''
       operationId: getRequest
       parameters:
@@ -328,6 +348,8 @@ paths:
         - labRoles
   /machine:
     get:
+      security:
+        - basicAuth: []
       description: ''
       operationId: getRequest
       parameters:
@@ -346,6 +368,8 @@ paths:
         - machine
   /member:
     get:
+      security:
+        - basicAuth: []
       description: ''
       operationId: getRequest
       parameters:
@@ -364,6 +388,8 @@ paths:
       tags:
         - member
     post:
+      security:
+        - basicAuth: []
       description: ''
       operationId: updateRequest
       parameters:
@@ -383,6 +409,8 @@ paths:
       tags:
         - member
     put:
+      security:
+        - basicAuth: []
       description: ''
       operationId: createRequest
       parameters:
@@ -403,6 +431,8 @@ paths:
         - member
   /project:
     get:
+      security:
+        - basicAuth: []
       description: ''
       operationId: getRequest
       parameters:
@@ -421,6 +451,8 @@ paths:
       tags:
         - project
     post:
+      security:
+        - basicAuth: []
       description: ''
       operationId: createRequest
       parameters:
@@ -440,6 +472,8 @@ paths:
       tags:
         - project
     put:
+      security:
+        - basicAuth: []
       description: ''
       operationId: updateRequest
       parameters:
@@ -460,6 +494,8 @@ paths:
         - project
   /projectMembership:
     get:
+      security:
+        - basicAuth: []
       description: ''
       operationId: get
       parameters:
@@ -477,6 +513,8 @@ paths:
       tags:
         - projectMembership
     put:
+      security:
+        - basicAuth: []
       description: ''
       operationId: update
       parameters:
@@ -496,6 +534,8 @@ paths:
         - projectMembership
   /projects:
     get:
+      security:
+        - basicAuth: []
       description: ''
       operationId: getRequest
       parameters:
@@ -514,6 +554,8 @@ paths:
         - projects
   /reservation:
     delete:
+      security:
+        - basicAuth: []
       description: ''
       operationId: deleteRequest
       parameters:
@@ -532,6 +574,8 @@ paths:
       tags:
         - reservation
     get:
+      security:
+        - basicAuth: []
       description: ''
       operationId: getRequest
       parameters:
@@ -549,6 +593,8 @@ paths:
       tags:
         - reservation
     post:
+      security:
+        - basicAuth: []
       description: ''
       operationId: createRequest
       parameters:
@@ -568,6 +614,8 @@ paths:
         - reservation
   /resetPassword:
     post:
+      security:
+        - basicAuth: []
       description: ''
       operationId: updatePassword
       parameters:
@@ -596,6 +644,8 @@ paths:
         - version
   /whoami:
     get:
+      security:
+        - basicAuth: []
       description: ''
       operationId: getRequest
       produces:
