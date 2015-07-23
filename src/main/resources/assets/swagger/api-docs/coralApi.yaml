@@ -1,4 +1,4 @@
-basePath: /
+basePath: /v0/
 definitions:
   Account:
     properties:
@@ -170,7 +170,7 @@ info:
   title: CoralAPIServer
   version: '0.3.3'
 paths:
-  /v0/account:
+  account:
     get:
       description: ''
       operationId: getRequest
@@ -188,7 +188,7 @@ paths:
             $ref: '#/definitions/Account'
       summary: Find account by name
       tags:
-        - v0/account
+        - account
     post:
       description: ''
       operationId: createRequest
@@ -207,7 +207,7 @@ paths:
             $ref: '#/definitions/Account'
       summary: update
       tags:
-        - v0/account
+        - account
     put:
       description: ''
       operationId: updateRequest
@@ -226,8 +226,8 @@ paths:
             $ref: '#/definitions/Account'
       summary: update
       tags:
-        - v0/account
-  /v0/authenticate:
+        - account
+  authenticate:
     get:
       description: ''
       operationId: getRequest
@@ -242,7 +242,7 @@ paths:
         '200':
           description: No response was specified
       tags:
-        - v0/authenticate
+        - authenticate
     post:
       description: ''
       operationId: authRequest
@@ -258,8 +258,8 @@ paths:
         '200':
           description: No response was specified
       tags:
-        - v0/authenticate
-  /v0/checkKey:
+        - authenticate
+  checkKey:
     get:
       description: ''
       operationId: checkKey
@@ -269,8 +269,8 @@ paths:
         '200':
           description: No response was specified
       tags:
-        - v0/checkKey
-  /v0/disable:
+        - checkKey
+  disable:
     post:
       description: ''
       operationId: createRequest
@@ -288,8 +288,8 @@ paths:
           schema:
             $ref: '#/definitions/DisableRequest'
       tags:
-        - v0/disable
-  /v0/enable:
+        - disable
+  enable:
     post:
       description: ''
       operationId: createRequest
@@ -307,8 +307,8 @@ paths:
           schema:
             $ref: '#/definitions/EnableRequest'
       tags:
-        - v0/enable
-  /v0/labRoles:
+        - enable
+  labRoles:
     get:
       description: ''
       operationId: getRequest
@@ -325,8 +325,8 @@ paths:
           schema:
             $ref: '#/definitions/LabRoles'
       tags:
-        - v0/labRoles
-  /v0/machine:
+        - labRoles
+  machine:
     get:
       description: ''
       operationId: getRequest
@@ -343,8 +343,8 @@ paths:
           schema:
             $ref: '#/definitions/Machines'
       tags:
-        - v0/machine
-  /v0/member:
+        - machine
+  member:
     get:
       description: ''
       operationId: getRequest
@@ -362,7 +362,7 @@ paths:
             $ref: '#/definitions/Member'
       summary: Find member by name
       tags:
-        - v0/member
+        - member
     post:
       description: ''
       operationId: updateRequest
@@ -381,7 +381,7 @@ paths:
             $ref: '#/definitions/Member'
       summary: Update member
       tags:
-        - v0/member
+        - member
     put:
       description: ''
       operationId: createRequest
@@ -400,8 +400,8 @@ paths:
             $ref: '#/definitions/Member'
       summary: Create member
       tags:
-        - v0/member
-  /v0/project:
+        - member
+  project:
     get:
       description: ''
       operationId: getRequest
@@ -419,7 +419,7 @@ paths:
             $ref: '#/definitions/Project'
       summary: Find project by name
       tags:
-        - v0/project
+        - project
     post:
       description: ''
       operationId: createRequest
@@ -438,7 +438,7 @@ paths:
             $ref: '#/definitions/Project'
       summary: Update project
       tags:
-        - v0/project
+        - project
     put:
       description: ''
       operationId: updateRequest
@@ -457,8 +457,8 @@ paths:
             $ref: '#/definitions/Project'
       summary: Create project
       tags:
-        - v0/project
-  /v0/projectMembership:
+        - project
+  projectMembership:
     get:
       description: ''
       operationId: get
@@ -475,7 +475,7 @@ paths:
           schema:
             $ref: '#/definitions/ProjectMembership'
       tags:
-        - v0/projectMembership
+        - projectMembership
     put:
       description: ''
       operationId: update
@@ -493,8 +493,8 @@ paths:
           schema:
             $ref: '#/definitions/ProjectMembership'
       tags:
-        - v0/projectMembership
-  /v0/projects:
+        - projectMembership
+  projects:
     get:
       description: ''
       operationId: getRequest
@@ -511,8 +511,8 @@ paths:
           schema:
             $ref: '#/definitions/Projects'
       tags:
-        - v0/projects
-  /v0/reservation:
+        - projects
+  reservation:
     delete:
       description: ''
       operationId: deleteRequest
@@ -530,7 +530,7 @@ paths:
           schema:
             $ref: '#/definitions/ReservationRequest'
       tags:
-        - v0/reservation
+        - reservation
     get:
       description: ''
       operationId: getRequest
@@ -547,7 +547,7 @@ paths:
           schema:
             $ref: '#/definitions/ReservationRequest'
       tags:
-        - v0/reservation
+        - reservation
     post:
       description: ''
       operationId: createRequest
@@ -565,8 +565,8 @@ paths:
           schema:
             $ref: '#/definitions/ReservationRequest'
       tags:
-        - v0/reservation
-  /v0/resetPassword:
+        - reservation
+  resetPassword:
     post:
       description: ''
       operationId: updatePassword
@@ -582,8 +582,8 @@ paths:
         '200':
           description: No response was specified
       tags:
-        - v0/resetPassword
-  /v0/version:
+        - resetPassword
+  version:
     get:
       description: ''
       operationId: getRequest
@@ -593,8 +593,8 @@ paths:
         '200':
           description: No response was specified
       tags:
-        - v0/version
-  /v0/whoami:
+        - version
+  whoami:
     get:
       description: ''
       operationId: getRequest
@@ -606,28 +606,28 @@ paths:
           schema:
             $ref: '#/definitions/User'
       tags:
-        - v0/whoami
+        - whoami
 schemes:
   - http
 swagger: '2.0'
 tags:
-  - name: v0/enable
+  - name: enable
   - description: Operations about authentication
-    name: v0/authenticate
-  - name: v0/resetPassword
+    name: authenticate
+  - name: resetPassword
   - description: Operations about members
-    name: v0/member
+    name: member
   - description: Operations about accounts
-    name: v0/account
-  - name: v0/projects
-  - name: v0/whoami
-  - name: v0/version
-  - name: v0/reservation
+    name: account
+  - name: projects
+  - name: whoami
+  - name: version
+  - name: reservation
   - description: check if key is working in coral
-    name: v0/checkKey
+    name: checkKey
   - description: Operations about projects
-    name: v0/project
-  - name: v0/projectMembership
-  - name: v0/labRoles
-  - name: v0/disable
-  - name: v0/machine
+    name: project
+  - name: projectMembership
+  - name: labRoles
+  - name: disable
+  - name: machine

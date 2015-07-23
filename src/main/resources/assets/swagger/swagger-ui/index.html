@@ -49,7 +49,6 @@
             hljs.highlightBlock(e)
           });
 
-          addApiKeyAuthorization();
         },
         onFailure: function(data) {
           log("Unable to Load SwaggerUI");
@@ -58,17 +57,6 @@
         apisSorter: "alpha",
         showRequestHeaders: false
       });
-
-      function addApiKeyAuthorization(){
-        var key = encodeURIComponent($('#input_apiKey')[0].value);
-        if(key && key.trim() != "") {
-            var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("api_key", key, "query");
-            window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
-            log("added key " + key);
-        }
-      }
-
-      $('#input_apiKey').change(addApiKeyAuthorization);
 
       // if you have an apiKey you would like to pre-populate on the page for demonstration purposes...
       /*
@@ -83,7 +71,23 @@
           console.log.apply(console, arguments);
         }
       }
+
+    // https://groups.google.com/forum/#!topic/swagger-swaggersocket/IziMnUwneKs
+    $('#input_user, #input_pass').change(function() {
+        var username = $('#input_user')[0].value;
+        var password = $('#input_pass')[0].value;
+
+        if(username && username.trim() != "" && password && password.trim() != "") {
+            var auth = "Basic " + btoa($('#input_user')[0].value + ":" + $('#input_pass')[0].value);
+            //window.authorizations.add("key", new ApiKeyAuthorization("Authorization", auth, "header"));
+            swaggerUi.api.clientAuthorizations.add("key", new SwaggerClient.ApiKeyAuthorization("Authorization", auth, "header"));
+        } else {
+            swaggerUi.api.clientAuthorizations.remove("key");
+            //window.authorizations.remove("key");
+        }
+    });
   });
+
   </script>
 </head>
 
@@ -92,14 +96,18 @@
   <div class="swagger-ui-wrap">
     <a id="logo" href="http://swagger.io">swagger</a>
     <form id='api_selector'>
+      <div class='input'><input placeholder="username or 'auth-token'" id="input_user" name="user" type="text" size="10" value="auth-token"/></div> 
+      <div class='input'><input placeholder="pass" id="input_pass" name="pass" type="password" size="10"/></div>
       <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
-      <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
       <div class='input'><a id="explore" href="#">Explore</a></div>
     </form>
   </div>
 </div>
 
 <div id="message-bar" class="swagger-ui-wrap">&nbsp;</div>
+<div id="coral-notes" class="swagger-ui-wrap">
+  <p><strong>Some notes</strong>: For operations requiring authentication, you need to enter a username and password in the boxes above.  You may enter 'auth-token' as the username and provide a valid token instead of entering your username and password, if you wish.  <!--You don't need to press the "explore" button to make the username and password take effect.--> </p>
+</div>
 <div id="swagger-ui-container" class="swagger-ui-wrap"></div>
 </body>
 </html>
