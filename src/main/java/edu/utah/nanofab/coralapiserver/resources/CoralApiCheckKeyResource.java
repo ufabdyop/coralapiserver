@@ -5,6 +5,8 @@ import edu.utah.nanofab.coralapi.CoralAPI;
 import org.slf4j.Logger;
 
 import com.codahale.metrics.annotation.Timed;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,6 +20,8 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Path("/v0/checkKey")
+@Api(value = "/v0/checkKey", description = "")
+
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiCheckKeyResource {
   
@@ -30,6 +34,7 @@ public class CoralApiCheckKeyResource {
   }
 
   @GET
+  @ApiOperation(value = "")  
   @Timed
   public Object checkKey() {
 	  CoralAPI api = new CoralAPI("", coralConfigUrl);

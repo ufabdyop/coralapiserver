@@ -17,7 +17,11 @@ import com.codahale.metrics.annotation.Timed;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.PasswordResetRequest;
 import edu.utah.nanofab.coralapiserver.resources.operations.PasswordResetOperationPost;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 
+
+@Api(value = "/v0/resetPassword", description = "")
 @Path("/v0/resetPassword")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiPasswordResetResource {
@@ -44,6 +48,7 @@ public class CoralApiPasswordResetResource {
    * @return True if the member's password was successfully updated. False otherwise.
    */
   @POST
+  @ApiOperation(value = "")  
   @Timed
   public Object updatePassword(@Valid PasswordResetRequest request, @Auth User user) {
     PasswordResetOperationPost operation = new PasswordResetOperationPost();

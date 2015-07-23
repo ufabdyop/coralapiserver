@@ -1,6 +1,7 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
 import edu.utah.nanofab.coralapiserver.auth.User;
+
 import edu.utah.nanofab.coralapiserver.core.EnableRequest;
 import edu.utah.nanofab.coralapiserver.resources.operations.EnableOperationPost;
 
@@ -19,8 +20,12 @@ import javax.ws.rs.core.MediaType;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicLong;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+
 
 @Path("/v0/enable")
+@Api(value = "/v0/enable", description = "")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiEnableResource {
   
@@ -33,6 +38,7 @@ public class CoralApiEnableResource {
   }
 
   @POST
+  @ApiOperation(value = "", response = EnableRequest.class)  
   @Timed
   public EnableRequest createRequest(@Valid EnableRequest enableRequest, @Auth User user) {
     EnableOperationPost operation = new EnableOperationPost();

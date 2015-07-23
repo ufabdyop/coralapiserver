@@ -19,8 +19,12 @@ import javax.ws.rs.core.MediaType;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicLong;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 
 @Path("/v0/labRoles")
+@Api(value = "/v0/labRoles", description = "")
+
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiLabRoleResource {
   
@@ -33,6 +37,7 @@ public class CoralApiLabRoleResource {
   }
 
   @GET
+  @ApiOperation(value = "", response = LabRoles.class)
   @Timed
   public LabRoles getRequest(@QueryParam("member") Optional<String> username, @Auth User user) {
     LabRoleOperationGet operation = new LabRoleOperationGet();

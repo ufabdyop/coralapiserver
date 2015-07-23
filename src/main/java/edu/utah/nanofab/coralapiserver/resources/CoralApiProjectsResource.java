@@ -16,7 +16,11 @@ import com.codahale.metrics.annotation.Timed;
 import edu.utah.nanofab.coralapi.collections.Projects;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.resources.operations.ProjectsOperationGet;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 
+
+@Api(value = "/v0/projects", description = "")
 @Path("/v0/projects")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiProjectsResource {
@@ -29,6 +33,7 @@ public class CoralApiProjectsResource {
   }
 
   @GET
+  @ApiOperation(value = "", response = Projects.class)
   @Timed
   public Projects getRequest(@QueryParam("member") Optional<String> member, @Auth User user) {
     ProjectsOperationGet operation = new ProjectsOperationGet();

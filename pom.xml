@@ -5,7 +5,7 @@
 
 	<groupId>edu.utah.nanofab</groupId>
 	<artifactId>coralapiserver</artifactId>
-	<version>0.3.3</version>
+	<version>0.3.4</version>
 
 
 	<dependencies>
@@ -104,6 +104,20 @@
     </dependency>
     <!--END proguard libs -->
 
+		<!--  swagger REST doc generation -->		
+    <dependency>
+      <groupId>io.federecio</groupId>
+      <artifactId>dropwizard-swagger</artifactId>
+      <version>0.5.3</version>
+    </dependency>
+    <!--
+		<dependency>
+		  <groupId>com.wordnik</groupId>
+		  <artifactId>swagger-jaxrs_2.10</artifactId>
+		  <version>1.3.12</version>
+		</dependency>
+    -->
+		
 	</dependencies>
 
 	<properties>

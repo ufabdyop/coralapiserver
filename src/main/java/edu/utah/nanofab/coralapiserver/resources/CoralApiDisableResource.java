@@ -7,7 +7,11 @@ import edu.utah.nanofab.coralapiserver.resources.operations.DisableOperationPost
 import org.slf4j.Logger;
 
 import com.google.common.base.Optional;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+
 import io.dropwizard.auth.Auth;
+
 import com.codahale.metrics.annotation.Timed;
 
 import javax.validation.Valid;
@@ -21,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Path("/v0/disable")
+@Api(value = "/v0/disable", description = "")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiDisableResource {
   
@@ -33,6 +38,7 @@ public class CoralApiDisableResource {
   }
 
   @POST
+  @ApiOperation(value = "", response = DisableRequest.class)  
   @Timed
   public DisableRequest createRequest(@Valid DisableRequest disableRequest, @Auth User user) {
     DisableOperationPost operation = new DisableOperationPost();
