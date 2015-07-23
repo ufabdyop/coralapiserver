@@ -1,4 +1,4 @@
-basePath: /v0/
+basePath: /v0
 definitions:
   Account:
     properties:
@@ -170,7 +170,7 @@ info:
   title: CoralAPIServer
   version: '0.3.3'
 paths:
-  account:
+  /account:
     get:
       description: ''
       operationId: getRequest
@@ -227,7 +227,7 @@ paths:
       summary: update
       tags:
         - account
-  authenticate:
+  /authenticate:
     get:
       description: ''
       operationId: getRequest
@@ -259,7 +259,7 @@ paths:
           description: No response was specified
       tags:
         - authenticate
-  checkKey:
+  /checkKey:
     get:
       description: ''
       operationId: checkKey
@@ -270,7 +270,7 @@ paths:
           description: No response was specified
       tags:
         - checkKey
-  disable:
+  /disable:
     post:
       description: ''
       operationId: createRequest
@@ -289,7 +289,7 @@ paths:
             $ref: '#/definitions/DisableRequest'
       tags:
         - disable
-  enable:
+  /enable:
     post:
       description: ''
       operationId: createRequest
@@ -308,7 +308,7 @@ paths:
             $ref: '#/definitions/EnableRequest'
       tags:
         - enable
-  labRoles:
+  /labRoles:
     get:
       description: ''
       operationId: getRequest
@@ -326,7 +326,7 @@ paths:
             $ref: '#/definitions/LabRoles'
       tags:
         - labRoles
-  machine:
+  /machine:
     get:
       description: ''
       operationId: getRequest
@@ -344,7 +344,7 @@ paths:
             $ref: '#/definitions/Machines'
       tags:
         - machine
-  member:
+  /member:
     get:
       description: ''
       operationId: getRequest
@@ -401,7 +401,7 @@ paths:
       summary: Create member
       tags:
         - member
-  project:
+  /project:
     get:
       description: ''
       operationId: getRequest
@@ -458,7 +458,7 @@ paths:
       summary: Create project
       tags:
         - project
-  projectMembership:
+  /projectMembership:
     get:
       description: ''
       operationId: get
@@ -494,7 +494,7 @@ paths:
             $ref: '#/definitions/ProjectMembership'
       tags:
         - projectMembership
-  projects:
+  /projects:
     get:
       description: ''
       operationId: getRequest
@@ -512,7 +512,7 @@ paths:
             $ref: '#/definitions/Projects'
       tags:
         - projects
-  reservation:
+  /reservation:
     delete:
       description: ''
       operationId: deleteRequest
@@ -566,7 +566,7 @@ paths:
             $ref: '#/definitions/ReservationRequest'
       tags:
         - reservation
-  resetPassword:
+  /resetPassword:
     post:
       description: ''
       operationId: updatePassword
@@ -583,7 +583,7 @@ paths:
           description: No response was specified
       tags:
         - resetPassword
-  version:
+  /version:
     get:
       description: ''
       operationId: getRequest
@@ -594,7 +594,7 @@ paths:
           description: No response was specified
       tags:
         - version
-  whoami:
+  /whoami:
     get:
       description: ''
       operationId: getRequest
