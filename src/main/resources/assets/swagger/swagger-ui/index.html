@@ -27,7 +27,10 @@
       if (url && url.length > 1) {
         url = decodeURIComponent(url[1]);
       } else {
-        url = "http://petstore.swagger.io/v2/swagger.json";
+        //url = "http://petstore.swagger.io/v2/swagger.json";
+        segments = window.location.pathname.split('/');
+        pathbase = segments.slice(0,segments.length - 2).join('/');
+        url = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + pathbase + '/api-docs/coralApi.yaml';
       }
       window.swaggerUi = new SwaggerUi({
         url: url,
