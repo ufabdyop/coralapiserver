@@ -612,21 +612,21 @@ schemes:
 swagger: '2.0'
 tags:
   - name: enable
-  - description: Operations about authentication
-    name: authenticate
+  - name: authenticate
+    description: ''
   - name: resetPassword
-  - description: Operations about members
-    name: member
-  - description: Operations about accounts
-    name: account
+  - name: member
+    description: ''
+  - name: account
+    description: ''
   - name: projects
   - name: whoami
   - name: version
   - name: reservation
-  - description: check if key is working in coral
-    name: checkKey
-  - description: Operations about projects
-    name: project
+  - name: checkKey
+    description: check if key is working in coral
+  - name: project
+    description: ''
   - name: projectMembership
   - name: labRoles
   - name: disable

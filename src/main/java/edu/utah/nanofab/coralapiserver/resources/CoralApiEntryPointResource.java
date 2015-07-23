@@ -43,7 +43,7 @@ public class CoralApiEntryPointResource {
 	  reference += "<title>See Docs</title>\n";
 	  reference += "</head>\n";
   	  reference += "<body>\n";
-	  reference += "For documentation, please see <a href=\"/assets/docs/index.html\">/assets/docs/index.html</a>\n";
+	  reference += "For documentation, please see <a href=\"/assets/swagger/swagger-ui/index.html\">/assets/swagger/swagger-ui/index.html</a>\n";
 	  reference += "</body>\n";
 	  reference += "</html>\n";
 	  return reference;
