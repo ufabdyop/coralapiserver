@@ -30,7 +30,6 @@ import edu.utah.nanofab.coralapiserver.resources.CoralApiMachineResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiMemberResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiPasswordResetResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiProjectMembershipResource;
-import edu.utah.nanofab.coralapiserver.resources.CoralApiProjectResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiProjectsResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiReservationResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiVersionResource;
@@ -67,7 +66,6 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
       environment.jersey().register(new CoralApiReservationResource( coralConfigUrl));
       environment.jersey().register(new CoralApiMachineResource( coralConfigUrl));
       environment.jersey().register(new CoralApiLabRoleResource( coralConfigUrl));
-      environment.jersey().register(new CoralApiProjectResource( coralConfigUrl));
       environment.jersey().register(new CoralApiAccountResource( coralConfigUrl));
       environment.jersey().register(new CoralApiProjectMembershipResource( coralConfigUrl));
       environment.jersey().register(new CoralApiProjectsResource( coralConfigUrl));
@@ -77,7 +75,7 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
    private void configureCors(Environment environment) {
      Dynamic filter = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
      filter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
-     filter.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, "GET,PUT,POST,DELETE,OPTIONS");
+     filter.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, "GET,PUT,POST,DELETE,OPTIONS,HEAD");
      filter.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
      filter.setInitParameter(CrossOriginFilter.ACCESS_CONTROL_ALLOW_ORIGIN_HEADER, "*");
      filter.setInitParameter("allowedHeaders", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin");

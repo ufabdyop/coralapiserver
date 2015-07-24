@@ -46,16 +46,16 @@ public abstract class ResourceOperation {
     public abstract String errorMessage();
   
     public Object perform() {
-    this.setUp();
-    try {
-      this.performOperationImpl();
-    } catch (Exception e) {
-      e.printStackTrace();
-      this.error = e.getMessage();
-    }
-    this.tearDown();
-    this.reportErrorIfEncountered();
-    return returnValue();
+	    this.setUp();
+	    try {
+	      this.performOperationImpl();
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	      this.error = e.getMessage();
+	    }
+	    this.tearDown();
+	    this.reportErrorIfEncountered();
+	    return returnValue();
     }
 
     public void setReturnValue(Object object) {

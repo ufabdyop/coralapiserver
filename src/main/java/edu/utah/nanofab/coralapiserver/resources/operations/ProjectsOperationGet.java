@@ -18,7 +18,6 @@ public class ProjectsOperationGet extends ResourceOperation {
       this.setReturnValue(this.api.getProjects());
     }
     
-    
   }
 
   @Override

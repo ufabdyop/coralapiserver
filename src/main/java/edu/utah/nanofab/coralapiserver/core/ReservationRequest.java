@@ -8,17 +8,17 @@ public class ReservationRequest {
   
   public String getBdate() {
 	return bdate;
-}
-public void setBdate(String bdate) {
+  }
+  public void setBdate(String bdate) {
 	this.bdate = bdate;
-}
-public int getLengthInMinutes() {
+  }
+  public int getLengthInMinutes() {
 	return lengthInMinutes;
-}
-public void setLengthInMinutes(int lengthInMinutes) {
+  }
+  public void setLengthInMinutes(int lengthInMinutes) {
 	this.lengthInMinutes = lengthInMinutes;
-}
-public String getItem() {
+  }
+  public String getItem() {
     return item;
   }
   public void setItem(String item) {
