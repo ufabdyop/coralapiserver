@@ -1,0 +1,79 @@
+Creating the Swagger API Docs
+---
+
+
+Swagger API as a tool for generating are active documentation rest APIs.
+
+At the core of swagger is a file that is essentially a schema for a rest api.  dropwizard-swagger is a tool that allows you to generate that schema file based on annotations in your drop wizard Application.
+
+At the time of this writing, tools for combining swagger drop wizard do not completely solve the problem of creating the swagger API schema file.  Following is a list of problems that I encountered while trying to automatically generate a swagger schema file.
+
+* auto-generated docs not quite accurate: when the swagger tools generate json schema for a function signature such as the following, it should recognize the first parameter to be a document that is sent from the client, and the second parameter to be authentication information.  However it interprets the second parameter to also be a parameter that is sent from the client.
+    >>  public GenericResponse createRequest(@Valid Project project, @Auth User user) {
+This means that the swagger schema document is up looking like this:
+
+...
+    "models": {
+        "EnableRequest": {
+            "id": "EnableRequest",
+            "properties": {
+                "item": {
+                    "type": "string"
+                },
+                "member": {
+                    "type": "string"
+                },
+                "project": {
+                    "type": "string"
+                }
+            }
+        },
+        "User": {
+            "id": "User",
+            "properties": {
+                "username": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+...
+
+When it should look like this:
+
+...
+    "models": {
+        "EnableRequest": {
+            "id": "EnableRequest",
+            "properties": {
+                "item": {
+                    "type": "string"
+                },
+                "member": {
+                    "type": "string"
+                },
+                "project": {
+                    "type": "string"
+                }
+            }
+        }
+...
+
+* swagger version behind: the dropwizard-swagger tool was built to generate swagger schema for version 1.2.  2.0 is the current version.  Fortunately and there is a project can be used to convert Version 1.2 schema documents to version 2.0 (https://github.com/apigee-127/swagger-converter). 
+
+To build the Version 2 swagger docs, you have to start the coral API server.  Save the file from http://localhost:4001/api-docs and all the linked paths from api-docs.  As of now, those are:
+/v0/enable
+/v0/authenticate
+/v0/resetPassword
+/v0/member
+/v0/account
+/v0/projects
+/v0/whoami
+/v0/version
+/v0/reservation
+/v0/checkKey
+/v0/projectMembership
+/v0/labRoles
+/v0/disable
+/v0/machine
+Then use swagger-converter to update to v2.0, then manually edit to fix issues mentioned above.  There is a helper node js script in util.
