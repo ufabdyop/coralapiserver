@@ -97,7 +97,7 @@ var writeVersion1 = function(data) {
     for (var i in data['apis']) {
       var base = data['apis'][i]['baseName'];
       var contents = data['apis'][i]['api'];
-      fs.writeFileSync('./output/swaggerv1.2/' + base + '.json', JSON.stringify(contents));
+      fs.writeFileSync('./output/swaggerv1.2/' + base + '.json', JSON.stringify(contents,null,'  '));
     }
     resolve(data);
   });
@@ -105,7 +105,7 @@ var writeVersion1 = function(data) {
 
 var writeVersion2 = function(data) {
   return new Promise(function(resolve, reject) {
-      fs.writeFileSync('./output/swaggerv2/api.json', JSON.stringify(data));
+      fs.writeFileSync('./output/swaggerv2/api.json', JSON.stringify(data,null,'  '));
       resolve(data);
   });
 };
@@ -126,7 +126,7 @@ var transformJson = function(jsonDoc) {
     var dataArray = jsonDoc.apis;
     for (var h in dataArray) {
       var data = dataArray[h];
-      data.basePath = "http://coralapiserver.local:4001";
+      data.basePath = "http://coralapiserver.local:4001/v0";
       for (var i in data.apis) {
         data.apis[i].path = data.apis[i].path.substring(3) ;
         for (var j in data.apis[i].operations) {
@@ -181,30 +181,25 @@ fetchData().then(function(data) {
   return readApiEndpoints(data);
 }).then(function(data) {
   console.log("----STEP 2.5------");
-  console.log(data);
   return writeVersion1(data);
 }).then(function(data) {
   console.log("----STEP 2------");
-  console.log(data);
   return flattenApis(data);
 }).then(function(data) {
   console.log("----STEP 3------");
-  console.log(data);
   return transformJson(data);
 }).then(function(data) {
   console.log("----STEP 4------");
-  console.log(data);
   return convertToVersion2(data);
 }).then(function(data) {
   console.log("----STEP 4.2------");
-  console.log(data);
   return updateVersion2(data);
 }).then(function(data) {
   console.log("----STEP 4.5------");
-  console.log(data);
   return writeVersion2(data);
 }).then(function(data) {
   console.log("----STEP 5------");
-  console.log(data);
-  //return logData(data);
+  console.log("FINISHED");
+  console.log('./output/swaggerv2/api.json');
+
 });
