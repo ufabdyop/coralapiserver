@@ -97,7 +97,7 @@ var writeVersion1 = function(data) {
     for (var i in data['apis']) {
       var base = data['apis'][i]['baseName'];
       var contents = data['apis'][i]['api'];
-      fs.writeFileSync('./output/swaggerv1.2/' + base + '.json', JSON.stringify(contents,null,'  '));
+      fs.writeFileSync('./output/swaggerv1.2/' + base + '.json', JSON.stringify(contents,null,'    '));
     }
     resolve(data);
   });
@@ -105,7 +105,7 @@ var writeVersion1 = function(data) {
 
 var writeVersion2 = function(data) {
   return new Promise(function(resolve, reject) {
-      fs.writeFileSync('./output/swaggerv2/api.json', JSON.stringify(data,null,'  '));
+      fs.writeFileSync('./output/swaggerv2/api.json', JSON.stringify(data,null,'    '));
       resolve(data);
   });
 };
@@ -136,13 +136,6 @@ var transformJson = function(jsonDoc) {
               delete data.apis[i].operations[j].parameters[k].items;
               data.apis[i].operations[j].parameters[k].type = 'string';
             }
-            if (data.apis[i].operations[j].parameters[k].type == 'User') {
-              data.apis[i].operations[j].parameters.splice(k, 1);
-              requiresAuth = true;
-            }
-          }
-          if (requiresAuth) {
-            data.apis[i].operations[j].security = { "basicAuth": [] };
           }
         }
       }
@@ -165,7 +158,30 @@ var convertToVersion2 = function(data) {
 var updateVersion2 = function(data) {
   return new Promise(function(resolve, reject) {
     data.info.version = apiVersion;
-    data.info.title = "Coral API Server";
+    data.info.title = "CoralAPIServer";
+
+    for (var i in data.paths) {
+      var path = data.paths[i];
+      for (var j in data.paths[i]) {
+        var operation = data.paths[i][j];
+        var requireAuth = false;
+        if (data.paths[i][j].tags && data.paths[i][j].tags[0]) {
+          data.paths[i][j].tags[0] = data.paths[i][j].tags[0].replace('v0/', '');
+        }
+        for( var k in data.paths[i][j].parameters) {
+          if ( data.paths[i][j].parameters[k] &&
+                data.paths[i][j].parameters[k]["schema"] &&
+                data.paths[i][j].parameters[k]["schema"]["$ref"] &&
+                (data.paths[i][j].parameters[k]["schema"]["$ref"] == '#/definitions/User') ) {
+            data.paths[i][j].parameters.splice(k, 1);
+            requireAuth = true;
+          }
+        }
+        if (requireAuth) {
+          data.paths[i][j].security = [ { "basicAuth": [] } ];
+        }
+      }
+    }
     resolve(data);
   });
 };
@@ -201,5 +217,7 @@ fetchData().then(function(data) {
   console.log("----STEP 5------");
   console.log("FINISHED");
   console.log('./output/swaggerv2/api.json');
-
+}).catch(function(error) {
+  console.log("Error");
+  console.log(error);
 });
