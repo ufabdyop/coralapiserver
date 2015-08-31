@@ -75,7 +75,7 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
 	        });
     	} else {
     		System.out.println("Not adding swagger bundle.");
-    		System.out.println(System.getenv("ENABLE_SWAGGER"));
+    		System.out.println("***" + System.getenv("ENABLE_SWAGGER") + "***");
     	}
     }
 
