@@ -44,14 +44,15 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
     @Override
     public void initialize(Bootstrap<CoralApiConfiguration> bootstrap) {
       bootstrap.addBundle(new AssetsBundle("/assets"));
-      addSwaggerBundlerConditionally(bootstrap);
+      addSwaggerBundleConditionally(bootstrap);
     }
     
     /**
      * add the /swagger endpoints if environment variable ENABLE_SWAGGER is equal to "1"
      */
-    private void addSwaggerBundlerConditionally(Bootstrap<CoralApiConfiguration> bootstrap) {
+    private void addSwaggerBundleConditionally(Bootstrap<CoralApiConfiguration> bootstrap) {
     	if (System.getenv("ENABLE_SWAGGER") == "1") {
+    		System.out.println("Adding swagger bundle");
 	        bootstrap.addBundle(new SwaggerBundle<CoralApiConfiguration>() {
 	            @Override
 	            public SwaggerBundleConfiguration getSwaggerBundleConfiguration(CoralApiConfiguration configuration) {
@@ -72,6 +73,9 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
 	                return new SwaggerBundleConfiguration(hostname, port);
 	            }
 	        });
+    	} else {
+    		System.out.println("Not adding swagger bundle.");
+    		System.out.println(System.getenv("ENABLE_SWAGGER"));
     	}
     }
 
