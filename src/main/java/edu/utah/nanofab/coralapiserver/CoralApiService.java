@@ -44,27 +44,37 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
     @Override
     public void initialize(Bootstrap<CoralApiConfiguration> bootstrap) {
       bootstrap.addBundle(new AssetsBundle("/assets"));
-      bootstrap.addBundle(new SwaggerBundle<CoralApiConfiguration>() {
-          @Override
-          public SwaggerBundleConfiguration getSwaggerBundleConfiguration(CoralApiConfiguration configuration) {
-              int port = 8080;
-              String hostname = System.getenv("APIHOST");
-              if (hostname == null) {
-                  hostname = "localhost";
-              }
-              String portString = System.getenv("APIPORT");
-              if (portString != null) {
-                  try {
-                      port = Integer.valueOf(portString);
-                  } catch (Exception e) {
-                      //ignore bad port and use default one
-                  }
-              }
-              
-              return new SwaggerBundleConfiguration(hostname, port);
-          }
-      });            
+      addSwaggerBundlerConditionally(bootstrap);
     }
+    
+    /**
+     * add the /swagger endpoints if environment variable ENABLE_SWAGGER is equal to "1"
+     */
+    private void addSwaggerBundlerConditionally(Bootstrap<CoralApiConfiguration> bootstrap) {
+    	if (System.getenv("ENABLE_SWAGGER") == "1") {
+	        bootstrap.addBundle(new SwaggerBundle<CoralApiConfiguration>() {
+	            @Override
+	            public SwaggerBundleConfiguration getSwaggerBundleConfiguration(CoralApiConfiguration configuration) {
+	                int port = 8080;
+	                String hostname = System.getenv("APIHOST");
+	                if (hostname == null) {
+	                    hostname = "localhost";
+	                }
+	                String portString = System.getenv("APIPORT");
+	                if (portString != null) {
+	                    try {
+	                        port = Integer.valueOf(portString);
+	                    } catch (Exception e) {
+	                        //ignore bad port and use default one
+	                    }
+	                }
+	                
+	                return new SwaggerBundleConfiguration(hostname, port);
+	            }
+	        });
+    	}
+    }
+
 
     @Override
     public void run(CoralApiConfiguration configuration,
