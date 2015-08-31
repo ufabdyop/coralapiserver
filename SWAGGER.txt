@@ -77,3 +77,12 @@ To build the Version 2 swagger docs, you have to start the coral API server.  Sa
 /v0/disable
 /v0/machine
 Then use swagger-converter to update to v2.0, then manually edit to fix issues mentioned above.  There is a helper node js script in util.
+
+UPDATE
+---
+To fix issues above, follow these instructions:
+1. run coralapiserver with environment variable ENABLE_SWAGGER=1
+2. in 'util' subdirectory, run 'node swagger-helper.js' (requires node modules swagger-converter and json2yaml)
+3. copy generated coralApi.yaml to src/main/resources/assets/swagger/api-docs
+4. rebuild with mvn package
+5. run coralapiserver with environment variable ENABLE_SWAGGER=0 (or no environment variable ENABLE_SWAGGER)
