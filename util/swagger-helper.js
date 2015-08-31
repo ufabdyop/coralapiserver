@@ -105,7 +105,7 @@ var writeVersion1 = function(data) {
 
 var writeVersion2 = function(data) {
   return new Promise(function(resolve, reject) {
-      fs.writeFileSync('./output/swaggerv2/api.json', JSON.stringify(data,null,'    '));
+      fs.writeFileSync('./output/swaggerv2/coralApi.json', JSON.stringify(data,null,'    '));
       resolve(data);
   });
 };
@@ -216,7 +216,7 @@ fetchData().then(function(data) {
 }).then(function(data) {
   console.log("----STEP 5------");
   console.log("FINISHED");
-  console.log('./output/swaggerv2/api.json');
+  console.log('./output/swaggerv2/coralApi.json');
 }).catch(function(error) {
   console.log("Error");
   console.log(error);
