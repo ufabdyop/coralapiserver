@@ -3,8 +3,9 @@ var fs = require('fs');
 var swaggerConverter = require('swagger-converter');
 var host = '172.17.42.1';
 host = 'localhost';
-var port = 4001;
+var port = 8080;
 var apiVersion = "0.3.5";
+var YAML = require('json2yaml');
 
 function getJson(page, callback) {
     return http.get({
@@ -106,6 +107,13 @@ var writeVersion1 = function(data) {
 var writeVersion2 = function(data) {
   return new Promise(function(resolve, reject) {
       fs.writeFileSync('./output/swaggerv2/coralApi.json', JSON.stringify(data,null,'    '));
+      resolve(data);
+  });
+};
+
+var writeYamlVersion2 = function(data) {
+  return new Promise(function(resolve, reject) {
+      fs.writeFileSync('./output/swaggerv2/coralApi.yaml', YAML.stringify(data,null,'    '));
       resolve(data);
   });
 };
@@ -214,9 +222,13 @@ fetchData().then(function(data) {
   console.log("----STEP 4.5------");
   return writeVersion2(data);
 }).then(function(data) {
+  console.log("----STEP 4.7------");
+  return writeYamlVersion2(data);
+}).then(function(data) {
   console.log("----STEP 5------");
   console.log("FINISHED");
   console.log('./output/swaggerv2/coralApi.json');
+  console.log('./output/swaggerv2/coralApi.yaml');
 }).catch(function(error) {
   console.log("Error");
   console.log(error);

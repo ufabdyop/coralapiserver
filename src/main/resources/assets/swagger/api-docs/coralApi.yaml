@@ -1,683 +1,720 @@
-host: 'coralapiserver.local:4001'
-basePath: /v0
-definitions:
-  Account:
-    properties:
-      active:
-        type: boolean
-      bdate:
-        format: date-time
-        type: string
-      description:
-        type: string
-      edate:
-        format: date-time
-        type: string
-      name:
-        type: string
-      organization:
-        type: string
-      type:
-        type: string
-  AuthRequest:
-    properties:
-      password:
-        type: string
-      username:
-        type: string
-  DisableRequest:
-    properties:
-      item:
-        type: string
-  EnableRequest:
-    properties:
-      item:
-        type: string
-      member:
-        type: string
-      project:
-        type: string
-  LabRoles:
-    properties:
-      empty:
-        type: boolean
-  Machines:
-    properties:
-      empty:
-        type: boolean
-  Member:
-    properties:
-      active:
-        type: boolean
-      address1:
-        type: string
-      address2:
-        type: string
-      advisor:
-        type: string
-      altFax:
-        type: string
-      altOffice:
-        type: string
-      altPhone:
-        type: string
-      bdate:
-        format: date-time
-        type: string
-      city:
-        type: string
-      disability:
-        type: string
-      edate:
-        format: date-time
-        type: string
-      email:
-        type: string
-      ethnicity:
-        type: string
-      fax:
-        type: string
-      firstName:
-        type: string
-      gender:
-        type: string
-      lastName:
-        type: string
-      mailCode:
-        type: string
-      name:
-        type: string
-      password:
-        type: string
-      phone:
-        type: string
-      project:
-        type: string
-      race:
-        type: string
-      state:
-        type: string
-      type:
-        type: string
-      univid:
-        type: string
-      url:
-        type: string
-      zipcode:
-        type: string
-  PasswordResetRequest:
-    properties:
-      name:
-        type: string
-      password:
-        type: string
-  Project:
-    properties:
-      account:
-        type: string
-      active:
-        type: boolean
-      bdate:
-        format: date-time
-        type: string
-      description:
-        type: string
-      discipline:
-        type: string
-      edate:
-        format: date-time
-        type: string
-      name:
-        type: string
-      nickname:
-        type: string
-      'null':
-        type: boolean
-      pi:
-        type: string
-      type:
-        type: string
-  ProjectMembership:
-    properties:
-      members:
-        items:
-          type: string
-        type: array
-      project:
-        type: string
-  Projects:
-    properties:
-      empty:
-        type: boolean
-  ReservationRequest:
-    properties:
-      bdate:
-        type: string
-      item:
-        type: string
-      lengthInMinutes:
-        format: int32
-        type: integer
-      member:
-        type: string
-      project:
-        type: string
-  User:
-    properties:
-      username:
-        type: string
-info:
-  title: CoralAPIServer
-  version: '0.3.5'
-securityDefinitions:
-  basicAuth:
-    type: "basic"
-    description: "HTTP Basic Authentication. Use a coral username and password, or use a pre-set auth-token."
-paths:
-  /account:
-    get:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: getRequest
-      parameters:
-        - in: query
-          name: name
-          required: false
-          type: string
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/Account'
-      summary: Find account by name
-      tags:
-        - account
-    post:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: createRequest
-      parameters:
-        - in: body
-          name: body
-          required: false
-          schema:
-            $ref: '#/definitions/Account'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/Account'
-      summary: update
-      tags:
-        - account
-    put:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: updateRequest
-      parameters:
-        - in: body
-          name: body
-          required: false
-          schema:
-            $ref: '#/definitions/Account'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/Account'
-      summary: update
-      tags:
-        - account
-  /authenticate:
-    get:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: getRequest
-      parameters:
-        - in: query
-          name: proxyFor
-          required: false
-          type: string
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-      tags:
-        - authenticate
-    post:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: authRequest
-      parameters:
-        - in: body
-          name: body
-          required: false
-          schema:
-            $ref: '#/definitions/AuthRequest'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-      tags:
-        - authenticate
-  /checkKey:
-    get:
-      description: ''
-      operationId: checkKey
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-      tags:
-        - checkKey
-  /disable:
-    post:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: createRequest
-      parameters:
-        - in: body
-          name: body
-          required: false
-          schema:
-            $ref: '#/definitions/DisableRequest'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/DisableRequest'
-      tags:
-        - disable
-  /enable:
-    post:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: createRequest
-      parameters:
-        - in: body
-          name: body
-          required: false
-          schema:
-            $ref: '#/definitions/EnableRequest'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/EnableRequest'
-      tags:
-        - enable
-  /labRoles:
-    get:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: getRequest
-      parameters:
-        - in: query
-          name: member
-          required: false
-          type: string
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/LabRoles'
-      tags:
-        - labRoles
-  /machine:
-    get:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: getRequest
-      parameters:
-        - in: query
-          name: name
-          required: false
-          type: string
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/Machines'
-      tags:
-        - machine
-  /member:
-    get:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: getRequest
-      parameters:
-        - in: query
-          name: name
-          required: false
-          type: string
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/Member'
-      summary: Find member by name
-      tags:
-        - member
-    post:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: updateRequest
-      parameters:
-        - in: body
-          name: body
-          required: false
-          schema:
-            $ref: '#/definitions/Member'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/Member'
-      summary: Update member
-      tags:
-        - member
-    put:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: createRequest
-      parameters:
-        - in: body
-          name: body
-          required: false
-          schema:
-            $ref: '#/definitions/Member'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/Member'
-      summary: Create member
-      tags:
-        - member
-  /project:
-    get:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: getRequest
-      parameters:
-        - in: query
-          name: name
-          required: false
-          type: string
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/Project'
-      summary: Find project by name
-      tags:
-        - project
-    post:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: createRequest
-      parameters:
-        - in: body
-          name: body
-          required: false
-          schema:
-            $ref: '#/definitions/Project'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/Project'
-      summary: Update project
-      tags:
-        - project
-    put:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: updateRequest
-      parameters:
-        - in: body
-          name: body
-          required: false
-          schema:
-            $ref: '#/definitions/Project'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/Project'
-      summary: Create project
-      tags:
-        - project
-  /projectMembership:
-    get:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: get
-      parameters:
-        - in: query
-          name: project
-          required: false
-          type: string
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/ProjectMembership'
-      tags:
-        - projectMembership
-    put:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: update
-      parameters:
-        - in: body
-          name: body
-          required: false
-          schema:
-            $ref: '#/definitions/ProjectMembership'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/ProjectMembership'
-      tags:
-        - projectMembership
-  /projects:
-    get:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: getRequest
-      parameters:
-        - in: query
-          name: member
-          required: false
-          type: string
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/Projects'
-      tags:
-        - projects
-  /reservation:
-    delete:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: deleteRequest
-      parameters:
-        - in: body
-          name: body
-          required: false
-          schema:
-            $ref: '#/definitions/ReservationRequest'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/ReservationRequest'
-      tags:
-        - reservation
-    get:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: getRequest
-      parameters:
-        - in: query
-          name: machine
-          required: false
-          type: string
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/ReservationRequest'
-      tags:
-        - reservation
-    post:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: createRequest
-      parameters:
-        - in: body
-          name: body
-          required: false
-          schema:
-            $ref: '#/definitions/ReservationRequest'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/ReservationRequest'
-      tags:
-        - reservation
-  /resetPassword:
-    post:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: updatePassword
-      parameters:
-        - in: body
-          name: body
-          required: false
-          schema:
-            $ref: '#/definitions/PasswordResetRequest'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-      tags:
-        - resetPassword
-  /version:
-    get:
-      description: ''
-      operationId: getRequest
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-      tags:
-        - version
-  /whoami:
-    get:
-      security:
-        - basicAuth: []
-      description: ''
-      operationId: getRequest
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/User'
-      tags:
-        - whoami
-schemes:
-  - http
-swagger: '2.0'
-tags:
-  - name: enable
-  - name: authenticate
-    description: ''
-  - name: resetPassword
-  - name: member
-    description: ''
-  - name: account
-    description: ''
-  - name: projects
-  - name: whoami
-  - name: version
-  - name: reservation
-  - name: checkKey
-    description: check if key is working in coral
-  - name: project
-    description: ''
-  - name: projectMembership
-  - name: labRoles
-  - name: disable
-  - name: machine
+---
+  swagger: "2.0"
+  info: 
+    version: "0.3.5"
+    title: "CoralAPIServer"
+  paths: 
+    /enable: 
+      post: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/EnableRequest"
+        description: ""
+        tags: 
+          - "enable"
+        operationId: "createRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: false
+            schema: 
+              $ref: "#/definitions/EnableRequest"
+        security: 
+          - 
+            basicAuth: []
+    /authenticate: 
+      get: 
+        responses: 
+          200: 
+            description: "No response was specified"
+        description: ""
+        tags: 
+          - "authenticate"
+        operationId: "getRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "query"
+            name: "proxyFor"
+            required: false
+            type: "string"
+        security: 
+          - 
+            basicAuth: []
+      post: 
+        responses: 
+          200: 
+            description: "No response was specified"
+        description: ""
+        tags: 
+          - "authenticate"
+        operationId: "authRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: false
+            schema: 
+              $ref: "#/definitions/AuthRequest"
+    /resetPassword: 
+      post: 
+        responses: 
+          200: 
+            description: "No response was specified"
+        description: ""
+        tags: 
+          - "resetPassword"
+        operationId: "updatePassword"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: false
+            schema: 
+              $ref: "#/definitions/PasswordResetRequest"
+        security: 
+          - 
+            basicAuth: []
+    /member: 
+      get: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/Member"
+        description: ""
+        tags: 
+          - "member"
+        summary: "Find member by name"
+        operationId: "getRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "query"
+            name: "name"
+            required: false
+            type: "string"
+        security: 
+          - 
+            basicAuth: []
+      put: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/Member"
+        description: ""
+        tags: 
+          - "member"
+        summary: "Create member"
+        operationId: "createRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: false
+            schema: 
+              $ref: "#/definitions/Member"
+        security: 
+          - 
+            basicAuth: []
+      post: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/Member"
+        description: ""
+        tags: 
+          - "member"
+        summary: "Update member"
+        operationId: "updateRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: false
+            schema: 
+              $ref: "#/definitions/Member"
+        security: 
+          - 
+            basicAuth: []
+    /account: 
+      get: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/Account"
+        description: ""
+        tags: 
+          - "account"
+        summary: "Find account by name"
+        operationId: "getRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "query"
+            name: "name"
+            required: false
+            type: "string"
+        security: 
+          - 
+            basicAuth: []
+      post: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/Account"
+        description: ""
+        tags: 
+          - "account"
+        summary: "update"
+        operationId: "createRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: false
+            schema: 
+              $ref: "#/definitions/Account"
+        security: 
+          - 
+            basicAuth: []
+      put: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/Account"
+        description: ""
+        tags: 
+          - "account"
+        summary: "update"
+        operationId: "updateRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: false
+            schema: 
+              $ref: "#/definitions/Account"
+        security: 
+          - 
+            basicAuth: []
+    /projects: 
+      get: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/Projects"
+        description: ""
+        tags: 
+          - "projects"
+        summary: "Find projects by name or member"
+        operationId: "getRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "query"
+            name: "name"
+            required: false
+            type: "string"
+          - 
+            in: "query"
+            name: "member"
+            required: false
+            type: "string"
+        security: 
+          - 
+            basicAuth: []
+      post: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/GenericResponse"
+        description: ""
+        tags: 
+          - "projects"
+        summary: "Update project"
+        operationId: "createRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: false
+            schema: 
+              $ref: "#/definitions/Project"
+        security: 
+          - 
+            basicAuth: []
+      put: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/GenericResponse"
+        description: ""
+        tags: 
+          - "projects"
+        summary: "Create project"
+        operationId: "updateRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: false
+            schema: 
+              $ref: "#/definitions/Project"
+        security: 
+          - 
+            basicAuth: []
+    /whoami: 
+      get: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/User"
+        description: ""
+        tags: 
+          - "whoami"
+        operationId: "getRequest"
+        produces: 
+          - "application/json"
+        parameters: []
+        security: 
+          - 
+            basicAuth: []
+    /version: 
+      get: 
+        responses: 
+          200: 
+            description: "No response was specified"
+        description: ""
+        tags: 
+          - "version"
+        operationId: "getRequest"
+        produces: 
+          - "application/json"
+    /reservation: 
+      get: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/ReservationRequest"
+        description: ""
+        tags: 
+          - "reservation"
+        operationId: "getRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "query"
+            name: "machine"
+            required: false
+            type: "string"
+        security: 
+          - 
+            basicAuth: []
+      post: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/ReservationRequest"
+        description: ""
+        tags: 
+          - "reservation"
+        operationId: "createRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: false
+            schema: 
+              $ref: "#/definitions/ReservationRequest"
+        security: 
+          - 
+            basicAuth: []
+      delete: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/ReservationRequest"
+        description: ""
+        tags: 
+          - "reservation"
+        operationId: "deleteRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: false
+            schema: 
+              $ref: "#/definitions/ReservationRequest"
+        security: 
+          - 
+            basicAuth: []
+    /checkKey: 
+      get: 
+        responses: 
+          200: 
+            description: "No response was specified"
+        description: ""
+        tags: 
+          - "checkKey"
+        operationId: "checkKey"
+        produces: 
+          - "application/json"
+    /projectMembership: 
+      get: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/ProjectMembership"
+        description: ""
+        tags: 
+          - "projectMembership"
+        operationId: "get"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "query"
+            name: "project"
+            required: false
+            type: "string"
+        security: 
+          - 
+            basicAuth: []
+      put: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/ProjectMembership"
+        description: ""
+        tags: 
+          - "projectMembership"
+        operationId: "update"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: false
+            schema: 
+              $ref: "#/definitions/ProjectMembership"
+        security: 
+          - 
+            basicAuth: []
+    /labRoles: 
+      get: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/LabRoles"
+        description: ""
+        tags: 
+          - "labRoles"
+        operationId: "getRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "query"
+            name: "member"
+            required: false
+            type: "string"
+        security: 
+          - 
+            basicAuth: []
+    /disable: 
+      post: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/DisableRequest"
+        description: ""
+        tags: 
+          - "disable"
+        operationId: "createRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: false
+            schema: 
+              $ref: "#/definitions/DisableRequest"
+        security: 
+          - 
+            basicAuth: []
+    /machine: 
+      get: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/Machines"
+        description: ""
+        tags: 
+          - "machine"
+        operationId: "getRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "query"
+            name: "name"
+            required: false
+            type: "string"
+        security: 
+          - 
+            basicAuth: []
+  tags: 
+    - 
+      name: "v0/enable"
+    - 
+      name: "v0/authenticate"
+    - 
+      name: "v0/resetPassword"
+    - 
+      name: "v0/member"
+    - 
+      name: "v0/account"
+    - 
+      name: "v0/projects"
+    - 
+      name: "v0/whoami"
+    - 
+      name: "v0/version"
+    - 
+      name: "v0/reservation"
+    - 
+      name: "v0/checkKey"
+    - 
+      name: "v0/projectMembership"
+    - 
+      name: "v0/labRoles"
+    - 
+      name: "v0/disable"
+    - 
+      name: "v0/machine"
+  host: "coralapiserver.local:4001"
+  basePath: "/v0"
+  schemes: 
+    - "http"
+  definitions: 
+    EnableRequest: 
+      properties: 
+        item: 
+          type: "string"
+        member: 
+          type: "string"
+        project: 
+          type: "string"
+    User: 
+      properties: 
+        username: 
+          type: "string"
+    AuthRequest: 
+      properties: 
+        username: 
+          type: "string"
+        password: 
+          type: "string"
+    PasswordResetRequest: 
+      properties: 
+        name: 
+          type: "string"
+        password: 
+          type: "string"
+    Member: 
+      properties: 
+        name: 
+          type: "string"
+        address1: 
+          type: "string"
+        address2: 
+          type: "string"
+        advisor: 
+          type: "string"
+        altFax: 
+          type: "string"
+        altOffice: 
+          type: "string"
+        altPhone: 
+          type: "string"
+        city: 
+          type: "string"
+        disability: 
+          type: "string"
+        email: 
+          type: "string"
+        ethnicity: 
+          type: "string"
+        fax: 
+          type: "string"
+        firstName: 
+          type: "string"
+        lastName: 
+          type: "string"
+        mailCode: 
+          type: "string"
+        password: 
+          type: "string"
+        phone: 
+          type: "string"
+        project: 
+          type: "string"
+        gender: 
+          type: "string"
+        race: 
+          type: "string"
+        state: 
+          type: "string"
+        type: 
+          type: "string"
+        univid: 
+          type: "string"
+        url: 
+          type: "string"
+        zipcode: 
+          type: "string"
+        active: 
+          type: "boolean"
+        bdate: 
+          type: "string"
+          format: "date-time"
+        edate: 
+          type: "string"
+          format: "date-time"
+    Account: 
+      properties: 
+        description: 
+          type: "string"
+        organization: 
+          type: "string"
+        active: 
+          type: "boolean"
+        bdate: 
+          type: "string"
+          format: "date-time"
+        edate: 
+          type: "string"
+          format: "date-time"
+        name: 
+          type: "string"
+        type: 
+          type: "string"
+    Project: 
+      properties: 
+        description: 
+          type: "string"
+        null: 
+          type: "boolean"
+        discipline: 
+          type: "string"
+        pi: 
+          type: "string"
+        nickname: 
+          type: "string"
+        account: 
+          type: "string"
+        active: 
+          type: "boolean"
+        bdate: 
+          type: "string"
+          format: "date-time"
+        edate: 
+          type: "string"
+          format: "date-time"
+        name: 
+          type: "string"
+        type: 
+          type: "string"
+    Projects: 
+      properties: 
+        empty: 
+          type: "boolean"
+    GenericResponse: 
+      properties: 
+        success: 
+          type: "boolean"
+        message: 
+          type: "string"
+    ReservationRequest: 
+      properties: 
+        item: 
+          type: "string"
+        member: 
+          type: "string"
+        bdate: 
+          type: "string"
+        lengthInMinutes: 
+          type: "integer"
+          format: "int32"
+        project: 
+          type: "string"
+    ProjectMembership: 
+      properties: 
+        project: 
+          type: "string"
+        members: 
+          type: "array"
+          items: 
+            type: "string"
+    LabRoles: 
+      properties: 
+        empty: 
+          type: "boolean"
+    DisableRequest: 
+      properties: 
+        item: 
+          type: "string"
+    Machines: 
+      properties: 
+        empty: 
+          type: "boolean"
