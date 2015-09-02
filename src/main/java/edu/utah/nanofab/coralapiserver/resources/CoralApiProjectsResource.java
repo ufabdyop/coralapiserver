@@ -49,18 +49,21 @@ public class CoralApiProjectsResource {
   @GET
   @ApiOperation(value = "Find projects by name or member", response = Projects.class)
   @Timed
-  public Projects getRequest(@QueryParam("name") Optional<String> name, 
+  public Project[] getRequest(@QueryParam("name") Optional<String> name, 
 		  @QueryParam("member") Optional<String> member, 
 		  @Auth User user) {
 	  Projects resultSet = new Projects();	  
 	  if (name.isPresent()) {
+		  logger.debug("projects query by name");
 		  resultSet.add(getProjectByName(name.get(), user));
 	  } else if (member.isPresent()) {
-		  resultSet = getProjectsByMember(member.get());
+		  logger.debug("projects query by member");
+		  resultSet = getProjectsByMember(member.get(), user);
 	  } else {
-		  resultSet = getAllActiveProjects();
+		  logger.debug("projects query for all projects");
+		  resultSet = getAllActiveProjects(user);
 	  }
-	  return resultSet;
+	  return resultSet.toArray();
   }
 
   @POST
@@ -93,22 +96,20 @@ public class CoralApiProjectsResource {
 	    return response;
   }
   
-  private Projects getProjectsByMember(String member) {
+  private Projects getProjectsByMember(String member, User apiUser) {
     ProjectsOperationGet operation = new ProjectsOperationGet();
-    User blank = new User();
     operation.init(this.coralConfigUrl, 
     		Optional.<String>of(member), 
     		Optional.<Object> absent(), 
-    		blank);
+    		apiUser);
     return (Projects) (operation.perform());
   }
-  private Projects getAllActiveProjects() {
+  private Projects getAllActiveProjects(User apiUser) {
     ProjectsOperationGet operation = new ProjectsOperationGet();
-    User blank = new User();
     operation.init(this.coralConfigUrl, 
     		Optional.<String>absent(), 
     		Optional.<Object>absent(), 
-    		blank);
+    		apiUser);
     return (Projects) (operation.perform());
   }
   private Project getProjectByName(String name, User user) {

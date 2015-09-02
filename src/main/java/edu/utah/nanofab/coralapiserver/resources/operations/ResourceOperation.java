@@ -3,10 +3,13 @@ package edu.utah.nanofab.coralapiserver.resources.operations;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.base.Optional;
 import com.sun.jersey.core.spi.factory.ResponseBuilderImpl;
-import io.dropwizard.auth.Auth;
 
+import io.dropwizard.auth.Auth;
 import edu.utah.nanofab.coralapi.CoralAPI;
 import edu.utah.nanofab.coralapiserver.auth.User;
 
@@ -19,15 +22,19 @@ public abstract class ResourceOperation {
     protected Optional<String> queryParam;
     protected Optional<Object> postedObject;
     protected String name = "";
+	protected Logger logger;
 
     public void init(String coralConfigUrl,
                     Optional<String> queryParam,
                     Optional<Object> postedObject,
                     @Auth User user) {
+
+    		logger = LoggerFactory.getLogger(ResourceOperation.class);
             this.coralConfigUrl = coralConfigUrl;
             this.queryParam = queryParam;
             this.postedObject = postedObject;
             this.user = user;
+            logger.debug("ResourceOperation: " + this.coralConfigUrl + " " + this.queryParam + " " + this.user.getUsername());
     }
 
     /**
@@ -63,7 +70,9 @@ public abstract class ResourceOperation {
     }
 
     private void setUp() {
-    this.api = new CoralAPI(this.user.getUsername(),
+    	logger.debug("user: " + user.getUsername());
+    	logger.debug("configUrl: " + coralConfigUrl);
+    	this.api = new CoralAPI(this.user.getUsername(),
                             this.coralConfigUrl);
     }
 

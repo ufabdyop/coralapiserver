@@ -11,13 +11,16 @@ public class ProjectsOperationGet extends ResourceOperation {
      * is currently working on. Otherwise, return all of the active projects.
      */
     if (this.queryParam.isPresent()) {
+      this.logger.debug("calling get member projects on " + this.queryParam.get());
       Projects projects = this.api.getMemberProjects(this.queryParam.get());
       System.out.println("Got Projects Collection of Size: " + projects.size());
       this.setReturnValue(projects);
     } else {
-      this.setReturnValue(this.api.getProjects());
+      this.logger.debug("calling getProjects" );
+      Projects allProj = this.api.getProjects();
+      this.logger.debug("result size of getProjects: " + allProj.size() );
+      this.setReturnValue(allProj);
     }
-    
   }
 
   @Override
