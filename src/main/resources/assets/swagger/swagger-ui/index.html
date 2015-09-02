@@ -73,9 +73,10 @@
       }
 
     // https://groups.google.com/forum/#!topic/swagger-swaggersocket/IziMnUwneKs
-    $('#input_user, #input_pass').change(function() {
+    var updateApiAuthInfo = function() {
         var username = $('#input_user')[0].value;
         var password = $('#input_pass')[0].value;
+	console.log("Using username: " + username);
 
         if(username && username.trim() != "" && password && password.trim() != "") {
             var auth = "Basic " + btoa($('#input_user')[0].value + ":" + $('#input_pass')[0].value);
@@ -85,7 +86,9 @@
             swaggerUi.api.clientAuthorizations.remove("key");
             //window.authorizations.remove("key");
         }
-    });
+    };
+    $('#input_user, #input_pass').change(updateApiAuthInfo);
+    updateApiAuthInfo();
   });
 
   </script>
@@ -97,7 +100,7 @@
     <a id="logo" href="http://swagger.io">swagger</a>
     <form id='api_selector'>
       <div class='input'><input placeholder="username or 'auth-token'" id="input_user" name="user" type="text" size="10" value="auth-token"/></div> 
-      <div class='input'><input placeholder="pass" id="input_pass" name="pass" type="password" size="10"/></div>
+      <div class='input'><input placeholder="pass" id="input_pass" name="pass" type="text" size="10" value="0qqCSnMFXxvFK8hzBJm56eaqWgVwDUMNCF5CToiS9b5DB7TJV9"/></div>
       <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
       <div class='input'><a id="explore" href="#">Explore</a></div>
     </form>
