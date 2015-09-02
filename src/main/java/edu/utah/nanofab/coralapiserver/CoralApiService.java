@@ -90,7 +90,7 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
       ConcurrentHashMap<String, TokenConfiguration> sessionTokens = new ConcurrentHashMap<String, TokenConfiguration>();
       configureCors(environment);
 
-      environment.jersey().register(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens, sessionTokens, coralConfigUrl ), "REALM STRING"));
+      environment.jersey().register(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens, sessionTokens, coralConfigUrl ), "CoralAPIServer Realm"));
       environment.jersey().register(new CoralApiEntryPointResource());
       environment.jersey().register(new CoralApiVersionResource());
       environment.jersey().register(new CoralApiWhoAmIResource());

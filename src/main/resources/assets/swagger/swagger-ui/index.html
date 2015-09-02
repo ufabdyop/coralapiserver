@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>Swagger UI</title>
   <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
@@ -21,6 +22,11 @@
   <script src='lib/marked.js' type='text/javascript'></script>
   <script src='lib/swagger-oauth.js' type='text/javascript'></script>
 
+  <!-- Some basic translations -->
+  <!-- <script src='lang/translator.js' type='text/javascript'></script> -->
+  <!-- <script src='lang/ru.js' type='text/javascript'></script> -->
+  <!-- <script src='lang/en.js' type='text/javascript'></script> -->
+
   <script type="text/javascript">
     $(function () {
       var url = window.location.search.match(/url=([^&]+)/);
@@ -32,6 +38,11 @@
         pathbase = segments.slice(0,segments.length - 2).join('/');
         url = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + pathbase + '/api-docs/coralApi.yaml';
       }
+
+      // Pre load translate...
+      if(window.SwaggerTranslator) {
+        window.SwaggerTranslator.translate();
+      }
       window.swaggerUi = new SwaggerUi({
         url: url,
         dom_id: "swagger-ui-container",
@@ -40,15 +51,22 @@
           if(typeof initOAuth == "function") {
             initOAuth({
               clientId: "your-client-id",
+              clientSecret: "your-client-secret",
               realm: "your-realms",
-              appName: "your-app-name"
+              appName: "your-app-name", 
+              scopeSeparator: ","
             });
+          }
+
+          if(window.SwaggerTranslator) {
+            window.SwaggerTranslator.translate();
           }
 
           $('pre code').each(function(i, e) {
             hljs.highlightBlock(e)
           });
 
+    updateApiAuthInfo();
         },
         onFailure: function(data) {
           log("Unable to Load SwaggerUI");
@@ -57,6 +75,24 @@
         apisSorter: "alpha",
         showRequestHeaders: false
       });
+
+
+    // https://groups.google.com/forum/#!topic/swagger-swaggersocket/IziMnUwneKs
+    function updateApiAuthInfo() {
+        var username = $('#input_user')[0].value;
+        var password = $('#input_pass')[0].value;
+        var authString = 'Basic ' + btoa(username + ':' + password);
+        console.log("Using username: " + username);
+
+        if(username && username.trim() != "" && password && password.trim() != "") {
+            swaggerUi.api.clientAuthorizations.add("basicAuth", new SwaggerClient.ApiKeyAuthorization("Authorization", authString, "header"));
+            //swaggerUi.api.clientAuthorizations.add("coralBasicAuth2", new SwaggerClient.ApiKeyAuthorization("X-TestHeader", authString, "header"));
+        } else {
+            swaggerUi.api.clientAuthorizations.remove("basicAuth");
+            //window.authorizations.remove("key");
+        }
+    };
+    $('#input_user, #input_pass').change(updateApiAuthInfo);
 
       // if you have an apiKey you would like to pre-populate on the page for demonstration purposes...
       /*
@@ -71,24 +107,6 @@
           console.log.apply(console, arguments);
         }
       }
-
-    // https://groups.google.com/forum/#!topic/swagger-swaggersocket/IziMnUwneKs
-    var updateApiAuthInfo = function() {
-        var username = $('#input_user')[0].value;
-        var password = $('#input_pass')[0].value;
-	console.log("Using username: " + username);
-
-        if(username && username.trim() != "" && password && password.trim() != "") {
-            var auth = "Basic " + btoa($('#input_user')[0].value + ":" + $('#input_pass')[0].value);
-            //window.authorizations.add("key", new ApiKeyAuthorization("Authorization", auth, "header"));
-            swaggerUi.api.clientAuthorizations.add("key", new SwaggerClient.ApiKeyAuthorization("Authorization", auth, "header"));
-        } else {
-            swaggerUi.api.clientAuthorizations.remove("key");
-            //window.authorizations.remove("key");
-        }
-    };
-    $('#input_user, #input_pass').change(updateApiAuthInfo);
-    updateApiAuthInfo();
   });
 
   </script>
