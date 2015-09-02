@@ -167,6 +167,7 @@ var updateVersion2 = function(data) {
   return new Promise(function(resolve, reject) {
     data.info.version = apiVersion;
     data.info.title = "CoralAPIServer";
+    data.securityDefinitions = { "basicAuth": {"type": "basic", "description": "HTTP Basic Authentication. Use a coral username and password, or use a pre-set auth-token."} };
 
     for (var i in data.paths) {
       var path = data.paths[i];

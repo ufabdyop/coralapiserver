@@ -3,6 +3,10 @@
   info: 
     version: "0.3.5"
     title: "CoralAPIServer"
+  securityDefinitions:
+    basicAuth:
+        type: "basic"
+        description: "HTTP Basic Authentication. Use a coral username and password, or use a pre-set auth-token."
   paths: 
     /enable: 
       post: 
