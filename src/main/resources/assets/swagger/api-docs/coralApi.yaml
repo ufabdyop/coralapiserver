@@ -227,9 +227,11 @@
       get: 
         responses: 
           200: 
-            description: "No response was specified"
-            schema: 
-              $ref: "#/definitions/Projects"
+            description: "An array of projects"
+            schema:
+              type:  "array"
+              items:
+                $ref: "#/definitions/Project"
         description: ""
         tags: 
           - "projects"

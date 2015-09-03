@@ -150,9 +150,9 @@ var updateVersion2 = function(data) {
     data.securityDefinitions = { "basicAuth": {"type": "basic", "description": "HTTP Basic Authentication. Use a coral username and password, or use a pre-set auth-token."} };
 
     for (var i in data.paths) {
-      var path = data.paths[i];
+      var path = i;
       for (var j in data.paths[i]) {
-        var operation = data.paths[i][j];
+        var operation = j;
         var requireAuth = false;
         if (data.paths[i][j].tags && data.paths[i][j].tags[0]) {
           data.paths[i][j].tags[0] = data.paths[i][j].tags[0].replace('v0/', '');
@@ -168,6 +168,13 @@ var updateVersion2 = function(data) {
         }
         if (requireAuth) {
           data.paths[i][j].security = [ { "basicAuth": [] } ];
+        }
+
+        /**
+         * fix the model for the response type.  (perhaps this could be detected automatically?)
+         * */
+        if (operation == 'get' && path == '/projects') {
+              data.paths[i][j]['responses']['200']['schema'] = {"type": "array", "items": {"$ref": "#/definitions/Project"}};
         }
       }
     }
