@@ -5,7 +5,7 @@ var host = '172.17.42.1';
 host = 'localhost';
 var port = 8080;
 port = 4001;
-var apiVersion = "0.3.5";
+var apiVersion = "0.3.7";
 var YAML = require('json2yaml');
 
 function getJson(page, callback) {
