@@ -3,10 +3,6 @@
   info: 
     version: "0.3.5"
     title: "CoralAPIServer"
-  securityDefinitions:
-    basicAuth:
-        type: "basic"
-        description: "HTTP Basic Authentication. Use a coral username and password, or use a pre-set auth-token."
   paths: 
     /enable: 
       post: 
@@ -301,6 +297,20 @@
         security: 
           - 
             basicAuth: []
+    /projects/example: 
+      get: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/Project"
+        description: ""
+        tags: 
+          - "projects"
+        summary: "Get Sample Project Resource"
+        operationId: "getProjectRequest"
+        produces: 
+          - "application/json"
     /whoami: 
       get: 
         responses: 
@@ -665,8 +675,6 @@
           type: "string"
         nickname: 
           type: "string"
-        account: 
-          type: "string"
         active: 
           type: "boolean"
         bdate: 
@@ -675,6 +683,8 @@
         edate: 
           type: "string"
           format: "date-time"
+        account: 
+          type: "string"
         name: 
           type: "string"
         type: 
@@ -722,3 +732,7 @@
       properties: 
         empty: 
           type: "boolean"
+  securityDefinitions: 
+    basicAuth: 
+      type: "basic"
+      description: "HTTP Basic Authentication. Use a coral username and password, or use a pre-set auth-token."
