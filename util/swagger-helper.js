@@ -82,17 +82,6 @@ var readApiEndpoints = function(data) {
     });
 };
 
-var flattenApis = function(data) {
-  return new Promise(function(resolve, reject) {
-    var flatArray = [];
-    for(var i in data['apis']) {
-      flatArray.push(data['apis'][i]['api']);
-    }
-    data['apis'] = flatArray;
-    resolve(data);
-  });
-};
-
 var writeVersion1 = function(data) {
   return new Promise(function(resolve, reject) {
     for (var i in data['apis']) {
@@ -104,23 +93,13 @@ var writeVersion1 = function(data) {
   });
 };
 
-var writeVersion2 = function(data) {
+var flattenApis = function(data) {
   return new Promise(function(resolve, reject) {
-      fs.writeFileSync('./output/swaggerv2/coralApi.json', JSON.stringify(data,null,'    '));
-      resolve(data);
-  });
-};
-
-var writeYamlVersion2 = function(data) {
-  return new Promise(function(resolve, reject) {
-      fs.writeFileSync('./output/swaggerv2/coralApi.yaml', YAML.stringify(data,null,'    '));
-      resolve(data);
-  });
-};
-
-var logData = function(data) {
-  return new Promise(function(resolve, reject) {
-    console.log(data);
+    var flatArray = [];
+    for(var i in data['apis']) {
+      flatArray.push(data['apis'][i]['api']);
+    }
+    data['apis'] = flatArray;
     resolve(data);
   });
 };
@@ -191,6 +170,27 @@ var updateVersion2 = function(data) {
         }
       }
     }
+    resolve(data);
+  });
+};
+
+var writeVersion2 = function(data) {
+  return new Promise(function(resolve, reject) {
+      fs.writeFileSync('./output/swaggerv2/coralApi.json', JSON.stringify(data,null,'    '));
+      resolve(data);
+  });
+};
+
+var writeYamlVersion2 = function(data) {
+  return new Promise(function(resolve, reject) {
+      fs.writeFileSync('./output/swaggerv2/coralApi.yaml', YAML.stringify(data,null,'    '));
+      resolve(data);
+  });
+};
+
+var logData = function(data) {
+  return new Promise(function(resolve, reject) {
+    console.log(data);
     resolve(data);
   });
 };
