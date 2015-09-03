@@ -31,6 +31,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Path("/v0/projects")
@@ -97,6 +98,15 @@ public class CoralApiProjectsResource {
 	    return response;
   }
   
+  @GET
+  @ApiOperation(value = "Get Sample Project Resource", response = Project.class)
+  @Path("/example")
+  @Timed
+  public Project getProjectRequest() {
+	  Project sample = new Project(false, "My project", "Project Description", "project nickname", "local", "chemistry", "My PI", "My account", true, new Date(), new Date());
+	  return sample;	  
+  }
+
   private Projects getProjectsByMember(String member, User apiUser) {
     ProjectsOperationGet operation = new ProjectsOperationGet();
     operation.init(this.coralConfigUrl, 
