@@ -48,7 +48,7 @@ public class CoralApiProjectsResource {
   }
 
   @GET
-  @ApiOperation(value = "Find projects by name or member", response = Projects.class)
+  @ApiOperation(value = "Find projects", notes="Find projects by name or member")
   @Timed
   public Projects getRequest(@QueryParam("name") Optional<String> name, 
 		  @QueryParam("member") Optional<String> member, 
