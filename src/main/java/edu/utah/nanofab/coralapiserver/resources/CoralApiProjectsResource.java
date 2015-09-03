@@ -47,13 +47,12 @@ public class CoralApiProjectsResource {
   }
 
   @GET
-  @ApiOperation(value = "Find projects by name or member", response = Project[].class)
+  @ApiOperation(value = "Find projects by name or member", response = Projects.class)
   @Timed
-  public Project[] getRequest(@QueryParam("name") Optional<String> name, 
+  public Projects getRequest(@QueryParam("name") Optional<String> name, 
 		  @QueryParam("member") Optional<String> member, 
 		  @Auth User user) {
 	  Projects resultSet = new Projects();
-	  Project[] resultSetAsArray;
 	  if (name.isPresent()) {
 		  logger.debug("projects query by name");
 		  resultSet.add(getProjectByName(name.get(), user));
@@ -64,9 +63,8 @@ public class CoralApiProjectsResource {
 		  logger.debug("projects query for all projects");
 		  resultSet = getAllActiveProjects(user);
 	  }
-	  resultSetAsArray = resultSet.toArray();
-	  logger.debug("returning project array after converting, length: " + resultSetAsArray.length);
-	  return resultSetAsArray;
+	  logger.debug("returning projects collection, length: " + resultSet.size());
+	  return resultSet;
   }
 
   @POST
