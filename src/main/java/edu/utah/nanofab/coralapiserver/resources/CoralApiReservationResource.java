@@ -1,6 +1,7 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
 import edu.utah.nanofab.coralapi.CoralAPI;
+import edu.utah.nanofab.coralapi.collections.Reservations;
 import edu.utah.nanofab.coralapi.resource.Project;
 import edu.utah.nanofab.coralapi.resource.Reservation;
 import edu.utah.nanofab.coralapiserver.auth.User;
@@ -31,6 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicLong;
+
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 
@@ -64,7 +66,7 @@ public class CoralApiReservationResource {
   @GET
   @ApiOperation(value = "", response = ReservationRequest.class)    
   @Timed
-  public Reservation[] getRequest(@QueryParam("machine") Optional<String> machine, @Auth User user) throws Exception {
+  public Reservations getRequest(@QueryParam("machine") Optional<String> machine, @Auth User user) throws Exception {
 	  CoralAPI coralApiInstance = new CoralAPI(user.getUsername(), this.coralConfigUrl);
 	  Date bdate = new Date();
 	  Date edate = new Date();
