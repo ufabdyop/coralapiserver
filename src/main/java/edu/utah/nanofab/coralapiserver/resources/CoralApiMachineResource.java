@@ -26,8 +26,8 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 
-@Api(value = "/v0/machine", description = "")
-@Path("/v0/machine")
+@Api(value = "/v0/machines", description = "")
+@Path("/v0/machines")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiMachineResource {
   

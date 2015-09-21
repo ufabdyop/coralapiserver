@@ -24,8 +24,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-@Path("/v0/disable")
-@Api(value = "/v0/disable", description = "")
+@Path("/v0/disables")
+@Api(value = "/v0/disables", description = "Disable machines")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiDisableResource {
   
