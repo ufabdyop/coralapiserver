@@ -4,6 +4,28 @@
     version: "0.3.7"
     title: "CoralAPIServer"
   paths: 
+    /machines: 
+      get: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/Machines"
+        description: ""
+        tags: 
+          - "machines"
+        operationId: "getRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "query"
+            name: "name"
+            required: false
+            type: "string"
+        security: 
+          - 
+            basicAuth: []
     /authenticate: 
       get: 
         responses: 
@@ -439,6 +461,29 @@
         security: 
           - 
             basicAuth: []
+    /disables: 
+      post: 
+        responses: 
+          200: 
+            description: "No response was specified"
+            schema: 
+              $ref: "#/definitions/DisableRequest"
+        description: ""
+        tags: 
+          - "disables"
+        operationId: "createRequest"
+        produces: 
+          - "application/json"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: false
+            schema: 
+              $ref: "#/definitions/DisableRequest"
+        security: 
+          - 
+            basicAuth: []
     /labRoles: 
       get: 
         responses: 
@@ -456,51 +501,6 @@
           - 
             in: "query"
             name: "member"
-            required: false
-            type: "string"
-        security: 
-          - 
-            basicAuth: []
-    /disable: 
-      post: 
-        responses: 
-          200: 
-            description: "No response was specified"
-            schema: 
-              $ref: "#/definitions/DisableRequest"
-        description: ""
-        tags: 
-          - "disable"
-        operationId: "createRequest"
-        produces: 
-          - "application/json"
-        parameters: 
-          - 
-            in: "body"
-            name: "body"
-            required: false
-            schema: 
-              $ref: "#/definitions/DisableRequest"
-        security: 
-          - 
-            basicAuth: []
-    /machine: 
-      get: 
-        responses: 
-          200: 
-            description: "No response was specified"
-            schema: 
-              $ref: "#/definitions/Machines"
-        description: ""
-        tags: 
-          - "machine"
-        operationId: "getRequest"
-        produces: 
-          - "application/json"
-        parameters: 
-          - 
-            in: "query"
-            name: "name"
             required: false
             type: "string"
         security: 
@@ -531,6 +531,8 @@
             basicAuth: []
   tags: 
     - 
+      name: "v0/machines"
+    - 
       name: "v0/authenticate"
     - 
       name: "v0/resetPassword"
@@ -554,11 +556,10 @@
     - 
       name: "v0/projectMembership"
     - 
+      name: "v0/disables"
+      description: "Disable machines"
+    - 
       name: "v0/labRoles"
-    - 
-      name: "v0/disable"
-    - 
-      name: "v0/machine"
     - 
       name: "v0/enables"
       description: "enable equipment, or fetch information about enables the equipment history"
@@ -567,15 +568,19 @@
   schemes: 
     - "http"
   definitions: 
+    Machines: 
+      properties: 
+        empty: 
+          type: "boolean"
+    User: 
+      properties: 
+        username: 
+          type: "string"
     AuthRequest: 
       properties: 
         username: 
           type: "string"
         password: 
-          type: "string"
-    User: 
-      properties: 
-        username: 
           type: "string"
     PasswordResetRequest: 
       properties: 
@@ -645,10 +650,6 @@
           format: "date-time"
     Project: 
       properties: 
-        name: 
-          type: "string"
-        type: 
-          type: "string"
         description: 
           type: "string"
         null: 
@@ -669,12 +670,16 @@
           type: "string"
         account: 
           type: "string"
+        name: 
+          type: "string"
+        type: 
+          type: "string"
     GenericResponse: 
       properties: 
-        message: 
-          type: "string"
         success: 
           type: "boolean"
+        message: 
+          type: "string"
     ReservationRequest: 
       properties: 
         item: 
@@ -690,10 +695,6 @@
           type: "string"
     Account: 
       properties: 
-        name: 
-          type: "string"
-        type: 
-          type: "string"
         description: 
           type: "string"
         active: 
@@ -706,6 +707,10 @@
           format: "date-time"
         organization: 
           type: "string"
+        name: 
+          type: "string"
+        type: 
+          type: "string"
     ProjectMembership: 
       properties: 
         project: 
@@ -714,15 +719,11 @@
           type: "array"
           items: 
             type: "string"
-    LabRoles: 
-      properties: 
-        empty: 
-          type: "boolean"
     DisableRequest: 
       properties: 
         item: 
           type: "string"
-    Machines: 
+    LabRoles: 
       properties: 
         empty: 
           type: "boolean"
