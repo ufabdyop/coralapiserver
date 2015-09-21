@@ -29,8 +29,8 @@ import javax.ws.rs.core.MediaType;
 
 import org.slf4j.LoggerFactory;
 
-@Path("/v0/member")
-@Api(value = "/v0/member", description = "")
+@Path("/v0/members")
+@Api(value = "/v0/members", description = "fetch or create/update members")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiMemberResource {
   

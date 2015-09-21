@@ -24,8 +24,8 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 
-@Path("/v0/enable")
-@Api(value = "/v0/enable", description = "")
+@Path("/v0/enables")
+@Api(value = "/v0/enables", description = "enable equipment, or fetch information about enables the equipment history")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiEnableResource {
   

@@ -30,8 +30,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-@Path("/v0/account")
-@Api(description = "", value = "/v0/account")
+@Path("/v0/accounts")
+@Api(description = "fetch or create/update accounts", value = "/v0/accounts")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiAccountResource {
   
