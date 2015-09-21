@@ -37,8 +37,8 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 
-@Api(value = "/v0/reservation", description = "")
-@Path("/v0/reservation")
+@Api(value = "/v0/reservations", description = "Create reservations or fetch reservations")
+@Path("/v0/reservations")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiReservationResource {
   
