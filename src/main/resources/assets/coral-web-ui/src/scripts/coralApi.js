@@ -39,6 +39,25 @@ CoralAPI.makeClient = function() {
     request.send(null);
   };
 
+  coralAPIClient.whoami = function(coralApiUrl, username, password, successCallback, errorCallback) {
+    var request = new XMLHttpRequest();
+    request.open("GET", coralApiUrl + '/whoami', true);
+    request.setRequestHeader("Accept", "application/json");
+    request.setRequestHeader("Content-Type", "application/json");
+    request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+
+    request.onreadystatechange = function() {
+          if (request.readyState == 4) {
+            if (request.status === 200) {
+                successCallback(JSON.parse(request.responseText));
+            } else {
+                errorCallback(request);
+            }
+          }
+    }
+    request.send(null);
+  };
+
   coralAPIClient.resetPassword = function(coralApiUrl, username, password, targetUsername, newPassword, successCallback, errorCallback) {
     var request = new XMLHttpRequest();
     request.open("POST", coralApiUrl + '/resetPassword', true);
@@ -59,9 +78,9 @@ CoralAPI.makeClient = function() {
     request.send(JSON.stringify(data));
   };
 
-  coralAPIClient.getMachines = function(coralApiUrl, username, password, successCallback, errorCallback) {
+  coralAPIClient.machineList = function(coralApiUrl, username, password, successCallback, errorCallback) {
     var request = new XMLHttpRequest();
-    request.open("GET", coralApiUrl + '/machines', true);
+    request.open("GET", coralApiUrl + '/machine', true);
     request.setRequestHeader("Accept", "application/json");
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
@@ -80,7 +99,7 @@ CoralAPI.makeClient = function() {
 
   coralAPIClient.enable = function(coralApiUrl, username, password, project, item, successCallback, errorCallback) {
     var request = new XMLHttpRequest();
-    request.open("POST", coralApiUrl + '/enables', true);
+    request.open("POST", coralApiUrl + '/enable', true);
     request.setRequestHeader("Accept", "application/json");
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
@@ -100,7 +119,7 @@ CoralAPI.makeClient = function() {
 
   coralAPIClient.disable = function(coralApiUrl, username, password, item, successCallback, errorCallback) {
     var request = new XMLHttpRequest();
-    request.open("POST", coralApiUrl + '/disables', true);
+    request.open("POST", coralApiUrl + '/disable', true);
     request.setRequestHeader("Accept", "application/json");
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
@@ -120,7 +139,7 @@ CoralAPI.makeClient = function() {
 
   coralAPIClient.reserve = function(coralApiUrl, username, password, member, project, item, bdate, minutes, successCallback, errorCallback) {
     var request = new XMLHttpRequest();
-    request.open("POST", coralApiUrl + '/reservations', true);
+    request.open("POST", coralApiUrl + '/reservation', true);
     request.setRequestHeader("Accept", "application/json");
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
@@ -141,7 +160,7 @@ CoralAPI.makeClient = function() {
   coralAPIClient.getReservations = function(coralApiUrl, username, password, item , successCallback, errorCallback) {
     var request = new XMLHttpRequest();
 
-    request.open("GET", coralApiUrl + '/reservations?machine=' + encodeURIComponent(item), true);
+    request.open("GET", coralApiUrl + '/reservation?machine=' + encodeURIComponent(item), true);
     request.setRequestHeader("Accept", "application/json");
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
@@ -161,7 +180,38 @@ CoralAPI.makeClient = function() {
   return coralAPIClient;
 };
 
+CoralAPI.makeStatefulClient = function(url) {
+  var coralUrl = url;
+  var statelessClient = CoralAPI.makeClient();
+  var username = false;
+  var password = false;
+  var authenticated = false;
+  var whoami = function(successCallback, errorCallback) {
+    statelessClient.whoami(coralUrl, username, password, successCallback, errorCallback);
+  };
+  var authenticate = function(user, pass, successCallback, errorCallback) {
+    statelessClient.authenticate(coralUrl, user, pass,
+        function(evtData) {
+          username = user;
+          password = pass;
+          whoami(successCallback, errorCallback);
+        },
+        function(evtData) {
+          errorCallback();
+        });
+  };
+  return {
+    "authenticate": authenticate,
+    "whoami": whoami
+  };
+};
+
+CoralAPI.StatefulClient = function(url) {
+  return CoralAPI.makeStatefulClient(url);
+};
+
 CoralAPI.Client = function() {
   return CoralAPI.makeClient();
 };
 
+export default CoralAPI;

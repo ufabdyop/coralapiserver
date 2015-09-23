@@ -1,0 +1,27 @@
+{
+  "name": "coral-web-client",
+  "version": "0.0.1",
+  "description": "coral-web-client",
+  "scripts": {
+    "start": "node server.js",
+    "babel": "babel src/scripts -d dist/scripts",
+    "browserify": "browserify dist/scripts/main.js -o dist/scripts/app.js",
+    "thirdParty": "mkdir -p dist/lib; cp -r node_modules/bootstrap/dist/ dist/lib/bootstrap; cp -r node_modules/jquery/dist/ dist/lib/jquery; cp -r node_modules/react/dist/ dist/lib/react",
+    "copyFiles": "cp src/index.html dist/;  cp -r src/styles/ dist/styles; cp -r src/assets/ dist/assets",
+    "build": "npm run babel && npm run browserify && npm run thirdParty && npm run copyFiles",
+    "watch": "watch 'npm run build' ./src",
+    "clean": "rm -rf dist"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "~3.3.0",
+    "jquery": "~2.1.4",
+    "react": ""
+  },
+  "devDependencies": {
+    "express": "^4.13.3",
+    "babel": "",
+    "browserify": "",
+    "watch": ""
+  }
+}

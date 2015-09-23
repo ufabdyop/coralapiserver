@@ -1,0 +1,147 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>Coral Web Client</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/custom.css">
+  </head>
+  <body>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="true" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Coral Web Client</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse in" aria-expanded="true">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <!--<li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li> -->
+          </ul>
+          <form class="navbar-form navbar-right">
+            <!-- <input type="text" class="form-control" placeholder="Search..."> -->
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+
+    <div class="row" id="big-main-row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">Login</a></li>
+            <li><a href="#">Logout</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="#">Overview</a></li>
+            <li><a href="#">Reservations</a></li>
+            <li><a href="#">Enables</a></li>
+            <li><a href="#">Equipment Info</a></li>
+            <li><a href="#">Report a Problem</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="#">People</a></li>
+            <li><a href="#">Supplies</a></li>
+          </ul>
+        </div>
+        <div id="page-login" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Login</h1>
+          <div class="row">
+            <form id="page-login-form">
+              <div class="form-group">
+                <label for="login-username">Username:</label><br/>
+                <input id="login-username" name="login-username"></input><br/>
+              </div>
+              <div class="form-group">
+                <label for="login-password">Password:</label><br/>
+                <input type="password" id="login-password" name="login-password"></input><br/>
+              </div>
+              <input class="btn btn-default" type="submit" id="login-submit" value="Login" name="login-submit"></input><br/>
+            </form>
+          </div>
+        </div><!--END page-login-->
+        <div id="page-dashboard" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Dashboard</h1>
+          <div id="welcome-component">
+            Welcome, you are logged in as <span id="welcome-component-user"></span>
+          </div>
+
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img src="assets/images/clock.svg" class="img-responsive" alt="Reservations"/>
+              <h4>Reservations</h4>
+              <span class="text-muted">Make/Check Reservations</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img src="assets/images/clock.svg" class="img-responsive" alt="Reservations"/>
+              <h4>Enable</h4>
+              <span class="text-muted">Coming Soon</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img src="assets/images/clock.svg" class="img-responsive" alt="Reservations"/>
+              <h4>Report a Problem</h4>
+              <span class="text-muted">Let us know about equipment issues.</span>
+            </div>
+          </div>
+
+          <h2 class="sub-header">Upcoming Reservations</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <th>Project</th>
+                  <th>Instrument</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>9/24 5:00pm</td>
+                  <td>9/24 9:00pm</td>
+                  <td>Example Project</td>
+                  <td>TMV Super</td>
+                </tr>
+                <tr>
+                  <td>9/24 5:00pm</td>
+                  <td>9/24 9:00pm</td>
+                  <td>Example Project</td>
+                  <td>Cambridge Fiji F200</td>
+                </tr>
+              </tbody>
+            </table>
+          </div> <!-- END table-responsive -->
+        </div> <!-- END page-dashboard -->
+
+      </div> <!-- END big-main-row -->
+
+    </div>
+
+    <!-- build:js(.) scripts/plugins.js -->
+    <script src="lib/react/react.min.js"></script>
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+    <!-- endbuild -->
+
+    <script src="scripts/app.js"></script>
+
+  </body>
+</html>
