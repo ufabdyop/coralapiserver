@@ -3,6 +3,7 @@
 import CoralAPI from './coralApi';
 import WelcomeBox from './welcomeComponent';
 import DashboardAction from './dashboardActionComponent';
+import DashboardActionBoard from './dashboardActionBoardComponent';
 
 /***SET UP THE CORAL URL  *********************/
 var apiVersion = 'v0';
@@ -104,16 +105,8 @@ var renderDashboard = function(state) {
     document.getElementById('welcome-component')
   );
   React.render(
-    <DashboardAction header="Reservations" thumb="assets/images/clock.svg" description="Make/Check Reservations" />,
-    document.getElementById('reservation-dashboard-action')
-  );
-  React.render(
-    <DashboardAction header="Enables" thumb="assets/images/clock.svg" description="Coming Soon" />,
-    document.getElementById('enable-dashboard-action')
-  );
-  React.render(
-    <DashboardAction header="Report a Problem" thumb="assets/images/clock.svg" description="Let us know about equipment issues." />,
-    document.getElementById('report-problem-dashboard-action')
+    <DashboardActionBoard />,
+    document.getElementById('dashboard-actions')
   );
 };
 
