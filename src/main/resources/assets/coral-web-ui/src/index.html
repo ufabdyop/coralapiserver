@@ -80,16 +80,10 @@
         </div><!--END page-login-->
         <div id="page-dashboard" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard</h1>
-          <div id="welcome-component">
-            Welcome, you are logged in as <span id="welcome-component-user"></span>
-          </div>
+          <div id="welcome-component"></div>
 
-          <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="assets/images/clock.svg" class="img-responsive" alt="Reservations"/>
-              <h4>Reservations</h4>
-              <span class="text-muted">Make/Check Reservations</span>
-            </div>
+          <div class="row placeholders" id="dashboard-actions">
+            <div class="col-xs-6 col-sm-3 placeholder" id="reservation-dashboard-action"></div>
             <div class="col-xs-6 col-sm-3 placeholder">
               <img src="assets/images/clock.svg" class="img-responsive" alt="Reservations"/>
               <h4>Enable</h4>

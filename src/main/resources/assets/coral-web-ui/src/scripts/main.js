@@ -2,6 +2,7 @@
 
 import CoralAPI from './coralApi';
 import WelcomeBox from './welcomeComponent';
+import DashboardAction from './dashboardActionComponent';
 
 /***SET UP THE CORAL URL  *********************/
 var apiVersion = 'v0';
@@ -102,6 +103,11 @@ var renderDashboard = function(state) {
     <WelcomeBox username={state.username} />,
     document.getElementById('welcome-component')
   );
+  React.render(
+    <DashboardAction header="Reservations" thumb="assets/images/clock.svg" description="Make/Check Reservations" />,
+    document.getElementById('reservation-dashboard-action')
+  );
+thumbnail, header, description
 };
 
 var hidePages = function() {
