@@ -107,7 +107,14 @@ var renderDashboard = function(state) {
     <DashboardAction header="Reservations" thumb="assets/images/clock.svg" description="Make/Check Reservations" />,
     document.getElementById('reservation-dashboard-action')
   );
-thumbnail, header, description
+  React.render(
+    <DashboardAction header="Enables" thumb="assets/images/clock.svg" description="Coming Soon" />,
+    document.getElementById('enable-dashboard-action')
+  );
+  React.render(
+    <DashboardAction header="Report a Problem" thumb="assets/images/clock.svg" description="Let us know about equipment issues." />,
+    document.getElementById('report-problem-dashboard-action')
+  );
 };
 
 var hidePages = function() {
