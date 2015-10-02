@@ -6,8 +6,8 @@
     "start": "node server.js",
     "babel": "babel src/scripts -d dist/scripts",
     "browserify": "browserify dist/scripts/main.js -o dist/scripts/app.js",
-    "thirdParty": "mkdir -p dist/lib; cp -r node_modules/bootstrap/dist/ dist/lib/bootstrap; cp -r node_modules/jquery/dist/ dist/lib/jquery; cp -r node_modules/react/dist/ dist/lib/react",
-    "copyFiles": "cp src/index.html dist/;  cp -r src/styles/ dist/styles; cp -r src/assets/ dist/assets",
+    "thirdParty": "mkdir -p dist/lib; cp -r node_modules/bootstrap/dist/ dist/lib/bootstrap; cp -r node_modules/jquery/dist/ dist/lib/jquery; cp -r node_modules/react/dist/ dist/lib/react; cp -r node_modules/fullcalendar/dist/ dist/lib/fullcalendar; cp -r ./node_modules/fullcalendar/node_modules/moment/ dist/lib/moment",
+    "copyFiles": "cp src/cal.html dist/; cp src/index.html dist/;  cp -r src/styles/ dist/styles; cp -r src/assets/ dist/assets",
     "build": "npm run babel && npm run browserify && npm run thirdParty && npm run copyFiles",
     "watch": "watch 'npm run build' ./src",
     "clean": "rm -rf dist"
@@ -16,7 +16,8 @@
   "dependencies": {
     "bootstrap": "~3.3.0",
     "jquery": "~2.1.4",
-    "react": ""
+    "react": "",
+    "fullcalendar": ""
   },
   "devDependencies": {
     "express": "^4.13.3",

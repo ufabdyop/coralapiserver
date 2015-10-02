@@ -68,6 +68,18 @@ loginForm.addEventListener("submit", function(formEvent) {
 });
 /***********************************************/
 
+/********WIRE RESERVATIONS BUTTON**********************/
+var reservationsButton = document.querySelector('#reservations');
+reservationsButton.addEventListener("click", function(formEvent) {
+  debug(formEvent);
+  var action = {
+    "type": "RESERVATIONS",
+    "data": {}
+  };
+  updateAppState(action, currentAppState);
+});
+/***********************************************/
+
 /********SEND ACTIONS THROUGH APP **************/
 var updateAppState = function(action, previousAppState) {
   debug(action);
@@ -77,6 +89,11 @@ var updateAppState = function(action, previousAppState) {
       nextAppState = makeAppStateTemplate();
       nextAppState.username = action.data.username;
       nextAppState.active_page = "dashboard";
+      debug(nextAppState);
+      break;
+    case "RESERVATIONS":
+      nextAppState = makeAppStateTemplate();
+      nextAppState.active_page = "reservations";
       debug(nextAppState);
       break;
     default:
@@ -93,6 +110,9 @@ var renderApp = function(state) {
     case "dashboard":
       renderDashboard(state);
       break;
+    case "reservations":
+      renderReservations(state);
+      break;
     default:
       debug("No such page renderer: " + state.active_page);
   }
@@ -108,6 +128,10 @@ var renderDashboard = function(state) {
     <DashboardActionBoard />,
     document.getElementById('dashboard-actions')
   );
+};
+
+var renderReservations = function(state) {
+  document.querySelector('#page-reservations').style.display = 'block';
 };
 
 var hidePages = function() {
