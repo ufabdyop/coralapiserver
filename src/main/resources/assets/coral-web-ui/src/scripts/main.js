@@ -1,46 +1,27 @@
 "use strict";
 
 import CoralAPI from './coralApi';
-import WelcomeBox from './welcomeComponent';
-import DashboardAction from './dashboardActionComponent';
-import DashboardActionBoard from './dashboardActionBoardComponent';
-
-/***SET UP THE CORAL URL  *********************/
-var apiVersion = 'v0';
-var coralApiUrl = window.location.search.match(/url=([^&]+)/);
-if (coralApiUrl && coralApiUrl.length > 1) {
-  coralApiUrl = decodeURIComponent(coralApiUrl[1]);
-} else {
-  coralApiUrl = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/' + apiVersion ;
-}
-console.log("coralApiUrl: " + coralApiUrl);
-
-/***SET UP SOME GLOBAL DATA*********************/
-var makeAppStateTemplate = function() {
-  return {
-    "logged_in": false,
-    "username": {},
-    "active_page": "login"
-  };
-};
-var copyAppState = function(state) {
-  return Object.create(state);
-};
-var initialAppState = makeAppStateTemplate();
-
-var actionTypes = ["LOGGED_IN"];
-var validPages = ["login", "dashboard"];
-var coralUrl = 'http://localhost:4001/v0';
-var coralClient = new CoralAPI.StatefulClient(coralUrl);
-var currentAppState = initialAppState;
-var DEBUGMODE=true;
-/***********************************************/
+import WelcomeBox from './components/welcomeComponent';
+import DashboardAction from './components/dashboardActionComponent';
+import DashboardActionBoard from './components/dashboardActionBoardComponent';
+import LoginForm from './components/loginFormComponent'
 
 /******** DEBUGGER LOGGER **********************/
+var DEBUGMODE=true;
 var debug = function(msg) {
-  console.log(msg);
+  if(DEBUGMODE){
+    console.log(msg);
+  }
 };
 /***********************************************/
+
+/***SET UP THE CORAL Client  *********************/
+var coralApiUrl = CoralAPI.determineUrlFromBrowser();
+debug("coralApiUrl: " + coralApiUrl);
+var coralClient = new CoralAPI.StatefulClient(coralApiUrl);
+/***********************************************/
+
+
 
 /********WIRE LOGIN BUTTON**********************/
 var loginForm = document.querySelector('#page-login-form');
@@ -51,17 +32,7 @@ loginForm.addEventListener("submit", function(formEvent) {
       document.querySelector('#login-username').value,
       document.querySelector('#login-password').value,
       function(credentials) {
-        var action = {
-          "type": "LOGGED_IN",
-          "data": credentials
-        };
-        updateAppState(action, currentAppState);
-      },
-      function(evtData) {
-        var action = {
-          "type": "ERROR",
-          "data": evtData
-        };
+
         updateAppState(action, currentAppState);
       }
     );

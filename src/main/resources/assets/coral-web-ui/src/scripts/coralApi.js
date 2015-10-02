@@ -214,4 +214,15 @@ CoralAPI.Client = function() {
   return CoralAPI.makeClient();
 };
 
+CoralAPI.determineUrlFromBrowser =function() {
+  var apiVersion = 'v0';
+  var coralApiUrl = window.location.search.match(/url=([^&]+)/);
+  if (coralApiUrl && coralApiUrl.length > 1) {
+    coralApiUrl = decodeURIComponent(coralApiUrl[1]);
+  } else {
+    coralApiUrl = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/' + apiVersion ;
+  }
+  return coralApiUrl;
+};
+
 export default CoralAPI;
