@@ -16,13 +16,16 @@
   "dependencies": {
     "bootstrap": "~3.3.0",
     "jquery": "~2.1.4",
-    "react": "",
-    "fullcalendar": ""
+    "react": "~0.13.3",
+    "redux": "~3.0.2",
+    "fullcalendar": "2.4.0"
   },
   "devDependencies": {
     "express": "^4.13.3",
-    "babel": "",
-    "browserify": "",
-    "watch": ""
+    "babel": "~5.8.23",
+    "babel-core": "~5.8.25",
+    "babel-plugin-object-assign": "~1.2.1",
+    "browserify": "~11.1.0",
+    "watch": "~0.16.0"
   }
 }

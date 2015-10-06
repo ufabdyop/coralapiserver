@@ -1,11 +1,4 @@
-/* var makeAppStateTemplate = function() {
-  return {
-    "logged_in": false,
-    "username": {},
-    "active_page": "login"
-  };
-};
-*/
+
 
 /*
  * action types
