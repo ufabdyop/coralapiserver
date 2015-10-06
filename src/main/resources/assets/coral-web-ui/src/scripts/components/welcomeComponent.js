@@ -1,3 +1,6 @@
+"use strict";
+import React, { findDOMNode, Component, PropTypes } from 'react';
+
 var WelcomeBox = React.createClass({
   displayName: 'WelcomeBox',
   render: function() {

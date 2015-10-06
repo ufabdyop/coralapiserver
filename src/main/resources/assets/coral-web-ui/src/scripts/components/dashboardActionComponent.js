@@ -1,4 +1,5 @@
 "use strict";
+import React, { findDOMNode, Component, PropTypes } from 'react';
 
 /**
 * props: thumbnail, header, description

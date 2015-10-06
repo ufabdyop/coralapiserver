@@ -1,3 +1,4 @@
+"use strict";
 import React, { findDOMNode, Component, PropTypes } from 'react';
 
 export default class LoginForm extends Component {

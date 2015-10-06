@@ -1,5 +1,5 @@
 "use strict";
-
+import React, { findDOMNode, Component, PropTypes } from 'react';
 import DashboardAction from './dashboardActionComponent';
 
 /**
