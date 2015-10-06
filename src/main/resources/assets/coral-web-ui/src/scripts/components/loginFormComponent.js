@@ -7,7 +7,11 @@ export default class LoginForm extends Component {
             <div>
               <h1 className="page-header">Login</h1>
               <div className="row">
-                <form id="page-login-form">
+                <form id="page-login-form"
+                onSubmit={e => {
+                  e.preventDefault();
+                  this.handleSubmit(e);
+                }}>
                   <div className="form-group">
                     <label htmlFor="login-username">Username:</label><br />
                     <input id="login-username" name="login-username" ref="username" /><br />
