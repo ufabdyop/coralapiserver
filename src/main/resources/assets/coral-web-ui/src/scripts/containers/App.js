@@ -1,18 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { LOGGED_IN, ERROR } from '../actions'
-import { loggedIn, addError } from '../actions'
+import { loggedIn, addError, logInAttempt } from '../actions'
 import LoginForm from '../components/loginFormComponent';
 
 class App extends Component {
   render() {
-    // Injected by connect() call:
     const dispatch = this.props.dispatch;
     return (
       <div>
         <LoginForm
           onLoginSubmit={credentials =>
-            dispatch(loggedIn(credentials))
+            dispatch(logInAttempt(credentials))
           } />
       </div>
     );

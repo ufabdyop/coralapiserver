@@ -32,7 +32,7 @@ export default class LoginForm extends Component {
     const passwordNode = findDOMNode(this.refs.password);
     const username = usernameNode.value.trim();
     const password = passwordNode.value.trim();
-    this.props.onLoginSubmit(username, password);
+    this.props.onLoginSubmit({username, password});
   }
 }
 
