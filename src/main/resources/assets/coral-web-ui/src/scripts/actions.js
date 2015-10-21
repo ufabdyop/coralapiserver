@@ -26,11 +26,7 @@ export function logInAttempt(credentials) {
     dispatch({ type: LOGIN_ATTEMPT, credentials });
     coralClient.authenticate(credentials.username, credentials.password).then(
       function(response) {
-        return new Promise(function (resolve, reject) {
-          console.log(response);
-          dispatch(loggedIn(credentials));
-          resolve();
-        });
+        dispatch(loggedIn(credentials));
       }
     ).catch(function(request) {
       console.log(request);
