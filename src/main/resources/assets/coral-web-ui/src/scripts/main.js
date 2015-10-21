@@ -1,13 +1,7 @@
 "use strict";
 
 import CoralPromisesAPI from './coralApi';
-import WelcomeBox from './components/welcomeComponent';
-import DashboardAction from './components/dashboardActionComponent';
-import DashboardActionBoard from './components/dashboardActionBoardComponent';
-import LoginForm from './components/loginFormComponent'
 import {debugLog, DEBUGMODE} from './debug'
-import { LOGGED_IN, ERROR } from './actions'
-import { loggedIn, addError, logInAttempt } from './actions'
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
@@ -39,7 +33,7 @@ const createStoreWithMiddleware = applyMiddleware(
 const store = createStoreWithMiddleware(webApp);
 
 // Log the initial state
-debugLog("initial state");
+debugLog("initializing. store.getState():");
 debugLog(store.getState());
 
 let rootElement = document.getElementById('page-root');

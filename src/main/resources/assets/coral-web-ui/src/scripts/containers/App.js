@@ -1,20 +1,23 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { LOGGED_IN, ERROR } from '../actions'
-import { loggedIn, addError, logInAttempt } from '../actions'
+import { logInAttempt } from '../actions'
 import LoginForm from '../components/loginFormComponent';
+import Reservations from '../components/reservationsComponent';
 
 class App extends Component {
   render() {
     const dispatch = this.props.dispatch;
-    return (
-      <div>
-        <LoginForm
-          onLoginSubmit={credentials =>
-            dispatch(logInAttempt(credentials))
-          } />
-      </div>
-    );
+    switch(this.props.router.location) {
+      case '/reservations':
+        return <Reservations/>;
+      default:
+        return (
+            <LoginForm
+              onLoginSubmit={credentials =>
+                dispatch(logInAttempt(credentials))
+              } />
+        );
+    }
   }
 }
 
