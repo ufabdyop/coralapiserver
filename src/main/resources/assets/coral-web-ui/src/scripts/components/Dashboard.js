@@ -1,11 +1,11 @@
 "use strict";
 import React, { findDOMNode, Component, PropTypes } from 'react';
-import DashboardAction from './dashboardActionComponent';
+import DashboardAction from './DashboardAction';
 
 /**
 * props: thumbnail, header, description
 */
-var DashboardActionBoard = React.createClass({
+var Dashboard = React.createClass({
   render: function() {
     return (
       <div>
@@ -17,4 +17,4 @@ var DashboardActionBoard = React.createClass({
   }
 });
 
-export default DashboardActionBoard;
+export default Dashboard;

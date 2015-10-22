@@ -1,13 +1,13 @@
 "use strict";
 
-import CoralPromisesAPI from './coralApi';
-import {debugLog, DEBUGMODE} from './debug'
+import CoralPromisesAPI from './lib/coralApi';
+import {debugLog, DEBUGMODE} from './util/debug'
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
 
-import webApp from './reducers';
-import App from './containers/App';
+import reducer from './reducers';
+import App from './components/App';
 import { Provider } from 'react-redux';
 import React from 'react';
 
@@ -30,7 +30,7 @@ const createStoreWithMiddleware = applyMiddleware(
   loggerMiddleware // neat middleware that logs actions
 )(createStore);
 
-const store = createStoreWithMiddleware(webApp);
+const store = createStoreWithMiddleware(reducer);
 
 // Log the initial state
 debugLog("initializing. store.getState():");

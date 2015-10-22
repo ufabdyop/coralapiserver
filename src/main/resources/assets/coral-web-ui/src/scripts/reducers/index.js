@@ -1,4 +1,4 @@
-import { LOGGED_IN } from './actions';
+import { LOGGED_IN } from '../actions';
 
 const initialState = {
   "application": {
@@ -14,7 +14,7 @@ const initialState = {
   }
 };
 
-export default function webApp(state = initialState, action) {
+export default function reducer(state = initialState, action) {
   switch (action.type) {
     case LOGGED_IN:
       return Object.assign({}, state, {

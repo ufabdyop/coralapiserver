@@ -1,8 +1,8 @@
 "use strict";
 import React, { findDOMNode, Component, PropTypes } from 'react';
 
-var WelcomeBox = React.createClass({
-  displayName: 'WelcomeBox',
+var Welcome = React.createClass({
+  displayName: 'Welcome',
   render: function() {
     if (this.props.show == true) {
       return (
@@ -16,4 +16,4 @@ var WelcomeBox = React.createClass({
   }
 });
 
-export default WelcomeBox;
+export default Welcome;

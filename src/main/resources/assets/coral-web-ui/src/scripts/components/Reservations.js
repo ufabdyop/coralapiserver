@@ -14,7 +14,11 @@ export default class Reservations extends Component {
                 }}>
                   <div className="form-group">
                     <label htmlFor="instrument">Instrument:</label><br />
-                    <input id="instrument" name="instrument" ref="instrument" /><br />
+                    <select id="instrument" name="instrument" ref="instrument" >
+                      {this.props.instruments.map(instrument =>
+                        <option value={instrument}>instrument</option>
+                      )}
+                    </select>
                   </div>
                   <div className="form-group">
                     <label htmlFor="minutes">Minutes:</label><br />

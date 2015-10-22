@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { logInAttempt } from '../actions'
-import LoginForm from '../components/loginFormComponent';
-import Reservations from '../components/reservationsComponent';
+import LoginForm from './LoginForm';
+import Reservations from './Reservations';
 
 class App extends Component {
   render() {
