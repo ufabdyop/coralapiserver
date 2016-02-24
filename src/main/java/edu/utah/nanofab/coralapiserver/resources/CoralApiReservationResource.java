@@ -84,6 +84,7 @@ public class CoralApiReservationResource {
   @ApiOperation(value = "", response = ReservationRequest.class)    
   @Timed
   public ReservationRequest deleteRequest(@Valid ReservationRequest request, @Auth User user) {
+    logger.debug("Got DELETE RESERVATION request : " + request.getItem() + " " + request.getBdate());
     ReservationOperationDelete operation = new ReservationOperationDelete();
     operation.init(
         this.coralConfigUrl, 
