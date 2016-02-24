@@ -12,12 +12,6 @@ public class ReservationOperationDelete extends ResourceOperation  {
       this.api.deleteReservation(user.getUsername(), request.getMember(), 
           request.getProject(), request.getItem(), request.getBdate(), request.getLengthInMinutes());
       
-      //checkRemoved = this.api.getReservations(request.getMember(), request.getItem(), request.getBdate(), request.getLengthInMinutes());
-      Reservations checkRemoved = this.api.getReservations(request.getMember(), request.getItem(), request.getBdate(), request.getLengthInMinutes());
-      if (checkRemoved.size() != 0) {
-          System.err.println("Reservation deletion FAILED for " + request.getItem() + " " + request.getBdate());          
-      }
-      
       this.setReturnValue(request);
   }
 
