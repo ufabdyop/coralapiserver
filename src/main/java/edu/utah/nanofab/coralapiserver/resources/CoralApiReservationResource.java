@@ -67,13 +67,17 @@ public class CoralApiReservationResource {
   @ApiOperation(value = "", response = ReservationRequest.class)    
   @Timed
   public Reservations getRequest(@QueryParam("machine") Optional<String> machine, @Auth User user) throws Exception {
-	  CoralAPI coralApiInstance = new CoralAPI(user.getUsername(), this.coralConfigUrl);
-	  Date bdate = new Date();
-	  Date edate = new Date();
-	  long edateMS = bdate.getTime();
-	  edateMS += (30L * 24L * 60L * 60L * 1000L);
-	  edate.setTime(edateMS); //30 days in the future;
-	  return coralApiInstance.getReservations(machine.get(), bdate, edate);
+        CoralAPI coralApiInstance = new CoralAPI(user.getUsername(), this.coralConfigUrl);
+        
+        Date bdate = new Date();
+        Date edate = new Date();
+        long edateMS = bdate.getTime();
+        edateMS += (30L * 24L * 60L * 60L * 1000L);
+        edate.setTime(edateMS); //30 days in the future;
+        Reservations r = coralApiInstance.getReservations(machine.get(), bdate, edate);
+        
+        coralApiInstance.close();
+        return r;
   }
 
   @DELETE

@@ -14,6 +14,7 @@ import edu.utah.nanofab.coralapi.CoralAPI;
 import edu.utah.nanofab.coralapiserver.auth.User;
 
 public abstract class ResourceOperation {
+    public static String GlobalLock = "coral api not thread safe";
     public String coralConfigUrl;
     public CoralAPI api;
     public String error = null;
@@ -22,7 +23,7 @@ public abstract class ResourceOperation {
     protected Optional<String> queryParam;
     protected Optional<Object> postedObject;
     protected String name = "";
-	protected Logger logger;
+    protected Logger logger;
 
     public void init(String coralConfigUrl,
                     Optional<String> queryParam,
@@ -53,6 +54,7 @@ public abstract class ResourceOperation {
     public abstract String errorMessage();
   
     public Object perform() {
+        synchronized(GlobalLock) {
 	    this.setUp();
 	    try {
 	      this.performOperationImpl();
@@ -63,6 +65,7 @@ public abstract class ResourceOperation {
 	    this.tearDown();
 	    this.reportErrorIfEncountered();
 	    return returnValue();
+        }
     }
 
     public void setReturnValue(Object object) {

@@ -1,7 +1,6 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
 import edu.utah.nanofab.coralapi.resource.Account;
-import edu.utah.nanofab.coralapi.resource.Member;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.resources.operations.AccountOperationGet;
 import edu.utah.nanofab.coralapiserver.resources.operations.AccountOperationPost;
@@ -60,7 +59,7 @@ public class CoralApiAccountResource {
     operation.init( 
         this.coralConfigUrl, 
         Optional.<String> absent(), 
-        Optional.<Object>of( account), 
+        Optional.<Object>of(account), 
         user);
     return (Account) (operation.perform());
   }

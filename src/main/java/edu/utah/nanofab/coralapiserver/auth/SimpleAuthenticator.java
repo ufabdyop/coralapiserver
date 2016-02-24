@@ -17,6 +17,8 @@ import edu.utah.nanofab.coralapiserver.TokenConfiguration;
 
 
 public class SimpleAuthenticator implements Authenticator<BasicCredentials, User> {
+    public static String GlobalLock = "coral api not thread safe";
+    
     private TokenConfiguration[] tokens;
   private ConcurrentHashMap<String, TokenConfiguration> sessionTokens;
   private String coralConfigUrl;
@@ -55,38 +57,42 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
     }
     
     public boolean isValidUser(Optional<User> user) {
-        if (!user.isPresent())
-            return false;
-        
-        String username = user.get().getUsername();
-        CoralAPI api = new CoralAPI(username, this.coralConfigUrl);
-        try {
-            api.getMember(username);
-        } catch (Exception ex) {
-            return false;
-        } finally {
-            api.close();
+        synchronized(GlobalLock) {
+            if (!user.isPresent())
+                return false;
+
+            String username = user.get().getUsername();
+            CoralAPI api = new CoralAPI(username, this.coralConfigUrl);
+            try {
+                api.getMember(username);
+            } catch (Exception ex) {
+                return false;
+            } finally {
+                api.close();
+            }
+
+            return true;
         }
-        
-        return true;
     }
   
   public Optional<User> authenticateByUsernamePassword(String user, String pass) {
-    logger.debug("Authenticating " + user + " by password.");
-    CoralAPI api = new CoralAPI(user, this.coralConfigUrl);
-    try {
-      boolean success = api.authenticate(user, pass);
-      api.close();
-      if (success) {
-        return Optional.of(new User(user));
-      }
-    } catch (Exception e) {
-      api.close();
-      e.printStackTrace();
-    } finally {
-      api.close();
+    synchronized(GlobalLock) {
+        logger.debug("Authenticating " + user + " by password.");
+        CoralAPI api = new CoralAPI(user, this.coralConfigUrl);
+        try {
+          boolean success = api.authenticate(user, pass);
+          api.close();
+          if (success) {
+            return Optional.of(new User(user));
+          }
+        } catch (Exception e) {
+          api.close();
+          e.printStackTrace();
+        } finally {
+          api.close();
+        }
+        return Optional.<User>absent();
     }
-    return Optional.<User>absent();
   }
   
   public Optional<User> authenticateByToken(String requestToken) {
