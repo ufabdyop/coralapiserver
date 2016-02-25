@@ -2,14 +2,8 @@ package edu.utah.nanofab.coralapiserver.resources;
 
 import edu.utah.nanofab.coralapi.CoralAPI;
 import edu.utah.nanofab.coralapi.collections.Reservations;
-import edu.utah.nanofab.coralapi.resource.Project;
-import edu.utah.nanofab.coralapi.resource.Reservation;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.ReservationRequest;
-import edu.utah.nanofab.coralapiserver.resources.operations.EnableOperationPost;
-import edu.utah.nanofab.coralapiserver.resources.operations.ProjectOperationGet;
-import edu.utah.nanofab.coralapiserver.resources.operations.ReservationOperationDelete;
-import edu.utah.nanofab.coralapiserver.resources.operations.ReservationOperationPost;
 
 import org.slf4j.Logger;
 
@@ -35,6 +29,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
+import edu.utah.nanofab.coralapi.CoralAPISynchronized;
 
 
 @Api(value = "/v0/reservations", description = "Create reservations or fetch reservations")
@@ -42,32 +38,38 @@ import com.wordnik.swagger.annotations.ApiOperation;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiReservationResource {
   
-  private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiReservationResource.class);
+  private final CoralAPIPool apiPool;
 
-  public CoralApiReservationResource(String coralConfigUrl ) {
-      this.coralConfigUrl = coralConfigUrl;
+  public CoralApiReservationResource(CoralAPIPool apiPool ) {
+      this.apiPool = apiPool;
       new AtomicLong();
   }
 
   @POST
   @ApiOperation(value = "", response = ReservationRequest.class)  
   @Timed
-  public ReservationRequest createRequest(@Valid ReservationRequest request, @Auth User user) {
-    ReservationOperationPost operation = new ReservationOperationPost();
-    operation.init(
-        this.coralConfigUrl, 
-        Optional.<String> absent(), 
-        Optional.<Object>of( request ), 
-        user);
-    return (ReservationRequest) (operation.perform());
+  public ReservationRequest createRequest(@Valid ReservationRequest request, 
+          @Auth User user) throws Exception {
+      
+      System.out.println("Reservation creation for " + request.getItem());
+      CoralAPISynchronized coralApiInstance = apiPool.getConnection(user.getUsername());
+              
+      coralApiInstance.createNewReservation(user.getUsername(), 
+              request.getMember(), 
+              request.getProject(), 
+              request.getItem(), 
+              request.getBdate(), 
+              request.getLengthInMinutes());
+      
+      return request;
   }
   
   @GET
   @ApiOperation(value = "", response = ReservationRequest.class)    
   @Timed
   public Reservations getRequest(@QueryParam("machine") Optional<String> machine, @Auth User user) throws Exception {
-        CoralAPI coralApiInstance = new CoralAPI(user.getUsername(), this.coralConfigUrl);
+        CoralAPISynchronized coralApiInstance = apiPool.getConnection(user.getUsername());
         
         Date bdate = new Date();
         Date edate = new Date();
@@ -76,22 +78,27 @@ public class CoralApiReservationResource {
         edate.setTime(edateMS); //30 days in the future;
         Reservations r = coralApiInstance.getReservations(machine.get(), bdate, edate);
         
-        coralApiInstance.close();
         return r;
   }
 
   @DELETE
   @ApiOperation(value = "", response = ReservationRequest.class)    
   @Timed
-  public ReservationRequest deleteRequest(@Valid ReservationRequest request, @Auth User user) {
+  public ReservationRequest deleteRequest(@Valid ReservationRequest request, @Auth User user) throws Exception {
     logger.debug("Got DELETE RESERVATION request : " + request.getItem() + " " + request.getBdate());
-    ReservationOperationDelete operation = new ReservationOperationDelete();
-    operation.init(
-        this.coralConfigUrl, 
-        Optional.<String> absent(), 
-        Optional.<Object>of( request ), 
-        user);
-    return (ReservationRequest) (operation.perform());
+    CoralAPISynchronized coralApiInstance = apiPool.getConnection(user.getUsername());
+    
+    System.out.println("Reservation deletion for " + request.getItem() + " " + request.getBdate());
+    coralApiInstance.deleteReservation(
+            user.getUsername(), 
+            request.getMember(), 
+            request.getProject(), 
+            request.getItem(), 
+            request.getBdate(), 
+            request.getLengthInMinutes()
+    );
+
+    return request;
   }
       
 }

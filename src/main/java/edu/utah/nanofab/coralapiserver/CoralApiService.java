@@ -1,6 +1,7 @@
 package edu.utah.nanofab.coralapiserver;
 
 
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 import java.util.EnumSet;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -88,8 +89,11 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
       final String coralConfigUrl = configuration.getCoralConfigUrl();
       final TokenConfiguration[] tokens = configuration.getAuthTokensConfiguration().getTokens();
       ConcurrentHashMap<String, TokenConfiguration> sessionTokens = new ConcurrentHashMap<String, TokenConfiguration>();
+      CoralAPIPool apiPool = CoralAPIPool.getInstance(coralConfigUrl);
       configureCors(environment);
 
+      environment.jersey().register(new CoralApiReservationResource(apiPool));
+      
       environment.jersey().register(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens, sessionTokens, coralConfigUrl ), "CoralAPIServer Realm"));
       environment.jersey().register(new CoralApiEntryPointResource());
       environment.jersey().register(new CoralApiVersionResource());
@@ -99,7 +103,6 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
       environment.jersey().register(new CoralApiMemberResource( coralConfigUrl));
       environment.jersey().register(new CoralApiEnableResource( coralConfigUrl));
       environment.jersey().register(new CoralApiDisableResource( coralConfigUrl));
-      environment.jersey().register(new CoralApiReservationResource( coralConfigUrl));
       environment.jersey().register(new CoralApiMachineResource( coralConfigUrl));
       environment.jersey().register(new CoralApiLabRoleResource( coralConfigUrl));
       environment.jersey().register(new CoralApiAccountResource( coralConfigUrl));
