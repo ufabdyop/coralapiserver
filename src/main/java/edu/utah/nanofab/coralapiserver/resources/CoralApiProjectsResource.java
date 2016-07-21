@@ -1,15 +1,22 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
+import edu.utah.nanofab.coralapi.CoralAPI;
 import edu.utah.nanofab.coralapi.collections.Projects;
 import edu.utah.nanofab.coralapi.resource.Member;
 import edu.utah.nanofab.coralapi.resource.Project;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.GenericResponse;
+import edu.utah.nanofab.coralapiserver.core.ProjectName;
 import edu.utah.nanofab.coralapiserver.resources.operations.ProjectOperationGet;
 import edu.utah.nanofab.coralapiserver.resources.operations.ProjectOperationPost;
 import edu.utah.nanofab.coralapiserver.resources.operations.ProjectOperationPut;
 import edu.utah.nanofab.coralapiserver.resources.operations.ProjectsOperationGet;
 
+import org.opencoral.idl.InvalidAccountSignal;
+import org.opencoral.idl.InvalidNicknameSignal;
+import org.opencoral.idl.InvalidTicketSignal;
+import org.opencoral.idl.NotAuthorizedSignal;
+import org.opencoral.idl.ProjectNotFoundSignal;
 import org.slf4j.Logger;
 
 import com.google.common.base.Optional;
@@ -98,6 +105,39 @@ public class CoralApiProjectsResource {
 	    return response;
   }
   
+  @POST
+  @ApiOperation(value = "Activate Project", response = ProjectName.class)
+  @Path("/activate")
+  @Timed
+  public ProjectName activate(@Valid ProjectName project, @Auth User user) throws Exception {
+	  	CoralAPI api = new CoralAPI(user.getUsername(), this.coralConfigUrl);
+		try {
+			api.activateProject(project.getProject());
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Caught exception activating " + project.getProject());
+			throw e;
+		}
+		return project;
+  }
+  
+  @POST
+  @ApiOperation(value = "Deactivate Project", response = ProjectName.class)
+  @Path("/deactivate")
+  @Timed
+  public ProjectName deactivate(@Valid ProjectName project, @Auth User user) throws Exception {
+	  	CoralAPI api = new CoralAPI(user.getUsername(), this.coralConfigUrl);
+		try {
+			api.deactivateProject(project.getProject());
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Caught exception deactivating " + project.getProject());
+			throw e;
+		}
+		return project;
+  }
+
+  
   @GET
   @ApiOperation(value = "Get Sample Project Resource", response = Project.class)
   @Path("/example")
@@ -115,6 +155,7 @@ public class CoralApiProjectsResource {
     		apiUser);
     return (Projects) (operation.perform());
   }
+  
   private Projects getAllActiveProjects(User apiUser) {
     ProjectsOperationGet operation = new ProjectsOperationGet();
     operation.init(this.coralConfigUrl, 
@@ -123,11 +164,11 @@ public class CoralApiProjectsResource {
     		apiUser);
     return (Projects) (operation.perform());
   }
+  
   private Project getProjectByName(String name, User user) {
 		ProjectOperationGet operation = new ProjectOperationGet();
 	    operation.init( this.coralConfigUrl, Optional.<String>of(name), Optional.<Object> absent(), user);
 	    return (Project) (operation.perform());
-	}
-	 
+  }
 
 }
