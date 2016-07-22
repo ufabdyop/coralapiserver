@@ -1,6 +1,7 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
 import edu.utah.nanofab.coralapi.CoralAPI;
+import edu.utah.nanofab.coralapi.collections.Members;
 import edu.utah.nanofab.coralapi.collections.Projects;
 import edu.utah.nanofab.coralapi.resource.Member;
 import edu.utah.nanofab.coralapi.resource.Project;
@@ -128,6 +129,8 @@ public class CoralApiProjectsResource {
   public ProjectName deactivate(@Valid ProjectName project, @Auth User user) throws Exception {
 	  	CoralAPI api = new CoralAPI(user.getUsername(), this.coralConfigUrl);
 		try {
+			Members members = api.getProjectMembers(project.getProject());
+			api.removeProjectMembers(project.getProject(), members.getNames());
 			api.deactivateProject(project.getProject());
 		} catch (Exception e) {
 			e.printStackTrace();
