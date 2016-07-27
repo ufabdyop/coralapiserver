@@ -1,7 +1,10 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
+import edu.utah.nanofab.coralapi.CoralAPI;
 import edu.utah.nanofab.coralapi.resource.Member;
 import edu.utah.nanofab.coralapiserver.auth.User;
+import edu.utah.nanofab.coralapiserver.core.MemberName;
+import edu.utah.nanofab.coralapiserver.core.ProjectName;
 import edu.utah.nanofab.coralapiserver.resources.operations.MemberOperationGet;
 import edu.utah.nanofab.coralapiserver.resources.operations.MemberOperationPost;
 import edu.utah.nanofab.coralapiserver.resources.operations.MemberOperationPut;
@@ -80,5 +83,21 @@ public class CoralApiMemberResource {
         user);
     return (Member) (operation.perform());
   }
+  
+  @POST
+  @ApiOperation(value = "Activate Member", response = MemberName.class)
+  @Path("/activate")
+  @Timed
+  public MemberName activate(@Valid MemberName member, @Auth User user) throws Exception {
+	  	CoralAPI api = new CoralAPI(user.getUsername(), this.coralConfigUrl);
+		try {
+			api.activateMember(member.getMember());
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Caught exception activating " + member.getMember());
+			throw e;
+		}
+		return member;
+  }  
 
 }
