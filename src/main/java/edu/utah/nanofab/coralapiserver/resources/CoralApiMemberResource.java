@@ -53,7 +53,10 @@ public class CoralApiMemberResource {
 		  @Auth User user) {
     MemberOperationGet operation = new MemberOperationGet();
     operation.init( this.coralConfigUrl, name, Optional.<Object> absent(), user);
-    return (Member) (operation.perform());
+    Member tempMember = (Member) (operation.perform());
+    this.logger.debug("fetched member: ");
+    this.logger.debug(tempMember.toString());
+    return tempMember;
   }
     
   @POST
