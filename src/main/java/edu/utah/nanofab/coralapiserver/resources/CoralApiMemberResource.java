@@ -20,6 +20,7 @@ import com.wordnik.swagger.annotations.Authorization;
 import io.dropwizard.auth.Auth;
 
 import com.codahale.metrics.annotation.Timed;
+import edu.utah.nanofab.coralapiserver.core.ProjectMembership;
 
 import javax.validation.Valid;
 import javax.ws.rs.GET;
@@ -59,12 +60,12 @@ public class CoralApiMemberResource {
     return tempMember;
   }
     
-  @POST
+  @PUT
   @ApiOperation(value = "Update member", 
 	response = Member.class)    
   @Timed
   public Member updateRequest(@Valid Member member, @Auth User user) {
-    MemberOperationPost operation = new MemberOperationPost();
+    MemberOperationPut operation = new MemberOperationPut();
     operation.init(
         this.coralConfigUrl, 
         Optional.<String> absent(), 
@@ -73,12 +74,12 @@ public class CoralApiMemberResource {
     return (Member) (operation.perform());
   }
   
-  @PUT
+  @POST
   @ApiOperation(value = "Create member", 
 	response = Member.class)    
   @Timed
   public Member createRequest(@Valid Member member, @Auth User user) {
-    MemberOperationPut operation = new MemberOperationPut();
+    MemberOperationPost operation = new MemberOperationPost();
     operation.init( 
         this.coralConfigUrl, 
         Optional.<String> absent(), 
@@ -98,6 +99,44 @@ public class CoralApiMemberResource {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Caught exception activating " + member.getMember());
+			throw e;
+		}
+		return member;
+  }  
+
+  @POST
+  @ApiOperation(value = "Activate Member With Project", response = MemberName.class)
+  @Path("/activateWithProject")
+  @Timed
+  public ProjectMembership activateWithProject(@Valid ProjectMembership memberProject, @Auth User user) throws Exception {
+        CoralAPI api = new CoralAPI(user.getUsername(), this.coralConfigUrl);
+        String member = null;
+        String project = null;
+        try {
+            member = memberProject.getMembers()[0];
+            project = memberProject.getProject();
+            api.activateMemberWithProject(
+                        member, 
+                        project);
+        } catch (Exception e) {
+                e.printStackTrace();
+                logger.error("Caught exception activating with project" + member);
+                throw e;
+        }
+        return memberProject;
+  }
+  
+  @POST
+  @ApiOperation(value = "Deactivate Member", response = MemberName.class)
+  @Path("/deactivate")
+  @Timed
+  public MemberName deactivate(@Valid MemberName member, @Auth User user) throws Exception {
+	  	CoralAPI api = new CoralAPI(user.getUsername(), this.coralConfigUrl);
+		try {
+			api.deactivateMember(member.getMember());
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Caught exception deactivating " + member.getMember());
 			throw e;
 		}
 		return member;

@@ -58,14 +58,19 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
     
     public boolean isValidUser(Optional<User> user) {
         synchronized(GlobalLock) {
-            if (!user.isPresent())
+            if (!user.isPresent()) {
                 return false;
+            }
 
             String username = user.get().getUsername();
             CoralAPI api = new CoralAPI(username, this.coralConfigUrl);
+            
             try {
                 api.getMember(username);
             } catch (Exception ex) {
+                System.out.println("Authentication Failure: Error Follows");
+                System.out.println(ex.getMessage());
+                ex.printStackTrace(System.out);
                 return false;
             } finally {
                 api.close();
