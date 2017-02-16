@@ -4,9 +4,10 @@ import edu.utah.nanofab.coralapi.collections.Members;
 import edu.utah.nanofab.coralapiserver.core.ProjectMembership;
 
 public class ProjectMembershipOperationDelete extends ResourceOperation  {
+    public ProjectMembership membership;
   @Override
   public void performOperationImpl() throws Exception {
-    ProjectMembership membership = (ProjectMembership) this.postedObject.get();
+    membership = (ProjectMembership) this.postedObject.get();
     name = membership.getProject();
     logSettings(name, membership);
     this.api.removeProjectMembers(name, membership.getMembers());
@@ -17,19 +18,25 @@ public class ProjectMembershipOperationDelete extends ResourceOperation  {
 
   @Override
   public String errorMessage() {
-    return "Error while trying to remove members from project: " + name + "\n";
+    return "Error while trying to remove members (" + implodeMembers(membership) + ") from project: " + name + "\n";
   }
   
   public void logSettings(String project, ProjectMembership membership) {
     logger.debug("ProjectMembershipOperationDelete: project is " + project);
     logger.debug("ProjectMembershipOperationDelete: auth user is " + this.user.getUsername());
-      String[] members = membership.getMembers();
-    String buffer = "";
-      for (String m : members) {
-          buffer += m + ", ";
-      }
+    String buffer = implodeMembers(membership);
     logger.debug("ProjectMembershipOperationDelete: members are " + buffer);
     
   }
+
+    private String implodeMembers(ProjectMembership membership) {
+        String[] members = membership.getMembers();
+        String buffer = "";
+        for (String m : members) {
+            buffer += m + ", ";
+        }
+        
+        return buffer.substring(0, buffer.length() - 2);
+    }
 
 }
