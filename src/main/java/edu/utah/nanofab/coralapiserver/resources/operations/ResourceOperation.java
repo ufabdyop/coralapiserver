@@ -1,5 +1,7 @@
 package edu.utah.nanofab.coralapiserver.resources.operations;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
@@ -12,12 +14,16 @@ import com.sun.jersey.core.spi.factory.ResponseBuilderImpl;
 import io.dropwizard.auth.Auth;
 import edu.utah.nanofab.coralapi.CoralAPI;
 import edu.utah.nanofab.coralapiserver.auth.User;
+import edu.utah.nanofab.coralapiserver.core.ErrorResponse;
+import java.util.logging.Level;
+import org.opencoral.idl.NotAuthorizedSignal;
 
 public abstract class ResourceOperation {
     public static String GlobalLock = "coral api not thread safe";
     public String coralConfigUrl;
     public CoralAPI api;
     public String error = null;
+    public int statusCode = 500;
     protected User user;
     private Object returnValue = null;
     protected Optional<String> queryParam;
@@ -30,7 +36,7 @@ public abstract class ResourceOperation {
                     Optional<Object> postedObject,
                     @Auth User user) {
 
-    		logger = LoggerFactory.getLogger(ResourceOperation.class);
+            logger = LoggerFactory.getLogger(ResourceOperation.class);
             this.coralConfigUrl = coralConfigUrl;
             this.queryParam = queryParam;
             this.postedObject = postedObject;
@@ -58,9 +64,14 @@ public abstract class ResourceOperation {
 	    this.setUp();
 	    try {
 	      this.performOperationImpl();
+            } catch (NotAuthorizedSignal nas) {
+                nas.printStackTrace();
+                this.statusCode = 403;
+                this.error = nas.reason;
+                this.error += "\n\n" + nas.getMessage() + "\n";
 	    } catch (Exception e) {
 	      e.printStackTrace();
-	      this.error = e.getMessage();
+	      this.error = e.getMessage() + "\n";
 	    }
 	    this.tearDown();
 	    this.reportErrorIfEncountered();
@@ -91,9 +102,20 @@ public abstract class ResourceOperation {
     private void reportErrorIfEncountered() {
             String message = this.errorMessage();
             if (this.error != null) {
-                Response resp = new ResponseBuilderImpl().status(500)
-                .entity(message + "\": "  + this.error).build();
-                    throw new WebApplicationException(resp);
+                ObjectMapper mapper = new ObjectMapper();
+                ErrorResponse er = new ErrorResponse();
+                er.message = message + " : "  + this.error;
+
+                Response resp;
+                try {
+                    resp = new ResponseBuilderImpl().status(this.statusCode)
+                            .entity(mapper.writeValueAsString(er)).build();
+                } catch (JsonProcessingException ex) {
+                    resp = new ResponseBuilderImpl().status(this.statusCode)
+                            .entity(er.message).build();
+                    java.util.logging.Logger.getLogger(ResourceOperation.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                throw new WebApplicationException(resp);
             }
     }
 }
