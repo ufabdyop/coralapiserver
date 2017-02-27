@@ -11,6 +11,8 @@ import io.dropwizard.auth.Auth;
 import com.codahale.metrics.annotation.Timed;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -21,6 +23,8 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.atomic.AtomicLong;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import edu.utah.nanofab.coralapiserver.core.GenericRoleRequest;
+import javax.validation.Valid;
 
 @Path("/v0/labRoles")
 @Api(value = "/v0/labRoles", description = "")
@@ -44,4 +48,41 @@ public class CoralApiLabRoleResource {
     operation.init(this.coralConfigUrl, username, Optional.<Object> absent(), user);
     return (LabRoles) (operation.perform());
   }
+
+  @POST
+  @ApiOperation(value = "", response = LabRoles.class)
+  @Timed
+  public GenericRoleRequest postRequest(@Valid GenericRoleRequest request, @Auth User user) {
+	  
+    LabRoleOperationPost operation = new LabRoleOperationPost();
+    
+    logger.debug("Received Request: ");
+    logger.debug(request.getMember() + ":" + 
+				request.getTarget() + ":" +
+    			request.getRole());
+
+    operation.init(
+            this.coralConfigUrl,  
+            Optional.<String> absent(), 
+            Optional.<Object> of(request), 
+            user);    
+    
+    return (GenericRoleRequest) (operation.perform());
+  }
+  
+  @DELETE
+  @ApiOperation(value = "", response = LabRoles.class)
+  @Timed
+  public GenericRoleRequest deleteRequest(@Valid GenericRoleRequest request, @Auth User user) {
+    LabRoleOperationDelete operation = new LabRoleOperationDelete();
+
+    operation.init(
+            this.coralConfigUrl,  
+            Optional.<String> absent(), 
+            Optional.<Object> of(request), 
+            user);
+    
+    return (GenericRoleRequest) (operation.perform());
+  }  
+  
 }
