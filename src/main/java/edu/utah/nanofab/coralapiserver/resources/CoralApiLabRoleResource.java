@@ -24,6 +24,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import edu.utah.nanofab.coralapiserver.core.GenericRoleRequest;
+import edu.utah.nanofab.coralapiserver.resources.operations.LabRoleOperationDelete;
+import edu.utah.nanofab.coralapiserver.resources.operations.LabRoleOperationPost;
 import javax.validation.Valid;
 
 @Path("/v0/labRoles")
