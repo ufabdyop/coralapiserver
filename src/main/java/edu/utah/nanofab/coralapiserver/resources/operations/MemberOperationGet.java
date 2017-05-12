@@ -4,7 +4,11 @@ public class MemberOperationGet extends ResourceOperation {
 
   @Override
   public void performOperationImpl() throws Exception {
-    this.setReturnValue(this.api.getMember(this.queryParam.get()));
+    if (this.queryParam.isPresent()) {
+        this.setReturnValue(this.api.getMember(this.queryParam.get()));
+    } else {
+        this.setReturnValue(this.api.getAllMembers());
+    }
   }
 
   @Override

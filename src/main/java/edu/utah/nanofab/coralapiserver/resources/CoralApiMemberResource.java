@@ -20,6 +20,7 @@ import com.wordnik.swagger.annotations.Authorization;
 import io.dropwizard.auth.Auth;
 
 import com.codahale.metrics.annotation.Timed;
+import edu.utah.nanofab.coralapi.collections.Members;
 import edu.utah.nanofab.coralapiserver.core.ProjectMembership;
 
 import javax.validation.Valid;
@@ -49,15 +50,23 @@ public class CoralApiMemberResource {
   @ApiOperation(value = "Find member by name", 
 					response = Member.class)    
   @Timed
-  public Member getRequest(
+  public Members getRequest(
 		  @QueryParam("name") Optional<String> name, 
 		  @Auth User user) {
     MemberOperationGet operation = new MemberOperationGet();
     operation.init( this.coralConfigUrl, name, Optional.<Object> absent(), user);
-    Member tempMember = (Member) (operation.perform());
-    this.logger.debug("fetched member: ");
-    this.logger.debug(tempMember.toString());
-    return tempMember;
+    
+    Members returnSet = new Members();
+    if (name.isPresent()) {
+        Member tempMember = (Member) (operation.perform());
+        returnSet.add(tempMember);
+        this.logger.debug("fetched member: ");
+        this.logger.debug(tempMember.toString());
+    } else {
+        returnSet = (Members) (operation.perform());
+        this.logger.debug("fetched all members");
+    }
+    return returnSet;
   }
     
   @PUT
