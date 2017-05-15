@@ -22,7 +22,9 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import edu.utah.nanofab.coralapiserver.core.MemberProjects;
 import edu.utah.nanofab.coralapiserver.resources.operations.MemberProjectsOperationDelete;
+import edu.utah.nanofab.coralapiserver.resources.operations.MemberProjectsOperationGet;
 import edu.utah.nanofab.coralapiserver.resources.operations.MemberProjectsOperationPut;
+import java.util.ArrayList;
 
 
 @Api(value = "/v0/memberProjects", description = "")
@@ -36,6 +38,21 @@ public class CoralApiMemberProjectsResource {
     this.coralConfigUrl = coralConfigUrl;
   }
 
+
+  @GET
+  @ApiOperation(value = "", response = MemberProjects.class)  
+  @Timed
+  public MemberProjects[] get(
+          @QueryParam("member") Optional<String> member, 
+          @Auth User user) {
+    MemberProjectsOperationGet operation = new MemberProjectsOperationGet();
+    operation.init(this.coralConfigUrl, member, Optional.<Object> absent(), user);
+    ArrayList<MemberProjects> returnSet;
+    
+    returnSet = (ArrayList<MemberProjects>) (operation.perform());
+    return returnSet.toArray(new MemberProjects[0]);
+  }
+  
   @PUT
   @ApiOperation(value = "", response = MemberProjects.class)  
   @Timed
