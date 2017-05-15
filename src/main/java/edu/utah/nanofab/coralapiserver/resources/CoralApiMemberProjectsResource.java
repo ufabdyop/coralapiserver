@@ -25,6 +25,7 @@ import edu.utah.nanofab.coralapiserver.resources.operations.MemberProjectsOperat
 import edu.utah.nanofab.coralapiserver.resources.operations.MemberProjectsOperationGet;
 import edu.utah.nanofab.coralapiserver.resources.operations.MemberProjectsOperationPut;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 @Api(value = "/v0/memberProjects", description = "")
@@ -42,15 +43,15 @@ public class CoralApiMemberProjectsResource {
   @GET
   @ApiOperation(value = "", response = MemberProjects.class)  
   @Timed
-  public MemberProjects[] get(
+  public HashMap<String, ArrayList<String>> get(
           @QueryParam("member") Optional<String> member, 
           @Auth User user) {
     MemberProjectsOperationGet operation = new MemberProjectsOperationGet();
     operation.init(this.coralConfigUrl, member, Optional.<Object> absent(), user);
-    ArrayList<MemberProjects> returnSet;
+    HashMap<String, ArrayList<String>> returnSet;
     
-    returnSet = (ArrayList<MemberProjects>) (operation.perform());
-    return returnSet.toArray(new MemberProjects[0]);
+    returnSet = (HashMap<String, ArrayList<String>>) (operation.perform());
+    return returnSet;
   }
   
   @PUT
