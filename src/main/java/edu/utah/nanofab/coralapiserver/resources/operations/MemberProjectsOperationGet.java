@@ -23,7 +23,7 @@ public class MemberProjectsOperationGet extends ResourceOperation  {
         requestedMemberProjects.put(memberName, 
                 new ArrayList<String>(Arrays.asList(mp.getProjects())));
     } else {
-        requestedMemberProjects = this.api.getAllMemberProjects();
+        requestedMemberProjects = this.api.getAllMemberProjects(true);
     }
     this.setReturnValue(requestedMemberProjects);
   }
