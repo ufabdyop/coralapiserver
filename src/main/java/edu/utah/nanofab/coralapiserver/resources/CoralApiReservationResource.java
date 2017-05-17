@@ -32,6 +32,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import edu.utah.nanofab.coralapi.CoralAPIPool;
 import edu.utah.nanofab.coralapi.CoralAPISynchronized;
 import edu.utah.nanofab.coralapi.exceptions.RequestFailedException;
+import edu.utah.nanofab.coralapiserver.core.GenericResponse;
 import java.util.logging.Level;
 import javax.ws.rs.core.Response;
 
@@ -57,7 +58,8 @@ public class CoralApiReservationResource {
       
       System.out.println("Reservation creation for " + request.getItem());
       CoralAPISynchronized coralApiInstance = apiPool.getConnection(user.getUsername());
-              
+      GenericResponse r = new GenericResponse();
+          
       try {
           coralApiInstance.createNewReservation(user.getUsername(),
                   request.getMember(),
@@ -66,9 +68,12 @@ public class CoralApiReservationResource {
                   request.getBdate(),
                   request.getLengthInMinutes());
       } catch (RequestFailedException rfe) {
-          return Response.status(Response.Status.FORBIDDEN).entity(rfe.getMessage()).build();
+          System.out.println("RequestFailedException " + rfe.getMessage());
+          r = new GenericResponse(false, rfe.getMessage());
+          return Response.status(Response.Status.FORBIDDEN).entity(r).build();
       } catch (Exception ex) {
-          return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
+          r = new GenericResponse(false, ex.getMessage());
+          return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(r).build();
       }
       return Response.status(Response.Status.OK).entity(request).build();
   }
