@@ -50,7 +50,7 @@ public class CoralApiReservationResource {
   @ApiOperation(value = "", response = ReservationRequest.class)  
   @Timed
   public ReservationRequest createRequest(@Valid ReservationRequest request, 
-          @Auth User user) throws Exception {
+          @Auth User user) {
       
       System.out.println("Reservation creation for " + request.getItem());
       CoralAPISynchronized coralApiInstance = apiPool.getConnection(user.getUsername());

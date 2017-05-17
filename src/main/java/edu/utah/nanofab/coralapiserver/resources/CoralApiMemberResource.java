@@ -60,11 +60,8 @@ public class CoralApiMemberResource {
     if (name.isPresent()) {
         Member tempMember = (Member) (operation.perform());
         returnSet.add(tempMember);
-        this.logger.debug("fetched member: ");
-        this.logger.debug(tempMember.toString());
     } else {
         returnSet = (Members) (operation.perform());
-        this.logger.debug("fetched all members");
     }
     return returnSet;
   }
