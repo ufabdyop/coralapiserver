@@ -31,6 +31,9 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import edu.utah.nanofab.coralapi.CoralAPIPool;
 import edu.utah.nanofab.coralapi.CoralAPISynchronized;
+import edu.utah.nanofab.coralapi.exceptions.RequestFailedException;
+import java.util.logging.Level;
+import javax.ws.rs.core.Response;
 
 
 @Api(value = "/v0/reservations", description = "Create reservations or fetch reservations")
@@ -49,20 +52,25 @@ public class CoralApiReservationResource {
   @POST
   @ApiOperation(value = "", response = ReservationRequest.class)  
   @Timed
-  public ReservationRequest createRequest(@Valid ReservationRequest request, 
-          @Auth User user) throws Exception {
+  public Response createRequest(@Valid ReservationRequest request, 
+          @Auth User user)  {
       
       System.out.println("Reservation creation for " + request.getItem());
       CoralAPISynchronized coralApiInstance = apiPool.getConnection(user.getUsername());
               
-      coralApiInstance.createNewReservation(user.getUsername(), 
-              request.getMember(), 
-              request.getProject(), 
-              request.getItem(), 
-              request.getBdate(), 
-              request.getLengthInMinutes());
-      
-      return request;
+      try {
+          coralApiInstance.createNewReservation(user.getUsername(),
+                  request.getMember(),
+                  request.getProject(),
+                  request.getItem(),
+                  request.getBdate(),
+                  request.getLengthInMinutes());
+      } catch (RequestFailedException rfe) {
+          return Response.status(Response.Status.FORBIDDEN).entity(rfe.getMessage()).build();
+      } catch (Exception ex) {
+          return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
+      }
+      return Response.status(Response.Status.OK).entity(request).build();
   }
   
   @GET
