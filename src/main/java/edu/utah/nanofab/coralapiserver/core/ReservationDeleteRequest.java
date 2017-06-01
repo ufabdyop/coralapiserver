@@ -1,9 +1,7 @@
 package edu.utah.nanofab.coralapiserver.core;
 
-public class ReservationRequest {
+public class ReservationDeleteRequest {
   private String item;
-  private String member;
-  private String project;
   private String bdate;
   private int lengthInMinutes;
   
@@ -24,17 +22,5 @@ public class ReservationRequest {
   }
   public void setItem(String item) {
     this.item = item;
-  }
-  public String getMember() {
-    return member;
-  }
-  public void setMember(String member) {
-    this.member = member;
-  }
-  public String getProject() {
-    return project;
-  }
-  public void setProject(String project) {
-    this.project = project;
   }
 }

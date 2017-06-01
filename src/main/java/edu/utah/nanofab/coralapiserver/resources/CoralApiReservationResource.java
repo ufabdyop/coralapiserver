@@ -33,6 +33,7 @@ import edu.utah.nanofab.coralapi.CoralAPIPool;
 import edu.utah.nanofab.coralapi.CoralAPISynchronized;
 import edu.utah.nanofab.coralapi.exceptions.RequestFailedException;
 import edu.utah.nanofab.coralapiserver.core.GenericResponse;
+import edu.utah.nanofab.coralapiserver.core.ReservationDeleteRequest;
 import java.util.logging.Level;
 import javax.ws.rs.core.Response;
 
@@ -97,16 +98,13 @@ public class CoralApiReservationResource {
   @DELETE
   @ApiOperation(value = "", response = ReservationRequest.class)    
   @Timed
-  public ReservationRequest deleteRequest(@Valid ReservationRequest request, @Auth User user) throws Exception {
+  public ReservationDeleteRequest deleteRequest(@Valid ReservationDeleteRequest request, @Auth User user) throws Exception {
     logger.debug("Got DELETE RESERVATION request : " + request.getItem() + " " + request.getBdate());
     CoralAPISynchronized coralApiInstance = apiPool.getConnection(user.getUsername());
     
     System.out.println("Reservation deletion for " + request.getItem() + " " + request.getBdate());
     coralApiInstance.deleteReservation(
-            user.getUsername(), 
-            request.getMember(), 
-            request.getProject(), 
-            request.getItem(), 
+            request.getItem(),
             request.getBdate(), 
             request.getLengthInMinutes()
     );
