@@ -112,6 +112,8 @@ public class CoralApiReservationResource {
                 request.getLengthInMinutes()
         );
     } catch (Exception ex) {
+          System.err.println("ERROR IN RES DELETE");
+          ex.printStackTrace(System.err);
           r = new GenericResponse(false, ex.getMessage());
           return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(r).build();        
     }
