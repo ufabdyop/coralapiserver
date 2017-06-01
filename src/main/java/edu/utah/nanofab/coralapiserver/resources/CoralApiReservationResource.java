@@ -98,18 +98,25 @@ public class CoralApiReservationResource {
   @DELETE
   @ApiOperation(value = "", response = ReservationRequest.class)    
   @Timed
-  public ReservationDeleteRequest deleteRequest(@Valid ReservationDeleteRequest request, @Auth User user) throws Exception {
-    logger.debug("Got DELETE RESERVATION request : " + request.getItem() + " " + request.getBdate());
+  public Response deleteRequest(@Valid ReservationDeleteRequest request, @Auth User user) throws Exception {
+    logger.debug("Got DELETE RESERVATION request : " + request.getItem() + " " + request.getBdate() + " " + request.getLengthInMinutes());
     CoralAPISynchronized coralApiInstance = apiPool.getConnection(user.getUsername());
+
+    GenericResponse r = new GenericResponse();
     
     System.out.println("Reservation deletion for " + request.getItem() + " " + request.getBdate());
-    coralApiInstance.deleteReservation(
-            request.getItem(),
-            request.getBdate(), 
-            request.getLengthInMinutes()
-    );
+    try {
+        coralApiInstance.deleteReservation(
+                request.getItem(),
+                request.getBdate(), 
+                request.getLengthInMinutes()
+        );
+    } catch (Exception ex) {
+          r = new GenericResponse(false, ex.getMessage());
+          return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(r).build();        
+    }
 
-    return request;
+    return Response.status(Response.Status.OK).entity(request).build();
   }
       
 }
