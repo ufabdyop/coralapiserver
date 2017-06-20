@@ -47,10 +47,10 @@ public class CoralApiRunDataDefinitionResource {
   @GET
   @ApiOperation(value = "Find rundata definitions by tool name", response = RunDataProcess.class)  
   @Timed
-  public RunDataProcess getRequest(@QueryParam("item") Optional<String> item, @Auth User user) {
+  public RunDataProcess[] getRequest(@QueryParam("item") Optional<String> item, @Auth User user) {
     RunDataDefinitionOperationGet operation = new RunDataDefinitionOperationGet();
     operation.init( this.coralConfigUrl, item, Optional.<Object> absent(), user);
-    return (RunDataProcess) (operation.perform());
+    return (RunDataProcess[]) (operation.perform());
   }
 
 }
