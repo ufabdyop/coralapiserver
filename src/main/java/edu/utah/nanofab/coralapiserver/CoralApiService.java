@@ -36,6 +36,7 @@ import edu.utah.nanofab.coralapiserver.resources.CoralApiProjectMembershipResour
 import edu.utah.nanofab.coralapiserver.resources.CoralApiProjectRoleResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiProjectsResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiReservationResource;
+import edu.utah.nanofab.coralapiserver.resources.CoralApiRunDataDefinitionResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiVersionResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiWhoAmIResource;
 
@@ -115,6 +116,7 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
       environment.jersey().register(new CoralApiProjectMembershipResource( coralConfigUrl));
       environment.jersey().register(new CoralApiProjectsResource( coralConfigUrl));
       environment.jersey().register(new CoralApiPasswordResetResource( coralConfigUrl));
+      environment.jersey().register(new CoralApiRunDataDefinitionResource( coralConfigUrl));      
     }
 
    private void configureCors(Environment environment) {
