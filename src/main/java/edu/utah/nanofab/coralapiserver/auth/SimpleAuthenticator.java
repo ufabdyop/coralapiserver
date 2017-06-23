@@ -78,7 +78,7 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
                 ex.printStackTrace(System.out);
                 return false;
             } finally {
-                apiPool.closeConnection(username);
+                //apiPool.closeConnection(username);
             }
 
             return true;
@@ -92,7 +92,7 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
         
         try {
           boolean success = coralApiInstance.authenticate(user, pass);
-          apiPool.closeConnection(user);
+          //apiPool.closeConnection(user);
           if (success) {
             return Optional.of(new User(user));
           }
@@ -100,7 +100,7 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
           apiPool.closeConnection(user);
           e.printStackTrace();
         } finally {
-          apiPool.closeConnection(user);
+          //apiPool.closeConnection(user);
         }
         return Optional.<User>absent();
     }
