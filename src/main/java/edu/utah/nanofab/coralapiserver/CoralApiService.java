@@ -99,7 +99,7 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
 
       environment.jersey().register(new CoralApiReservationResource(apiPool));
       
-      environment.jersey().register(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens, sessionTokens, coralConfigUrl ), "CoralAPIServer Realm"));
+      environment.jersey().register(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens, sessionTokens, apiPool ), "CoralAPIServer Realm"));
       environment.jersey().register(new CoralApiEntryPointResource());
       environment.jersey().register(new CoralApiVersionResource());
       environment.jersey().register(new CoralApiWhoAmIResource());

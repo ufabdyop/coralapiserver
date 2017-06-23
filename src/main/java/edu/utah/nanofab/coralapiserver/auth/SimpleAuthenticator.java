@@ -12,8 +12,10 @@ import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
 import io.dropwizard.auth.basic.BasicCredentials;
 
-import edu.utah.nanofab.coralapi.CoralAPI;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
+import edu.utah.nanofab.coralapi.CoralAPISynchronized;
 import edu.utah.nanofab.coralapiserver.TokenConfiguration;
+import java.util.concurrent.atomic.AtomicLong;
 
 
 public class SimpleAuthenticator implements Authenticator<BasicCredentials, User> {
@@ -23,14 +25,17 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
   private ConcurrentHashMap<String, TokenConfiguration> sessionTokens;
   private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(SimpleAuthenticator.class);   
+    private final CoralAPIPool apiPool;
 
   public SimpleAuthenticator(TokenConfiguration[] tokens, 
       ConcurrentHashMap<String, TokenConfiguration> sessionTokens, 
-      String coralConfigUrl) {
+      CoralAPIPool apiPool) {
     super();
     this.tokens = tokens;
     this.sessionTokens = sessionTokens;
     this.coralConfigUrl = coralConfigUrl;
+    this.apiPool = apiPool;
+    new AtomicLong();
   }
 
   @Override
@@ -63,17 +68,17 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
             }
 
             String username = user.get().getUsername();
-            CoralAPI api = new CoralAPI(username, this.coralConfigUrl);
+            CoralAPISynchronized coralApiInstance = apiPool.getConnection(username);
             
             try {
-                api.getMember(username);
+                coralApiInstance.getMember(username);
             } catch (Exception ex) {
                 System.out.println("Authentication Failure: Error Follows");
                 System.out.println(ex.getMessage());
                 ex.printStackTrace(System.out);
                 return false;
             } finally {
-                api.close();
+                apiPool.closeConnection(username);
             }
 
             return true;
@@ -83,18 +88,19 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
   public Optional<User> authenticateByUsernamePassword(String user, String pass) {
     synchronized(GlobalLock) {
         logger.debug("Authenticating " + user + " by password.");
-        CoralAPI api = new CoralAPI(user, this.coralConfigUrl);
+        CoralAPISynchronized coralApiInstance = apiPool.getConnection(user);
+        
         try {
-          boolean success = api.authenticate(user, pass);
-          api.close();
+          boolean success = coralApiInstance.authenticate(user, pass);
+          apiPool.closeConnection(user);
           if (success) {
             return Optional.of(new User(user));
           }
         } catch (Exception e) {
-          api.close();
+          apiPool.closeConnection(user);
           e.printStackTrace();
         } finally {
-          api.close();
+          apiPool.closeConnection(user);
         }
         return Optional.<User>absent();
     }
