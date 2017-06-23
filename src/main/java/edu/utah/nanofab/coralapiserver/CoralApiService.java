@@ -94,6 +94,7 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
       final TokenConfiguration[] tokens = configuration.getAuthTokensConfiguration().getTokens();
       ConcurrentHashMap<String, TokenConfiguration> sessionTokens = new ConcurrentHashMap<String, TokenConfiguration>();
       CoralAPIPool apiPool = CoralAPIPool.getInstance(coralConfigUrl);
+      apiPool.setMaxAgeInSeconds(300);
       configureCors(environment);
 
       environment.jersey().register(new CoralApiReservationResource(apiPool));
