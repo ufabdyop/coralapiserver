@@ -72,15 +72,15 @@ public class CoralApiRunDataResource {
           r.setMessage("Created rundata");
       } catch (NullReturnException ex) {
           r.setSuccess(false);
-          r.setMessage("NullReturnException while saving rundata");
+          r.setMessage("NullReturnException while saving rundata: " + ex.getMessage());
       } catch (ServerErrorException ex) {
           r.setSuccess(false);
-          r.setMessage("ServerErrorException while saving rundata");
+          r.setMessage("ServerErrorException while saving rundata: " + ex.getMessage());
       } catch (Exception ex) {
           r.setSuccess(false);
-          r.setMessage("Exception while saving rundata");
+          r.setMessage("Exception while saving rundata: " + ex.getMessage());
       }
-          
+
       if (r.isSuccess()) {
         return Response.status(Response.Status.OK).entity(r).build();      
       } else {
