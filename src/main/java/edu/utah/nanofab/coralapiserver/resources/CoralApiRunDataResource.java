@@ -81,7 +81,11 @@ public class CoralApiRunDataResource {
           r.setMessage("Exception while saving rundata");
       }
           
-      return Response.status(Response.Status.OK).entity(rundata).build();      
+      if (r.isSuccess()) {
+        return Response.status(Response.Status.OK).entity(r).build();      
+      } else {
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(r).build();      
+      }
   }
 
 }
