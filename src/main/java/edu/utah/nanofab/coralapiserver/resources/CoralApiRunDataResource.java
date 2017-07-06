@@ -66,10 +66,11 @@ public class CoralApiRunDataResource {
   public Response postRequest(@Valid RunDataEntry rundata, @Auth User user) {
       CoralAPISynchronized coralApiInstance = apiPool.getConnection(user.getUsername());
       GenericResponse r = new GenericResponse(true, "");
+      String id = "not assigned";
           
       try {
-          coralApiInstance.createRunData(rundata.xmlDefinition);
-          r.setMessage("Created rundata");
+          id = coralApiInstance.createAndCommitRunData(rundata.xmlDefinition);
+          r.setMessage("Created rundata: " + id);
       } catch (NullReturnException ex) {
           r.setSuccess(false);
           r.setMessage("NullReturnException while saving rundata: " + ex.description + " : " + ex.getMessage());
