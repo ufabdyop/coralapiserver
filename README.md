@@ -105,9 +105,9 @@ We need the API to meet the following requirements:
     -   Version
 
   -   URLs (examples)
-    -   https://coral-api-server/v0/member
+    -   https://coral-api-server/v0/members
         -   supporting PUT, GET(list)
-    -   https://coral-api-server/v0/member?name=ryant
+    -   https://coral-api-server/v0/members?name=ryant
         -   supporting POST, GET
         -   POST and GET would send/receive json representations of member
     -   https://coral-api-server/v0/reservation
@@ -235,7 +235,7 @@ curl -u auth-token:abcdefg -k https://localhost/v0/projects
 #### List member(s) on a project
 
 ```
-curl -H "Content-Type: application/json" -u auth-token:abcdefg -k https://localhost/v0/projectMembership?project=new%20project -D -
+curl -H "Content-Type: application/json" -u auth-token:abcdefg -k https://localhost/v0/projectMemberships?project=new%20project -D -
 ```
 
 ### Member
@@ -245,14 +245,14 @@ curl -H "Content-Type: application/json" -u auth-token:abcdefg -k https://localh
 To get the details of an already existing coral member:
 
 ```
-curl -u auth-token:abcdefg -k https://localhost/v0/member?name=coral
+curl -u auth-token:abcdefg -k https://localhost/v0/members?name=coral
 ```
 
 #### POST requests
 
 To create a new coral member:
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new proj"}' -u auth-token:abcdefg -k https://localhost/v0/member -D -
+curl -X POST -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new proj"}' -u auth-token:abcdefg -k https://localhost/v0/members -D -
 ```
 
 To change a password:
@@ -268,25 +268,25 @@ curl -X POST -H "Content-Type: application/json" -d '{"member":"coral", "project
 
 To enable a tool:
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "project":"new proj", "item": "some instrument"}' -u auth-token:abcdefg -k https://localhost/v0/enable -D -
+curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "project":"new proj", "item": "some instrument"}' -u auth-token:abcdefg -k https://localhost/v0/enables -D -
 ```
 
 To disable a tool:
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "item": "some instrument"}' -u auth-token:abcdefg -k https://localhost/v0/disable -D -
+curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "item": "some instrument"}' -u auth-token:abcdefg -k https://localhost/v0/disables -D -
 ```
 
 #### PUT requests
 
 To update an already existing member:
 ```
-curl -X PUT -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new proj", "firstName": "amy"}' -u auth-token:abcdefg -k https://localhost/v0/member -D -
+curl -X PUT -H "Content-Type: application/json" -d '{"name":"newmember", "project":"new proj", "firstName": "amy"}' -u auth-token:abcdefg -k https://localhost/v0/members -D -
 ```
 
 #### Add member(s) to a project:
 
 ```
-curl -X PUT -H "Content-Type: application/json" -d '{"project":"new proj", "members":["coral"]}' -u auth-token:abcdefg -k https://localhost/v0/projectMembership -D -
+curl -X PUT -H "Content-Type: application/json" -d '{"project":"new proj", "members":["coral"]}' -u auth-token:abcdefg -k https://localhost/v0/projectMemberships -D -
 ```
 
 #### Get projects for member
