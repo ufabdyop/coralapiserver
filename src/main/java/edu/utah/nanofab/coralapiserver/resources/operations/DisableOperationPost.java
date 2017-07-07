@@ -1,6 +1,7 @@
 package edu.utah.nanofab.coralapiserver.resources.operations;
 
 import edu.utah.nanofab.coralapiserver.core.DisableRequest;
+import java.util.HashMap;
 
 public class DisableOperationPost extends ResourceOperation  {
   @Override
@@ -8,8 +9,10 @@ public class DisableOperationPost extends ResourceOperation  {
       DisableRequest disableRequest = (DisableRequest)(this.postedObject.get());
       System.out.println("Disabling beginning for " + disableRequest.getItem());
   
-      this.api.disable(user.getUsername(), disableRequest.getItem());
-      this.setReturnValue(disableRequest);
+      String id = this.api.disable(user.getUsername(), disableRequest.getItem());
+      HashMap<String, String> result = new HashMap<String, String>();
+      result.put("id", id);
+      this.setReturnValue(result);
   }
 
   @Override

@@ -13,6 +13,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import io.dropwizard.auth.Auth;
 
 import com.codahale.metrics.annotation.Timed;
+import java.util.HashMap;
 
 import javax.validation.Valid;
 import javax.ws.rs.POST;
@@ -40,13 +41,14 @@ public class CoralApiDisableResource {
   @POST
   @ApiOperation(value = "", response = DisableRequest.class)  
   @Timed
-  public DisableRequest createRequest(@Valid DisableRequest disableRequest, @Auth User user) {
+  public HashMap<String, String> createRequest(@Valid DisableRequest disableRequest, @Auth User user) {
     DisableOperationPost operation = new DisableOperationPost();
     operation.init(
         this.coralConfigUrl, 
         Optional.<String> absent(), 
         Optional.<Object>of( disableRequest), 
         user);
-    return (DisableRequest) (operation.perform());
+    HashMap<String, String> result = (HashMap<String, String>) (operation.perform());
+    return result;
   }
 }
