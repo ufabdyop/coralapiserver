@@ -1,6 +1,7 @@
 package edu.utah.nanofab.coralapiserver.resources.operations;
 
 import edu.utah.nanofab.coralapiserver.core.EnableRequest;
+import java.util.HashMap;
 
 public class EnableOperationPost extends ResourceOperation  {
   @Override
@@ -8,9 +9,11 @@ public class EnableOperationPost extends ResourceOperation  {
       EnableRequest enableRequest = (EnableRequest)(this.postedObject.get());
       System.out.println("Enabling beginning for " + enableRequest.getItem());
   
-      this.api.enable(user.getUsername(), enableRequest.getMember(), 
+      String id = this.api.enable(user.getUsername(), enableRequest.getMember(), 
           enableRequest.getProject(), enableRequest.getItem());
-      this.setReturnValue(enableRequest);
+      HashMap<String, String> response = new HashMap<String, String>();
+      response.put("id", id);
+      this.setReturnValue(response);
   }
 
   @Override

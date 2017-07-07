@@ -22,6 +22,10 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.atomic.AtomicLong;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import java.util.HashMap;
+
+import javax.ws.rs.core.Response;
+
 
 
 @Path("/v0/enables")
@@ -40,14 +44,16 @@ public class CoralApiEnableResource {
   @POST
   @ApiOperation(value = "", response = EnableRequest.class)  
   @Timed
-  public EnableRequest createRequest(@Valid EnableRequest enableRequest, @Auth User user) {
+  public HashMap<String, String> createRequest(@Valid EnableRequest enableRequest, @Auth User user) {
     EnableOperationPost operation = new EnableOperationPost();
     operation.init(
         this.coralConfigUrl, 
         Optional.<String> absent(), 
         Optional.<Object>of( enableRequest), 
         user);
-    return (EnableRequest) (operation.perform());
+      HashMap<String, String> result = (HashMap<String, String>) (operation.perform());
+      return result;
+        //return Response.status(200).entity(obj).build();
   }
     
 }
