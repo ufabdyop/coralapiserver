@@ -22,6 +22,7 @@ import edu.utah.nanofab.coralapi.resource.RunDataProcess;
 import edu.utah.nanofab.coralapiserver.core.GenericResponse;
 import edu.utah.nanofab.coralapiserver.core.RunDataEntry;
 import edu.utah.nanofab.coralapiserver.resources.operations.RunDataDefinitionOperationGet;
+import java.util.HashMap;
 
 import javax.validation.Valid;
 import javax.ws.rs.GET;
@@ -83,7 +84,11 @@ public class CoralApiRunDataResource {
       }
 
       if (r.isSuccess()) {
-        return Response.status(Response.Status.OK).entity(r).build();      
+          HashMap<String, String> jsonObject = new HashMap<String, String>();
+          jsonObject.put("success", "" + r.isSuccess());
+          jsonObject.put("message", r.getMessage());
+          jsonObject.put("id", id);
+        return Response.status(Response.Status.OK).entity(jsonObject).build();      
       } else {
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(r).build();      
       }
