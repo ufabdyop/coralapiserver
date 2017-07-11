@@ -273,7 +273,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "pro
 
 To disable a tool:
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"member":"newmember", "item": "some instrument"}' -u auth-token:abcdefg -k https://localhost/v0/disables -D -
+curl -X POST -H "Content-Type: application/json" -d '{"item": "some instrument"}' -u auth-token:abcdefg -k https://localhost/v0/disables -D -
 ```
 
 #### PUT requests
