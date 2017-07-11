@@ -51,4 +51,19 @@ public class CoralApiDisableResource {
     HashMap<String, String> result = (HashMap<String, String>) (operation.perform());
     return result;
   }
+  
+  @POST
+  @Path("/withRundata")
+  @ApiOperation(value = "", response = DisableRequest.class)  
+  @Timed
+  public HashMap<String, String> disableWithRundataRequest(@Valid DisableRequest disableRequest, @Auth User user) {
+    DisableOperationPost operation = new DisableOperationPost();
+    operation.init(
+        this.coralConfigUrl, 
+        Optional.<String> absent(), 
+        Optional.<Object>of( disableRequest), 
+        user);
+    HashMap<String, String> result = (HashMap<String, String>) (operation.perform());
+    return result;
+  }
 }
