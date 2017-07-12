@@ -16,6 +16,8 @@ public class DisableWithRundataOperationPost extends ResourceOperation  {
       
       HashMap<String, String> result = new HashMap<String, String>();
       result.put("id", id);
+      result.put("success", "true");
+      
       this.setReturnValue(result);
   }
 
