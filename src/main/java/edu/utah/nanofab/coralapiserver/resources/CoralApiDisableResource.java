@@ -14,6 +14,7 @@ import io.dropwizard.auth.Auth;
 
 import com.codahale.metrics.annotation.Timed;
 import edu.utah.nanofab.coralapiserver.core.DisableWithRundataRequest;
+import edu.utah.nanofab.coralapiserver.resources.operations.DisableWithRundataOperationPost;
 import java.util.HashMap;
 
 import javax.validation.Valid;
@@ -58,7 +59,7 @@ public class CoralApiDisableResource {
   @ApiOperation(value = "", response = DisableRequest.class)  
   @Timed
   public HashMap<String, String> disableWithRundataRequest(@Valid DisableWithRundataRequest disableRequest, @Auth User user) {
-    DisableOperationPost operation = new DisableOperationPost();
+    DisableWithRundataOperationPost operation = new DisableWithRundataOperationPost();
     operation.init(
         this.coralConfigUrl, 
         Optional.<String> absent(), 
