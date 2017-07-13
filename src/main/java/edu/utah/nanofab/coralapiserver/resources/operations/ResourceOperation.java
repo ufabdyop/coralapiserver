@@ -13,6 +13,7 @@ import com.sun.jersey.core.spi.factory.ResponseBuilderImpl;
 
 import io.dropwizard.auth.Auth;
 import edu.utah.nanofab.coralapi.CoralAPI;
+import edu.utah.nanofab.coralapi.exceptions.CoralConnectionException;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.ErrorResponse;
 import java.util.logging.Level;
@@ -61,8 +62,8 @@ public abstract class ResourceOperation {
   
     public Object perform() {
         synchronized(GlobalLock) {
-	    this.setUp();
 	    try {
+	      this.setUp();
 	      this.performOperationImpl();
             } catch (NotAuthorizedSignal nas) {
                 nas.printStackTrace();
@@ -83,7 +84,7 @@ public abstract class ResourceOperation {
             this.returnValue = object;
     }
 
-    private void setUp() {
+    private void setUp() throws CoralConnectionException {
     	logger.debug("user: " + user.getUsername());
     	logger.debug("configUrl: " + coralConfigUrl);
     	this.api = new CoralAPI(this.user.getUsername(),

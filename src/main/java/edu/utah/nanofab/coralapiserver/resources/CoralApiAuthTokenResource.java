@@ -113,14 +113,17 @@ public class CoralApiAuthTokenResource {
   }
 
   private boolean authenticate(String username, String password) {
-    CoralAPI api = new CoralAPI(username, this.coralConfigUrl);
+    CoralAPI api = null;
     boolean success = false;
     try {
-      success = api.authenticate(username, password);
-      api.close();
+        api = new CoralAPI(username, this.coralConfigUrl);
+        success = api.authenticate(username, password);
+        api.close();
     } catch (Exception e) {
-      api.close();
-      e.printStackTrace();
+        if (api != null) {
+            api.close();
+        }
+        e.printStackTrace();
     }
     return success;
   }

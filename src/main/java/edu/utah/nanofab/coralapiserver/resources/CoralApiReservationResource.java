@@ -31,6 +31,7 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import edu.utah.nanofab.coralapi.CoralAPIPool;
 import edu.utah.nanofab.coralapi.CoralAPISynchronized;
+import edu.utah.nanofab.coralapi.exceptions.CoralConnectionException;
 import edu.utah.nanofab.coralapi.exceptions.RequestFailedException;
 import edu.utah.nanofab.coralapiserver.core.GenericResponse;
 import edu.utah.nanofab.coralapiserver.core.ReservationDeleteRequest;
@@ -55,7 +56,7 @@ public class CoralApiReservationResource {
   @ApiOperation(value = "", response = ReservationRequest.class)  
   @Timed
   public Response createRequest(@Valid ReservationRequest request, 
-          @Auth User user)  {
+          @Auth User user) throws CoralConnectionException  {
       
       System.out.println("Reservation creation for " + request.getItem());
       CoralAPISynchronized coralApiInstance = apiPool.getConnection(user.getUsername());

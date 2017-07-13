@@ -68,9 +68,10 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
             }
 
             String username = user.get().getUsername();
-            CoralAPISynchronized coralApiInstance = apiPool.getConnection(username);
+            CoralAPISynchronized coralApiInstance;
             
             try {
+                coralApiInstance = apiPool.getConnection(username);
                 coralApiInstance.getMember(username);
             } catch (Exception ex) {
                 System.out.println("Authentication Failure: Error Follows");
@@ -88,9 +89,10 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
   public Optional<User> authenticateByUsernamePassword(String user, String pass) {
     synchronized(GlobalLock) {
         logger.debug("Authenticating " + user + " by password.");
-        CoralAPISynchronized coralApiInstance = apiPool.getConnection(user);
+        CoralAPISynchronized coralApiInstance;
         
         try {
+          coralApiInstance = apiPool.getConnection(user);
           boolean success = coralApiInstance.authenticate(user, pass);
           //apiPool.closeConnection(user);
           if (success) {
