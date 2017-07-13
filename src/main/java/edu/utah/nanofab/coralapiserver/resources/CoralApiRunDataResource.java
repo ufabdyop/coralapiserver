@@ -41,6 +41,9 @@ import javax.ws.rs.core.Response;
 import org.opencoral.idl.Runtime.NullReturnException;
 import org.opencoral.idl.Runtime.ServerErrorException;
 
+import java.io.StringWriter;
+import java.io.PrintWriter;
+
 @Path("/v0/rundata")
 @Api(description = "fetch and create rundata", value = "/v0/rundata")
 @Produces(MediaType.APPLICATION_JSON)
@@ -79,6 +82,16 @@ public class CoralApiRunDataResource {
           r.setSuccess(false);
           r.setMessage("ServerErrorException while saving rundata: " + ex.description + " : " + ex.getMessage());
       } catch (Exception ex) {
+          String exceptionParent = getExceptionTraceAsString(ex);
+          String exceptionChild = getExceptionTraceAsString(ex.getCause());
+          
+          this.logger.error("-------EXCEPTIONS-------");
+          this.logger.error("Got exception of type: " + ex.getClass().getCanonicalName());
+          this.logger.error("StackTrace: " + exceptionParent);
+          this.logger.error("Got exception cause of type: " + ex.getCause().getClass().getCanonicalName());
+          this.logger.error("StackTrace: " + exceptionChild);
+          this.logger.error("------------------------");
+          
           r.setSuccess(false);
           r.setMessage("Exception while saving rundata: " + ex.getMessage());
       }
@@ -93,5 +106,12 @@ public class CoralApiRunDataResource {
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(r).build();      
       }
   }
+
+    private String getExceptionTraceAsString(Throwable ex) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        ex.printStackTrace(pw);
+        return sw.toString();
+    }
 
 }
