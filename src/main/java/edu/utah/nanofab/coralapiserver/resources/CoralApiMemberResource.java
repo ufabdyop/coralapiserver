@@ -1,10 +1,8 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
-import edu.utah.nanofab.coralapi.CoralAPI;
 import edu.utah.nanofab.coralapi.resource.Member;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.MemberName;
-import edu.utah.nanofab.coralapiserver.core.ProjectName;
 import edu.utah.nanofab.coralapiserver.resources.operations.MemberOperationGet;
 import edu.utah.nanofab.coralapiserver.resources.operations.MemberOperationPost;
 import edu.utah.nanofab.coralapiserver.resources.operations.MemberOperationPut;
@@ -14,12 +12,12 @@ import org.slf4j.Logger;
 import com.google.common.base.Optional;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiParam;
-import com.wordnik.swagger.annotations.Authorization;
 
 import io.dropwizard.auth.Auth;
 
 import com.codahale.metrics.annotation.Timed;
+import edu.utah.nanofab.coralapi.CoralAPIInterface;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 import edu.utah.nanofab.coralapi.collections.Members;
 import edu.utah.nanofab.coralapiserver.core.ProjectMembership;
 
@@ -39,12 +37,13 @@ import org.slf4j.LoggerFactory;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiMemberResource {
   
-  private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiMemberResource.class);
+  
+    private CoralAPIPool apiPool;
 
-  public CoralApiMemberResource(String coralConfigUrl ) {
-      this.coralConfigUrl = coralConfigUrl;
-  }
+    public CoralApiMemberResource(CoralAPIPool apiPool) {
+        this.apiPool = apiPool;
+    }
 
   @GET
   @ApiOperation(value = "Find member by name", 
@@ -54,7 +53,7 @@ public class CoralApiMemberResource {
 		  @QueryParam("name") Optional<String> name, 
 		  @Auth User user) {
     MemberOperationGet operation = new MemberOperationGet();
-    operation.init( this.coralConfigUrl, name, Optional.<Object> absent(), user);
+    operation.init( this.apiPool, name, Optional.<Object> absent(), user);
     
     Members returnSet = new Members();
     if (name.isPresent()) {
@@ -73,7 +72,7 @@ public class CoralApiMemberResource {
   public Member updateRequest(@Valid Member member, @Auth User user) {
     MemberOperationPut operation = new MemberOperationPut();
     operation.init(
-        this.coralConfigUrl, 
+        this.apiPool, 
         Optional.<String> absent(), 
         Optional.<Object>of( member), 
         user);
@@ -87,7 +86,7 @@ public class CoralApiMemberResource {
   public Member createRequest(@Valid Member member, @Auth User user) {
     MemberOperationPost operation = new MemberOperationPost();
     operation.init( 
-        this.coralConfigUrl, 
+        this.apiPool, 
         Optional.<String> absent(), 
         Optional.<Object>of( member), 
         user);
@@ -99,15 +98,15 @@ public class CoralApiMemberResource {
   @Path("/activate")
   @Timed
   public MemberName activate(@Valid MemberName member, @Auth User user) throws Exception {
-	  	CoralAPI api = new CoralAPI(user.getUsername(), this.coralConfigUrl);
-		try {
-			api.activateMember(member.getMember());
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("Caught exception activating " + member.getMember());
-			throw e;
-		}
-		return member;
+        CoralAPIInterface api = apiPool.getConnection(user.getUsername());
+        try {
+                api.activateMember(member.getMember());
+        } catch (Exception e) {
+                e.printStackTrace();
+                logger.error("Caught exception activating " + member.getMember());
+                throw e;
+        }
+        return member;
   }  
 
   @POST
@@ -115,7 +114,7 @@ public class CoralApiMemberResource {
   @Path("/activateWithProject")
   @Timed
   public ProjectMembership activateWithProject(@Valid ProjectMembership memberProject, @Auth User user) throws Exception {
-        CoralAPI api = new CoralAPI(user.getUsername(), this.coralConfigUrl);
+        CoralAPIInterface api = apiPool.getConnection(user.getUsername());
         String member = null;
         String project = null;
         try {
@@ -137,15 +136,15 @@ public class CoralApiMemberResource {
   @Path("/deactivate")
   @Timed
   public MemberName deactivate(@Valid MemberName member, @Auth User user) throws Exception {
-	  	CoralAPI api = new CoralAPI(user.getUsername(), this.coralConfigUrl);
-		try {
-			api.deactivateMember(member.getMember());
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("Caught exception deactivating " + member.getMember());
-			throw e;
-		}
-		return member;
+        CoralAPIInterface api = apiPool.getConnection(user.getUsername());
+        try {
+                api.deactivateMember(member.getMember());
+        } catch (Exception e) {
+                e.printStackTrace();
+                logger.error("Caught exception deactivating " + member.getMember());
+                throw e;
+        }
+        return member;
   }  
 
 }

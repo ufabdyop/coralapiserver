@@ -15,8 +15,8 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import io.dropwizard.auth.Auth;
 
 import com.codahale.metrics.annotation.Timed;
+import edu.utah.nanofab.coralapi.CoralAPIInterface;
 import edu.utah.nanofab.coralapi.CoralAPIPool;
-import edu.utah.nanofab.coralapi.CoralAPISynchronized;
 import edu.utah.nanofab.coralapi.exceptions.CoralConnectionException;
 import edu.utah.nanofab.coralapi.exceptions.RequestFailedException;
 import edu.utah.nanofab.coralapi.resource.RunDataProcess;
@@ -69,7 +69,7 @@ public class CoralApiRunDataResource {
   @ApiOperation(value = "Create rundata entry", response = RunDataEntry.class)  
   @Timed
   public Response postRequest(@Valid RunDataEntry rundata, @Auth User user) throws CoralConnectionException {
-      CoralAPISynchronized coralApiInstance = apiPool.getConnection(user.getUsername());
+      CoralAPIInterface coralApiInstance = apiPool.getConnection(user.getUsername());
       GenericResponse r = new GenericResponse(true, "");
       String id = "not assigned";
           

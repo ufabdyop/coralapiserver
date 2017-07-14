@@ -8,12 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
+import edu.utah.nanofab.coralapi.CoralAPIInterface;
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
 import io.dropwizard.auth.basic.BasicCredentials;
 
 import edu.utah.nanofab.coralapi.CoralAPIPool;
-import edu.utah.nanofab.coralapi.CoralAPISynchronized;
 import edu.utah.nanofab.coralapiserver.TokenConfiguration;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -68,7 +68,7 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
             }
 
             String username = user.get().getUsername();
-            CoralAPISynchronized coralApiInstance;
+            CoralAPIInterface coralApiInstance;
             
             try {
                 coralApiInstance = apiPool.getConnection(username);
@@ -89,7 +89,7 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
   public Optional<User> authenticateByUsernamePassword(String user, String pass) {
     synchronized(GlobalLock) {
         logger.debug("Authenticating " + user + " by password.");
-        CoralAPISynchronized coralApiInstance;
+        CoralAPIInterface coralApiInstance;
         
         try {
           coralApiInstance = apiPool.getConnection(user);

@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.atomic.AtomicLong;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 import java.util.HashMap;
 
 import javax.ws.rs.core.Response;
@@ -33,11 +34,11 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiEnableResource {
   
-  private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiEnableResource.class);
+  private CoralAPIPool apiPool;
 
-  public CoralApiEnableResource(String coralConfigUrl ) {
-      this.coralConfigUrl = coralConfigUrl;
+  public CoralApiEnableResource(CoralAPIPool apiPool ) {
+      this.apiPool = apiPool;
       new AtomicLong();
   }
 
@@ -47,7 +48,7 @@ public class CoralApiEnableResource {
   public HashMap<String, String> createRequest(@Valid EnableRequest enableRequest, @Auth User user) {
     EnableOperationPost operation = new EnableOperationPost();
     operation.init(
-        this.coralConfigUrl, 
+        this.apiPool, 
         Optional.<String> absent(), 
         Optional.<Object>of( enableRequest), 
         user);

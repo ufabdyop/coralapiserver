@@ -22,7 +22,8 @@ import io.dropwizard.auth.Auth;
 
 import com.codahale.metrics.annotation.Timed;
 
-import edu.utah.nanofab.coralapi.CoralAPI;
+import edu.utah.nanofab.coralapi.CoralAPIInterface;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 import edu.utah.nanofab.coralapiserver.TokenConfiguration;
 import edu.utah.nanofab.coralapiserver.auth.CoralCredentials;
 import edu.utah.nanofab.coralapiserver.auth.User;
@@ -34,11 +35,11 @@ import edu.utah.nanofab.coralapiserver.core.AuthRequest;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiAuthTokenResource {
   private ConcurrentHashMap<String, TokenConfiguration> sessionTokens;
-  private String coralConfigUrl;
+  private CoralAPIPool apiPool;
   
-  public CoralApiAuthTokenResource(String coralConfigUrl, ConcurrentHashMap<String, TokenConfiguration> sessionTokens) {
-        this.coralConfigUrl = coralConfigUrl;
-        this.sessionTokens = sessionTokens;
+  public CoralApiAuthTokenResource(CoralAPIPool apiPool, ConcurrentHashMap<String, TokenConfiguration> sessionTokens) {
+       this.apiPool = apiPool;
+       this.sessionTokens = sessionTokens;
   }
   
     @GET
@@ -113,10 +114,10 @@ public class CoralApiAuthTokenResource {
   }
 
   private boolean authenticate(String username, String password) {
-    CoralAPI api = null;
+    CoralAPIInterface api = null;
     boolean success = false;
     try {
-        api = new CoralAPI(username, this.coralConfigUrl);
+        api = apiPool.getConnection(username);
         success = api.authenticate(username, password);
         api.close();
     } catch (Exception e) {

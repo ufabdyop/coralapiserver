@@ -12,7 +12,8 @@ import com.google.common.base.Optional;
 import com.sun.jersey.core.spi.factory.ResponseBuilderImpl;
 
 import io.dropwizard.auth.Auth;
-import edu.utah.nanofab.coralapi.CoralAPI;
+import edu.utah.nanofab.coralapi.CoralAPIInterface;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 import edu.utah.nanofab.coralapi.exceptions.CoralConnectionException;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.ErrorResponse;
@@ -21,8 +22,9 @@ import org.opencoral.idl.NotAuthorizedSignal;
 
 public abstract class ResourceOperation {
     public static String GlobalLock = "coral api not thread safe";
-    public String coralConfigUrl;
-    public CoralAPI api;
+    protected CoralAPIPool apiPool;
+    protected CoralAPIInterface api;
+         
     public String error = null;
     public int statusCode = 500;
     protected User user;
@@ -32,17 +34,17 @@ public abstract class ResourceOperation {
     protected String name = "";
     protected Logger logger;
 
-    public void init(String coralConfigUrl,
+    public void init(CoralAPIPool apiPool,
                     Optional<String> queryParam,
                     Optional<Object> postedObject,
                     @Auth User user) {
 
             logger = LoggerFactory.getLogger(ResourceOperation.class);
-            this.coralConfigUrl = coralConfigUrl;
+            this.apiPool = apiPool;
             this.queryParam = queryParam;
             this.postedObject = postedObject;
             this.user = user;
-            logger.debug("ResourceOperation: " + this.coralConfigUrl + " " + this.queryParam + " " + this.user.getUsername());
+            logger.debug("ResourceOperation: " + this.queryParam + " " + this.user.getUsername());
     }
 
     /**
@@ -74,7 +76,6 @@ public abstract class ResourceOperation {
 	      e.printStackTrace();
 	      this.error = e.getMessage() + "\n";
 	    }
-	    this.tearDown();
 	    this.reportErrorIfEncountered();
 	    return returnValue();
         }
@@ -86,16 +87,9 @@ public abstract class ResourceOperation {
 
     private void setUp() throws CoralConnectionException {
     	logger.debug("user: " + user.getUsername());
-    	logger.debug("configUrl: " + coralConfigUrl);
-    	this.api = new CoralAPI(this.user.getUsername(),
-                            this.coralConfigUrl);
+    	this.api = this.apiPool.getConnection(user.getUsername());
     }
 
-    private void tearDown() {
-    this.api.close();
-    this.api = null;
-    }
-  
     private Object returnValue() {
       return this.returnValue;
   }

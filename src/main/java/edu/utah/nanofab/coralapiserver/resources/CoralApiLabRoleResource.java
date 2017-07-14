@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.atomic.AtomicLong;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 import edu.utah.nanofab.coralapiserver.core.GenericRoleRequest;
 import edu.utah.nanofab.coralapiserver.resources.operations.LabRoleOperationDelete;
 import edu.utah.nanofab.coralapiserver.resources.operations.LabRoleOperationPost;
@@ -34,12 +35,12 @@ import javax.validation.Valid;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiLabRoleResource {
   
-  private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiLabRoleResource.class);
-
-  public CoralApiLabRoleResource(String coralConfigUrl ) {
-      this.coralConfigUrl = coralConfigUrl;
-      new AtomicLong();
+  private CoralAPIPool apiPool;
+  
+  public CoralApiLabRoleResource(CoralAPIPool apiPool) {
+     this.apiPool = apiPool;
+     new AtomicLong();
   }
 
   @GET
@@ -47,7 +48,7 @@ public class CoralApiLabRoleResource {
   @Timed
   public LabRoles getRequest(@QueryParam("member") Optional<String> username, @Auth User user) {
     LabRoleOperationGet operation = new LabRoleOperationGet();
-    operation.init(this.coralConfigUrl, username, Optional.<Object> absent(), user);
+    operation.init(this.apiPool, username, Optional.<Object> absent(), user);
     return (LabRoles) (operation.perform());
   }
 
@@ -64,7 +65,7 @@ public class CoralApiLabRoleResource {
     			request.getRole());
 
     operation.init(
-            this.coralConfigUrl,  
+            this.apiPool,  
             Optional.<String> absent(), 
             Optional.<Object> of(request), 
             user);    
@@ -79,7 +80,7 @@ public class CoralApiLabRoleResource {
     LabRoleOperationDelete operation = new LabRoleOperationDelete();
 
     operation.init(
-            this.coralConfigUrl,  
+            this.apiPool,  
             Optional.<String> absent(), 
             Optional.<Object> of(request), 
             user);

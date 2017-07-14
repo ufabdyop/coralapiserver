@@ -1,6 +1,5 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
-import edu.utah.nanofab.coralapi.CoralAPI;
 import edu.utah.nanofab.coralapi.collections.Reservations;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.ReservationRequest;
@@ -29,8 +28,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import edu.utah.nanofab.coralapi.CoralAPIInterface;
 import edu.utah.nanofab.coralapi.CoralAPIPool;
-import edu.utah.nanofab.coralapi.CoralAPISynchronized;
 import edu.utah.nanofab.coralapi.exceptions.CoralConnectionException;
 import edu.utah.nanofab.coralapi.exceptions.RequestFailedException;
 import edu.utah.nanofab.coralapiserver.core.GenericResponse;
@@ -59,7 +58,7 @@ public class CoralApiReservationResource {
           @Auth User user) throws CoralConnectionException  {
       
       System.out.println("Reservation creation for " + request.getItem());
-      CoralAPISynchronized coralApiInstance = apiPool.getConnection(user.getUsername());
+      CoralAPIInterface coralApiInstance = apiPool.getConnection(user.getUsername());
       GenericResponse r = new GenericResponse();
           
       try {
@@ -84,7 +83,7 @@ public class CoralApiReservationResource {
   @ApiOperation(value = "", response = ReservationRequest.class)    
   @Timed
   public Reservations getRequest(@QueryParam("machine") Optional<String> machine, @Auth User user) throws Exception {
-        CoralAPISynchronized coralApiInstance = apiPool.getConnection(user.getUsername());
+        CoralAPIInterface coralApiInstance = apiPool.getConnection(user.getUsername());
         
         Date bdate = new Date();
         Date edate = new Date();
@@ -101,7 +100,7 @@ public class CoralApiReservationResource {
   @Timed
   public Response deleteRequest(@Valid ReservationDeleteRequest request, @Auth User user) throws Exception {
     logger.debug("Got DELETE RESERVATION request : " + request.getItem() + " " + request.getBdate() + " " + request.getLengthInMinutes());
-    CoralAPISynchronized coralApiInstance = apiPool.getConnection(user.getUsername());
+    CoralAPIInterface coralApiInstance = apiPool.getConnection(user.getUsername());
 
     GenericResponse r = new GenericResponse();
     

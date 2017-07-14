@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.atomic.AtomicLong;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 
 @Path("/v0/projectRoles")
 @Api(value = "/v0/projectRoles", description = "")
@@ -33,12 +34,12 @@ import com.wordnik.swagger.annotations.ApiOperation;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiProjectRoleResource {
   
-  private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiProjectRoleResource.class);
-
-  public CoralApiProjectRoleResource(String coralConfigUrl ) {
-      this.coralConfigUrl = coralConfigUrl;
-      new AtomicLong();
+  private CoralAPIPool apiPool;
+  
+  public CoralApiProjectRoleResource(CoralAPIPool apiPool) {
+    this.apiPool = apiPool;
+    new AtomicLong();
   }
 
   @GET
@@ -61,7 +62,7 @@ public class CoralApiProjectRoleResource {
     			request.getRole());
 
     operation.init(
-            this.coralConfigUrl,  
+            this.apiPool,  
             Optional.<String> absent(), 
             Optional.<Object> of(request), 
             user);    
@@ -76,7 +77,7 @@ public class CoralApiProjectRoleResource {
     ProjectRoleOperationDelete operation = new ProjectRoleOperationDelete();
 
     operation.init(
-            this.coralConfigUrl,  
+            this.apiPool,  
             Optional.<String> absent(), 
             Optional.<Object> of(request), 
             user);

@@ -20,6 +20,7 @@ import edu.utah.nanofab.coralapiserver.resources.operations.ProjectMembershipOpe
 import edu.utah.nanofab.coralapiserver.resources.operations.ProjectMembershipOperationDelete;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 import edu.utah.nanofab.coralapiserver.core.MemberProjects;
 import edu.utah.nanofab.coralapiserver.resources.operations.MemberProjectsOperationDelete;
 import edu.utah.nanofab.coralapiserver.resources.operations.MemberProjectsOperationGet;
@@ -32,11 +33,11 @@ import java.util.HashMap;
 @Path("/v0/memberProjects")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiMemberProjectsResource {
-  private String coralConfigUrl;
-
+  private CoralAPIPool apiPool;
+  
   public CoralApiMemberProjectsResource(
-      String coralConfigUrl) {
-    this.coralConfigUrl = coralConfigUrl;
+      CoralAPIPool apiPool) {
+      this.apiPool = apiPool;
   }
 
 
@@ -47,7 +48,7 @@ public class CoralApiMemberProjectsResource {
           @QueryParam("member") Optional<String> member, 
           @Auth User user) {
     MemberProjectsOperationGet operation = new MemberProjectsOperationGet();
-    operation.init(this.coralConfigUrl, member, Optional.<Object> absent(), user);
+    operation.init(apiPool, member, Optional.<Object> absent(), user);
     HashMap<String, ArrayList<String>> returnSet;
     
     returnSet = (HashMap<String, ArrayList<String>>) (operation.perform());
@@ -60,7 +61,7 @@ public class CoralApiMemberProjectsResource {
   public MemberProjects update(@Valid MemberProjects request, @Auth User user) {
     MemberProjectsOperationPut operation = new MemberProjectsOperationPut();
     operation.init(
-        this.coralConfigUrl,  
+        this.apiPool,  
         Optional.<String> absent(), 
         Optional.<Object> of(request), 
         user);
@@ -73,7 +74,7 @@ public class CoralApiMemberProjectsResource {
   public MemberProjects delete(@Valid MemberProjects request, @Auth User user) {
     MemberProjectsOperationDelete operation = new MemberProjectsOperationDelete();
     operation.init(
-        this.coralConfigUrl,  
+        this.apiPool,  
         Optional.<String> absent(), 
         Optional.<Object> of(request), 
         user);

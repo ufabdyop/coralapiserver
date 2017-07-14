@@ -1,9 +1,7 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
-import edu.utah.nanofab.coralapi.CoralAPI;
 import edu.utah.nanofab.coralapi.collections.Members;
 import edu.utah.nanofab.coralapi.collections.Projects;
-import edu.utah.nanofab.coralapi.resource.Member;
 import edu.utah.nanofab.coralapi.resource.Project;
 import edu.utah.nanofab.coralapiserver.auth.User;
 import edu.utah.nanofab.coralapiserver.core.GenericResponse;
@@ -13,11 +11,6 @@ import edu.utah.nanofab.coralapiserver.resources.operations.ProjectOperationPost
 import edu.utah.nanofab.coralapiserver.resources.operations.ProjectOperationPut;
 import edu.utah.nanofab.coralapiserver.resources.operations.ProjectsOperationGet;
 
-import org.opencoral.idl.InvalidAccountSignal;
-import org.opencoral.idl.InvalidNicknameSignal;
-import org.opencoral.idl.InvalidTicketSignal;
-import org.opencoral.idl.NotAuthorizedSignal;
-import org.opencoral.idl.ProjectNotFoundSignal;
 import org.slf4j.Logger;
 
 import com.google.common.base.Optional;
@@ -27,6 +20,8 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import io.dropwizard.auth.Auth;
 
 import com.codahale.metrics.annotation.Timed;
+import edu.utah.nanofab.coralapi.CoralAPIInterface;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 
 import javax.validation.Valid;
 import javax.ws.rs.GET;
@@ -47,12 +42,12 @@ import java.util.concurrent.atomic.AtomicLong;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiProjectsResource {
   
-  private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiProjectsResource.class);
-
-  public CoralApiProjectsResource(String coralConfigUrl ) {
-      this.coralConfigUrl = coralConfigUrl;
-      new AtomicLong();
+     private CoralAPIPool apiPool;
+     
+  public CoralApiProjectsResource(CoralAPIPool apiPool ) {
+        this.apiPool = apiPool;
+        new AtomicLong();
   }
 
   @GET
@@ -82,7 +77,7 @@ public class CoralApiProjectsResource {
   public GenericResponse createRequest(@Valid Project project, @Auth User user) {
     ProjectOperationPost operation = new ProjectOperationPost();
     operation.init(
-        this.coralConfigUrl, 
+        this.apiPool, 
         Optional.<String> absent(), 
         Optional.<Object>of( project), 
         user);
@@ -97,7 +92,7 @@ public class CoralApiProjectsResource {
   public GenericResponse updateRequest(@Valid Project project, @Auth User user) {
 	    ProjectOperationPut operation = new ProjectOperationPut();
 	    operation.init(
-	        this.coralConfigUrl, 
+	        this.apiPool, 
 	        Optional.<String> absent(), 
 	        Optional.<Object>of( project), 
 	        user);
@@ -111,8 +106,9 @@ public class CoralApiProjectsResource {
   @Path("/activate")
   @Timed
   public ProjectName activate(@Valid ProjectName project, @Auth User user) throws Exception {
-	  	CoralAPI api = new CoralAPI(user.getUsername(), this.coralConfigUrl);
 		try {
+                    CoralAPIInterface api = null;
+                        api = apiPool.getConnection(user.getUsername());
 			api.activateProject(project.getProject());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -127,8 +123,9 @@ public class CoralApiProjectsResource {
   @Path("/deactivate")
   @Timed
   public ProjectName deactivate(@Valid ProjectName project, @Auth User user) throws Exception {
-	  	CoralAPI api = new CoralAPI(user.getUsername(), this.coralConfigUrl);
 		try {
+                        CoralAPIInterface api = null;
+                        api = apiPool.getConnection(user.getUsername());
 			Members members = api.getProjectMembers(project.getProject());
 			api.removeProjectMembers(project.getProject(), members.getNames());
 			api.deactivateProject(project.getProject());
@@ -152,7 +149,7 @@ public class CoralApiProjectsResource {
 
   private Projects getProjectsByMember(String member, User apiUser) {
     ProjectsOperationGet operation = new ProjectsOperationGet();
-    operation.init(this.coralConfigUrl, 
+    operation.init(this.apiPool, 
     		Optional.<String>of(member), 
     		Optional.<Object> absent(), 
     		apiUser);
@@ -161,7 +158,7 @@ public class CoralApiProjectsResource {
   
   private Projects getAllActiveProjects(User apiUser) {
     ProjectsOperationGet operation = new ProjectsOperationGet();
-    operation.init(this.coralConfigUrl, 
+    operation.init(this.apiPool, 
     		Optional.<String>absent(), 
     		Optional.<Object>absent(), 
     		apiUser);
@@ -170,7 +167,7 @@ public class CoralApiProjectsResource {
   
   private Project getProjectByName(String name, User user) {
 		ProjectOperationGet operation = new ProjectOperationGet();
-	    operation.init( this.coralConfigUrl, Optional.<String>of(name), Optional.<Object> absent(), user);
+	    operation.init( this.apiPool, Optional.<String>of(name), Optional.<Object> absent(), user);
 	    return (Project) (operation.perform());
   }
 

@@ -15,6 +15,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import io.dropwizard.auth.Auth;
 
 import com.codahale.metrics.annotation.Timed;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 import edu.utah.nanofab.coralapi.resource.RunDataProcess;
 import edu.utah.nanofab.coralapiserver.resources.operations.RunDataDefinitionOperationGet;
 
@@ -36,12 +37,12 @@ import java.util.concurrent.atomic.AtomicLong;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiRunDataDefinitionResource {
   
-  private String coralConfigUrl;
-  public static final Logger logger = LoggerFactory.getLogger(CoralApiRunDataDefinitionResource.class);
+     private CoralAPIPool apiPool;
+     public static final Logger logger = LoggerFactory.getLogger(CoralApiRunDataDefinitionResource.class);
 
-  public CoralApiRunDataDefinitionResource(String coralConfigUrl ) {
-      this.coralConfigUrl = coralConfigUrl;
-      new AtomicLong();
+  public CoralApiRunDataDefinitionResource(CoralAPIPool apiPool) {
+    this.apiPool = apiPool;
+    new AtomicLong();
   }
 
   @GET
@@ -49,7 +50,7 @@ public class CoralApiRunDataDefinitionResource {
   @Timed
   public RunDataProcess[] getRequest(@QueryParam("item") Optional<String> item, @Auth User user) {
     RunDataDefinitionOperationGet operation = new RunDataDefinitionOperationGet();
-    operation.init( this.coralConfigUrl, item, Optional.<Object> absent(), user);
+    operation.init( this.apiPool, item, Optional.<Object> absent(), user);
     return (RunDataProcess[]) (operation.perform());
   }
 

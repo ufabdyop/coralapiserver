@@ -104,21 +104,21 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
       environment.jersey().register(new CoralApiEntryPointResource());
       environment.jersey().register(new CoralApiVersionResource());
       environment.jersey().register(new CoralApiWhoAmIResource());
-      environment.jersey().register(new CoralApiCheckKeyResource( coralConfigUrl));
-      environment.jersey().register(new CoralApiAuthTokenResource( coralConfigUrl, sessionTokens));
-      environment.jersey().register(new CoralApiMemberResource( coralConfigUrl));
-      environment.jersey().register(new CoralApiEnableResource( coralConfigUrl));
-      environment.jersey().register(new CoralApiDisableResource( coralConfigUrl));
-      environment.jersey().register(new CoralApiMachineResource( coralConfigUrl));
-      environment.jersey().register(new CoralApiLabRoleResource( coralConfigUrl));
-      environment.jersey().register(new CoralApiMemberProjectsResource( coralConfigUrl));
-      environment.jersey().register(new CoralApiEquipmentRoleResource( coralConfigUrl));
-      environment.jersey().register(new CoralApiProjectRoleResource( coralConfigUrl));
-      environment.jersey().register(new CoralApiAccountResource( coralConfigUrl));
-      environment.jersey().register(new CoralApiProjectMembershipResource( coralConfigUrl));
-      environment.jersey().register(new CoralApiProjectsResource( coralConfigUrl));
-      environment.jersey().register(new CoralApiPasswordResetResource( coralConfigUrl));
-      environment.jersey().register(new CoralApiRunDataDefinitionResource( coralConfigUrl)); 
+      environment.jersey().register(new CoralApiCheckKeyResource( apiPool ));
+      environment.jersey().register(new CoralApiAuthTokenResource( apiPool, sessionTokens));
+      environment.jersey().register(new CoralApiMemberResource( apiPool ));
+      environment.jersey().register(new CoralApiEnableResource( apiPool));
+      environment.jersey().register(new CoralApiDisableResource( apiPool));
+      environment.jersey().register(new CoralApiMachineResource( apiPool));
+      environment.jersey().register(new CoralApiLabRoleResource( apiPool));
+      environment.jersey().register(new CoralApiMemberProjectsResource( apiPool));
+      environment.jersey().register(new CoralApiEquipmentRoleResource( apiPool));
+      environment.jersey().register(new CoralApiProjectRoleResource( apiPool));
+      environment.jersey().register(new CoralApiAccountResource( apiPool));
+      environment.jersey().register(new CoralApiProjectMembershipResource( apiPool));
+      environment.jersey().register(new CoralApiProjectsResource( apiPool));
+      environment.jersey().register(new CoralApiPasswordResetResource( apiPool));
+      environment.jersey().register(new CoralApiRunDataDefinitionResource( apiPool)); 
       environment.jersey().register(new CoralApiRunDataResource( apiPool)); 
       
     }

@@ -13,6 +13,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import io.dropwizard.auth.Auth;
 
 import com.codahale.metrics.annotation.Timed;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 import edu.utah.nanofab.coralapiserver.core.DisableWithRundataRequest;
 import edu.utah.nanofab.coralapiserver.resources.operations.DisableWithRundataOperationPost;
 import java.util.HashMap;
@@ -32,11 +33,12 @@ import java.util.concurrent.atomic.AtomicLong;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiDisableResource {
   
-  private String coralConfigUrl;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiEnableResource.class);
+  private CoralAPIPool apiPool;
 
-  public CoralApiDisableResource(String coralConfigUrl ) {
-      this.coralConfigUrl = coralConfigUrl;
+  public CoralApiDisableResource(CoralAPIPool apiPool) {
+      this.apiPool = apiPool;
+      
       new AtomicLong();
   }
 
@@ -46,7 +48,7 @@ public class CoralApiDisableResource {
   public HashMap<String, String> createRequest(@Valid DisableRequest disableRequest, @Auth User user) {
     DisableOperationPost operation = new DisableOperationPost();
     operation.init(
-        this.coralConfigUrl, 
+        this.apiPool, 
         Optional.<String> absent(), 
         Optional.<Object>of( disableRequest), 
         user);
@@ -61,7 +63,7 @@ public class CoralApiDisableResource {
   public HashMap<String, String> disableWithRundataRequest(@Valid DisableWithRundataRequest disableRequest, @Auth User user) {
     DisableWithRundataOperationPost operation = new DisableWithRundataOperationPost();
     operation.init(
-        this.coralConfigUrl, 
+        this.apiPool, 
         Optional.<String> absent(), 
         Optional.<Object>of( disableRequest), 
         user);

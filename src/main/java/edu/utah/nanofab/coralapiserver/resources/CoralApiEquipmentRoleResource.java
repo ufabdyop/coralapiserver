@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.atomic.AtomicLong;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 import edu.utah.nanofab.coralapi.collections.EquipmentRoles;
 import edu.utah.nanofab.coralapiserver.core.GenericRoleRequest;
 import edu.utah.nanofab.coralapiserver.resources.operations.EquipmentRoleOperationDelete;
@@ -37,12 +38,13 @@ import edu.utah.nanofab.coralapiserver.resources.operations.EquipmentRoleOperati
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiEquipmentRoleResource {
   
-  private String coralConfigUrl;
+  private CoralAPIPool apiPool;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiEquipmentRoleResource.class);
 
-  public CoralApiEquipmentRoleResource(String coralConfigUrl ) {
-      this.coralConfigUrl = coralConfigUrl;
-      new AtomicLong();
+  public CoralApiEquipmentRoleResource(CoralAPIPool apiPool ) {
+     this.apiPool = apiPool;
+  
+     new AtomicLong();
   }
 
   @GET
@@ -65,7 +67,7 @@ public class CoralApiEquipmentRoleResource {
     			request.getRole());
 
     operation.init(
-            this.coralConfigUrl,  
+            this.apiPool ,  
             Optional.<String> absent(), 
             Optional.<Object> of(request), 
             user);    
@@ -80,7 +82,7 @@ public class CoralApiEquipmentRoleResource {
     EquipmentRoleOperationDelete operation = new EquipmentRoleOperationDelete();
 
     operation.init(
-            this.coralConfigUrl,  
+            this.apiPool,  
             Optional.<String> absent(), 
             Optional.<Object> of(request), 
             user);

@@ -20,17 +20,18 @@ import edu.utah.nanofab.coralapiserver.resources.operations.ProjectMembershipOpe
 import edu.utah.nanofab.coralapiserver.resources.operations.ProjectMembershipOperationDelete;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 
 
 @Api(value = "/v0/projectMembership", description = "")
 @Path("/v0/projectMembership")
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiProjectMembershipResource {
-  private String coralConfigUrl;
-
+     private CoralAPIPool apiPool;
+     
   public CoralApiProjectMembershipResource(
-      String coralConfigUrl) {
-    this.coralConfigUrl = coralConfigUrl;
+      CoralAPIPool apiPool) {
+      this.apiPool = apiPool;
   }
 
   @GET
@@ -38,7 +39,7 @@ public class CoralApiProjectMembershipResource {
   @Timed
   public ProjectMembership get(@QueryParam("project") Optional<String> project, @Auth User user) {
     ProjectMembershipOperationGet operation = new ProjectMembershipOperationGet();
-    operation.init( this.coralConfigUrl, project, Optional.<Object> absent(), user);
+    operation.init( this.apiPool, project, Optional.<Object> absent(), user);
     return (ProjectMembership) (operation.perform());
   }
   
@@ -48,7 +49,7 @@ public class CoralApiProjectMembershipResource {
   public ProjectMembership update(@Valid ProjectMembership request, @Auth User user) {
     ProjectMembershipOperationPut operation = new ProjectMembershipOperationPut();
     operation.init(
-        this.coralConfigUrl,  
+        this.apiPool,  
         Optional.<String> absent(), 
         Optional.<Object> of(request), 
         user);
@@ -62,7 +63,7 @@ public class CoralApiProjectMembershipResource {
   public ProjectMembership delete(@Valid ProjectMembership request, @Auth User user) {
     ProjectMembershipOperationDelete operation = new ProjectMembershipOperationDelete();
     operation.init(
-        this.coralConfigUrl,  
+        this.apiPool,  
         Optional.<String> absent(), 
         Optional.<Object> of(request), 
         user);

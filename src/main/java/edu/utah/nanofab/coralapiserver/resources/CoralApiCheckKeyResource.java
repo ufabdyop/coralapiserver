@@ -1,12 +1,12 @@
 package edu.utah.nanofab.coralapiserver.resources;
 
-import edu.utah.nanofab.coralapi.CoralAPI;
-
 import org.slf4j.Logger;
 
 import com.codahale.metrics.annotation.Timed;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import edu.utah.nanofab.coralapi.CoralAPIInterface;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 import edu.utah.nanofab.coralapi.exceptions.CoralConnectionException;
 
 import javax.ws.rs.GET;
@@ -27,11 +27,11 @@ import java.util.logging.Level;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiCheckKeyResource {
   
-  private String coralConfigUrl;
+  private CoralAPIPool apiPool;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiEnableResource.class);
 
-  public CoralApiCheckKeyResource( String coralConfigUrl ) {
-      this.coralConfigUrl = coralConfigUrl;
+  public CoralApiCheckKeyResource( CoralAPIPool apiPool ) {
+      this.apiPool = apiPool;
       new AtomicLong();
   }
 
@@ -39,10 +39,10 @@ public class CoralApiCheckKeyResource {
   @ApiOperation(value = "")  
   @Timed
   public Object checkKey() {
-    CoralAPI api = null;
+    CoralAPIInterface api = null;
     boolean keyValid = false;
     try {
-        api = new CoralAPI("", coralConfigUrl);
+        api = apiPool.getConnection("");
         keyValid = api.checkKeyIsValid();
     } catch (CoralConnectionException ex) {
         java.util.logging.Logger.getLogger(CoralApiCheckKeyResource.class.getName()).log(Level.SEVERE, null, ex);

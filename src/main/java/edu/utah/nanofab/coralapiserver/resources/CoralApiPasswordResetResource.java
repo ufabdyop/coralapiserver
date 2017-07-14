@@ -19,6 +19,7 @@ import edu.utah.nanofab.coralapiserver.core.PasswordResetRequest;
 import edu.utah.nanofab.coralapiserver.resources.operations.PasswordResetOperationPost;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 
 
 @Api(value = "/v0/resetPassword", description = "")
@@ -26,16 +27,16 @@ import com.wordnik.swagger.annotations.ApiOperation;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiPasswordResetResource {
   
-  private String coralConfigUrl;
-  public static final Logger logger = LoggerFactory.getLogger(CoralApiPasswordResetResource.class);
+     private CoralAPIPool apiPool;
+     public static final Logger logger = LoggerFactory.getLogger(CoralApiPasswordResetResource.class);
   
   /**
    * Constructs a new password reset resource with the supplied coralConfigUrl.
    * 
    * @param coralConfigUrl The URL endpoint for the CORBA configurations.
    */
-  public CoralApiPasswordResetResource(String coralConfigUrl) {
-    this.coralConfigUrl = coralConfigUrl;
+  public CoralApiPasswordResetResource(CoralAPIPool apiPool) {
+    this.apiPool = apiPool;
   }
   
   /**
@@ -58,7 +59,7 @@ public class CoralApiPasswordResetResource {
     }
     
     operation.init( 
-             this.coralConfigUrl, 
+             this.apiPool, 
              Optional.<String> absent(), 
              Optional.<Object> of(request), 
              user

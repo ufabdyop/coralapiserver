@@ -24,6 +24,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 
 
 @Api(value = "/v0/machines", description = "")
@@ -31,12 +32,12 @@ import com.wordnik.swagger.annotations.ApiOperation;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiMachineResource {
   
-  private String coralConfigUrl;
+  private CoralAPIPool apiPool;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiMachineResource.class);
 
-  public CoralApiMachineResource( String coralConfigUrl ) {
-      this.coralConfigUrl = coralConfigUrl;
-      new AtomicLong();
+  public CoralApiMachineResource( CoralAPIPool apiPool ) {
+    this.apiPool = apiPool;
+    new AtomicLong();
   }
 
   @GET
@@ -44,7 +45,7 @@ public class CoralApiMachineResource {
   @Timed
   public Object getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
     MachineOperationGet operation = new MachineOperationGet();
-    operation.init(this.coralConfigUrl, name, Optional.<Object> absent(), user);
+    operation.init(this.apiPool, name, Optional.<Object> absent(), user);
     return operation.perform();
   }
   

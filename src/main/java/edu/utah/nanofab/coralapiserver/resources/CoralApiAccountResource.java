@@ -15,6 +15,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import io.dropwizard.auth.Auth;
 
 import com.codahale.metrics.annotation.Timed;
+import edu.utah.nanofab.coralapi.CoralAPIPool;
 
 import javax.validation.Valid;
 import javax.ws.rs.GET;
@@ -34,11 +35,11 @@ import java.util.concurrent.atomic.AtomicLong;
 @Produces(MediaType.APPLICATION_JSON)
 public class CoralApiAccountResource {
   
-  private String coralConfigUrl;
+  private CoralAPIPool apiPool;
   public static final Logger logger = LoggerFactory.getLogger(CoralApiAccountResource.class);
 
-  public CoralApiAccountResource(String coralConfigUrl ) {
-      this.coralConfigUrl = coralConfigUrl;
+  public CoralApiAccountResource(CoralAPIPool apiPool) {
+      this.apiPool = apiPool;
       new AtomicLong();
   }
 
@@ -47,7 +48,7 @@ public class CoralApiAccountResource {
   @Timed
   public Account getRequest(@QueryParam("name") Optional<String> name, @Auth User user) {
     AccountOperationGet operation = new AccountOperationGet();
-    operation.init( this.coralConfigUrl, name, Optional.<Object> absent(), user);
+    operation.init( this.apiPool, name, Optional.<Object> absent(), user);
     return (Account) (operation.perform());
   }
   
@@ -57,7 +58,7 @@ public class CoralApiAccountResource {
   public Account createRequest(@Valid Account account, @Auth User user) {
     AccountOperationPost operation = new AccountOperationPost();
     operation.init( 
-        this.coralConfigUrl, 
+        this.apiPool, 
         Optional.<String> absent(), 
         Optional.<Object>of(account), 
         user);
@@ -70,7 +71,7 @@ public class CoralApiAccountResource {
   public Account updateRequest(@Valid Account account, @Auth User user) {
     AccountOperationPut operation = new AccountOperationPut();
     operation.init( 
-        this.coralConfigUrl, 
+        this.apiPool, 
         Optional.<String> absent(), 
         Optional.<Object>of( account), 
         user);
