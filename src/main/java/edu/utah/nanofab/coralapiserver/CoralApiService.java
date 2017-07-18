@@ -133,11 +133,11 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
       environment.jersey().register(new CoralApiRunDataResource( apiPool)); 
 
       //LOGGING?
-      java.util.logging.Logger requestLogger = java.util.logging.Logger.getLogger(LoggingFilter.class.getName());
-      environment.jersey().register(new LoggingFilter(
-                     (java.util.logging.Logger) requestLogger,
-                     true)
-                 );      
+//      java.util.logging.Logger requestLogger = java.util.logging.Logger.getLogger(LoggingFilter.class.getName());
+//      environment.jersey().register(new LoggingFilter(
+//                     (java.util.logging.Logger) requestLogger,
+//                     true)
+//                 );      
       //environment.jersey().register(new LoggingFeature(logger, LoggingFeature.Verbosity.PAYLOAD_ANY));
 
       
