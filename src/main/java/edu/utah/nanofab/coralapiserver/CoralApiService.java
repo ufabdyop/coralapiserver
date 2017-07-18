@@ -42,7 +42,9 @@ import edu.utah.nanofab.coralapiserver.resources.CoralApiWhoAmIResource;
 import io.dropwizard.auth.AuthFactory;
 import io.dropwizard.auth.basic.BasicAuthFactory;
 import io.dropwizard.jersey.setup.JerseyEnvironment;
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class CoralApiService extends Application<CoralApiConfiguration> {
@@ -129,6 +131,15 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
       environment.jersey().register(new CoralApiPasswordResetResource( apiPool));
       environment.jersey().register(new CoralApiRunDataDefinitionResource( apiPool)); 
       environment.jersey().register(new CoralApiRunDataResource( apiPool)); 
+
+      //LOGGING?
+      java.util.logging.Logger requestLogger = java.util.logging.Logger.getLogger(LoggingFilter.class.getName());
+      environment.jersey().register(new LoggingFilter(
+                     (java.util.logging.Logger) requestLogger,
+                     true)
+                 );      
+      //environment.jersey().register(new LoggingFeature(logger, LoggingFeature.Verbosity.PAYLOAD_ANY));
+
       
     }
 
