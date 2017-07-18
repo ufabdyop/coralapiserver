@@ -6,15 +6,14 @@ import java.util.HashMap;
 public class EnableOperationPost extends ResourceOperation  {
   @Override
   public void performOperationImpl() throws Exception {
-      throw new Exception("TEST EXCEPHTION HANDLING");
-//      EnableRequest enableRequest = (EnableRequest)(this.postedObject.get());
-//      System.out.println("Enabling beginning for " + enableRequest.getItem());
-//  
-//      String id = this.api.enable(user.getUsername(), enableRequest.getMember(), 
-//          enableRequest.getProject(), enableRequest.getItem());
-//      HashMap<String, String> response = new HashMap<String, String>();
-//      response.put("id", id);
-//      this.setReturnValue(response);
+      EnableRequest enableRequest = (EnableRequest)(this.postedObject.get());
+      System.out.println("Enabling beginning for " + enableRequest.getItem());
+  
+      String id = this.api.enable(user.getUsername(), enableRequest.getMember(), 
+          enableRequest.getProject(), enableRequest.getItem());
+      HashMap<String, String> response = new HashMap<String, String>();
+      response.put("id", id);
+      this.setReturnValue(response);
   }
 
   @Override
