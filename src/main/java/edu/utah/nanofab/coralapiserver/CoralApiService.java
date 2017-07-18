@@ -6,7 +6,6 @@ import java.util.EnumSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 import io.dropwizard.Application;
-import io.dropwizard.auth.basic.BasicAuthProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.assets.AssetsBundle;
@@ -40,6 +39,10 @@ import edu.utah.nanofab.coralapiserver.resources.CoralApiRunDataDefinitionResour
 import edu.utah.nanofab.coralapiserver.resources.CoralApiRunDataResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiVersionResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiWhoAmIResource;
+import io.dropwizard.auth.AuthFactory;
+import io.dropwizard.auth.basic.BasicAuthFactory;
+import io.dropwizard.jersey.setup.JerseyEnvironment;
+import org.slf4j.Logger;
 
 
 public class CoralApiService extends Application<CoralApiConfiguration> {
@@ -100,7 +103,13 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
 
       environment.jersey().register(new CoralApiReservationResource(apiPool));
       
-      environment.jersey().register(new BasicAuthProvider<User>(new SimpleAuthenticator(tokens, sessionTokens, apiPool ), "CoralAPIServer Realm"));
+      environment.jersey().register(
+        AuthFactory.binder(
+            new BasicAuthFactory<User>(
+                new SimpleAuthenticator(tokens, sessionTokens, apiPool ),
+                "CoralAPIServer Realm",
+                User.class)));      
+      
       environment.jersey().register(new CoralApiEntryPointResource());
       environment.jersey().register(new CoralApiVersionResource());
       environment.jersey().register(new CoralApiWhoAmIResource());

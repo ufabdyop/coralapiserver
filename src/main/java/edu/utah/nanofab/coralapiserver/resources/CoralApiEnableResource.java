@@ -27,8 +27,6 @@ import java.util.HashMap;
 
 import javax.ws.rs.core.Response;
 
-
-
 @Path("/v0/enables")
 @Api(value = "/v0/enables", description = "enable equipment, or fetch information about enables the equipment history")
 @Produces(MediaType.APPLICATION_JSON)

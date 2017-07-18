@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
-import com.sun.jersey.core.spi.factory.ResponseBuilderImpl;
 
 import io.dropwizard.auth.Auth;
 import edu.utah.nanofab.coralapi.CoralAPIInterface;
@@ -103,10 +102,10 @@ public abstract class ResourceOperation {
 
                 Response resp;
                 try {
-                    resp = new ResponseBuilderImpl().status(this.statusCode)
+                    resp = Response.status(this.statusCode)
                             .entity(mapper.writeValueAsString(er)).build();
                 } catch (JsonProcessingException ex) {
-                    resp = new ResponseBuilderImpl().status(this.statusCode)
+                    resp = Response.status(this.statusCode)
                             .entity(er.message).build();
                     java.util.logging.Logger.getLogger(ResourceOperation.class.getName()).log(Level.SEVERE, null, ex);
                 }
