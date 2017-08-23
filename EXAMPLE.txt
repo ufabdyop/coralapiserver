@@ -1,0 +1,32 @@
+Does Not Work?
+===
+
+{
+    "description": "",
+    "name": "afm",
+    "version": "2.54",
+    "xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rmRunData xmlns=\"http://snf.stanford.edu/rmconfig1\" name=\"service\"\n    version=\"\" agent=\"coral\" item=\"undefined\" lot=\"not assigned\"\n    viewlock=\"not locked\"\n    id=\"undefined\"\n    autosaved=\"false\" active=\"true\">\n    <element>\n        <key>mode-used</key>\n        <stringValue></stringValue>\n        <intValue>undefined</intValue>\n        <fieldType>InputChoice</fieldType>\n        <fieldSubType>string</fieldSubType>\n    </element>\n    <element>\n        <key>tips-used</key>\n        <stringValue></stringValue>\n        <fieldType>InputInt</fieldType>\n    </element>\n    <element>\n        <key>comments</key>\n        <stringValue></stringValue>\n        <fieldType>InputString</fieldType>\n    </element>\n    <element>\n        <key>staff-only</key>\n        <stringValue>undefined</stringValue>\n        <fieldType>InputImg</fieldType>\n    </element>\n    <element>\n        <key>tech-time</key>\n        <stringValue></stringValue>\n        <fieldType>InputTime</fieldType>\n    </element>\n    <element>\n        <key>tech-name</key>\n        <stringValue></stringValue>\n        <intValue>undefined</intValue>\n        <fieldType>InputChoice</fieldType>\n        <fieldSubType>string</fieldSubType>\n    </element>\n    <element>\n        <key>student-tech-time</key>\n        <stringValue></stringValue>\n        <fieldType>InputTime</fieldType>\n    </element>\n    <element>\n        <key>student-tech-name</key>\n        <stringValue></stringValue>\n        <intValue>undefined</intValue>\n        <fieldType>InputChoice</fieldType>\n        <fieldSubType>string</fieldSubType>\n    </element>\n    <element>\n        <key>all-enable-time-is-tech-time</key>\n        <stringValue></stringValue>\n        <intValue>undefined</intValue>\n        <fieldType>InputChoice</fieldType>\n        <fieldSubType>string</fieldSubType>\n    </element>\n</rmRunData>\n<!--@CLASSNAME:org.opencoral.runtime.xml.RmRunData-->"
+}
+
+
+
+Does Work
+===
+
+
+curl -u auth-token:1234 -H "Content-Type: application/json" -d '
+{
+    "description": "",
+    "name": "afm",
+    "version": "2.54",
+    "xmlDefinition": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n <rmRunData xmlns=\"http://snf.stanford.edu/rmconfig1\"\n     name=\"afm-bruker-dimension-icon\" version=\"2.54\" agent=\"coral\"\n     item=\"AFM, Bruker Dimension Icon\" lot=\"not assigned\"\n     viewlock=\"coral\" created=\"2017-07-03 16:46:42\"\n     modified=\"2017-07-03 16:46:49\"\n     id=\"Runtime Manager??rundata??2017-07-03 16:46:42??1\"\n     autosaved=\"false\" active=\"false\">\n     <element>\n         <key>mode-used</key>\n         <stringValue>Tapping</stringValue>\n         <intValue>1</intValue>\n         <fieldType>InputChoice</fieldType>\n         <fieldSubtype>string</fieldSubtype>\n     </element>\n     <element>\n         <key>tips-used</key>\n         <intValue>5</intValue>\n         <fieldType>InputInt</fieldType>\n     </element>\n     <element>\n         <key>comments</key>\n         <stringValue></stringValue>\n         <fieldType>InputString</fieldType>\n     </element>\n     <element>\n         <key>tech-time</key>\n         <stringValue></stringValue>\n         <units>HH:MM:SS</units>\n         <fieldType>InputTime</fieldType>\n     </element>\n     <element>\n         <key>tech-name</key>\n         <fieldType>InputChoice</fieldType>\n         <fieldSubtype>string</fieldSubtype>\n     </element>\n     <element>\n         <key>student-tech-time</key>\n         <stringValue></stringValue>\n         <units>HH:MM:SS</units>\n         <fieldType>InputTime</fieldType>\n     </element>\n     <element>\n         <key>student-tech-name</key>\n         <fieldType>InputChoice</fieldType>\n         <fieldSubtype>string</fieldSubtype>\n     </element>\n     <element>\n         <key>all-enable-time-is-tech-time</key>\n         <fieldType>InputChoice</fieldType>\n         <fieldSubtype>string</fieldSubtype>\n     </element>\n </rmRunData>\n <!--@CLASSNAME:org.opencoral.runtime.xml.RmRunData-->"
+}' -X POST 'http://172.17.0.1:8001/v0/rundata'
+
+curl -u auth-token:1234 -H "Content-Type: application/json" -d '
+{
+    "description": "",
+    "name": "afm",
+    "version": "2.54",
+    "xmlDefinition": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n <rmRunData xmlns=\"http://snf.stanford.edu/rmconfig1\"\n     name=\"afm-bruker-dimension-icon\" version=\"2.54\" agent=\"coral\"\n     item=\"AFM, Bruker Dimension Icon\" lot=\"not assigned\"\n     viewlock=\"coral\" created=\"2017-07-03 16:46:42\"\n     modified=\"2017-07-03 16:46:49\"\n     id=\"not assigned\"\n     autosaved=\"false\" active=\"false\">\n     <element>\n         <key>mode-used</key>\n         <stringValue>Tapping</stringValue>\n         <intValue>1</intValue>\n         <fieldType>InputChoice</fieldType>\n         <fieldSubtype>string</fieldSubtype>\n     </element>\n     <element>\n         <key>tips-used</key>\n         <intValue>5</intValue>\n         <fieldType>InputInt</fieldType>\n     </element>\n     <element>\n         <key>comments</key>\n         <stringValue></stringValue>\n         <fieldType>InputString</fieldType>\n     </element>\n     <element>\n         <key>tech-time</key>\n         <stringValue></stringValue>\n         <units>HH:MM:SS</units>\n         <fieldType>InputTime</fieldType>\n     </element>\n     <element>\n         <key>tech-name</key>\n         <fieldType>InputChoice</fieldType>\n         <fieldSubtype>string</fieldSubtype>\n     </element>\n     <element>\n         <key>student-tech-time</key>\n         <stringValue></stringValue>\n         <units>HH:MM:SS</units>\n         <fieldType>InputTime</fieldType>\n     </element>\n     <element>\n         <key>student-tech-name</key>\n         <fieldType>InputChoice</fieldType>\n         <fieldSubtype>string</fieldSubtype>\n     </element>\n     <element>\n         <key>all-enable-time-is-tech-time</key>\n         <fieldType>InputChoice</fieldType>\n         <fieldSubtype>string</fieldSubtype>\n     </element>\n </rmRunData>\n <!--@CLASSNAME:org.opencoral.runtime.xml.RmRunData-->"
+}' -X POST 'http://172.17.0.1:8001/v0/rundata'
+

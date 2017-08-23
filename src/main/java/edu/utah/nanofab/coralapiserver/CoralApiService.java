@@ -41,13 +41,16 @@ import edu.utah.nanofab.coralapiserver.resources.CoralApiVersionResource;
 import edu.utah.nanofab.coralapiserver.resources.CoralApiWhoAmIResource;
 import io.dropwizard.auth.AuthFactory;
 import io.dropwizard.auth.basic.BasicAuthFactory;
-import io.dropwizard.jersey.setup.JerseyEnvironment;
-import org.glassfish.jersey.filter.LoggingFilter;
+import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
+import io.dropwizard.configuration.SubstitutingSourceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 public class CoralApiService extends Application<CoralApiConfiguration> {
+    
+    public static final Logger logger = LoggerFactory.getLogger(CoralApiService.class);
+    
     public static void main(String[] args) throws Exception {
         new CoralApiService().run(args);
     }
@@ -55,6 +58,12 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
     @Override
     public void initialize(Bootstrap<CoralApiConfiguration> bootstrap) {
       bootstrap.addBundle(new AssetsBundle("/assets"));
+      bootstrap.setConfigurationSourceProvider( 
+              new SubstitutingSourceProvider(
+                      bootstrap.getConfigurationSourceProvider(),
+                      new EnvironmentVariableSubstitutor()
+                )
+      );
       addSwaggerBundleConditionally(bootstrap);
     }
     
@@ -97,6 +106,9 @@ public class CoralApiService extends Application<CoralApiConfiguration> {
     public void run(CoralApiConfiguration configuration,
                     Environment environment) {
       final String coralConfigUrl = configuration.getCoralConfigUrl();
+      
+      logger.debug("coralConfigUrl is set to: " + coralConfigUrl);
+      
       final TokenConfiguration[] tokens = configuration.getAuthTokensConfiguration().getTokens();
       ConcurrentHashMap<String, TokenConfiguration> sessionTokens = new ConcurrentHashMap<String, TokenConfiguration>();
       CoralAPIPool apiPool = CoralAPIPool.getInstance(coralConfigUrl);
